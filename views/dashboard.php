@@ -2,7 +2,7 @@
 
 include("../php/functions/validar.php");
 
-include("../php/functions/tasa.php");
+// include("../php/functions/tasa.php");
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +84,17 @@ include("../php/functions/tasa.php");
                         <h5 class="card-title">Configuracion</h5>
                        
                         <a href="configuracion.php" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Venta</h5>
+                       
+                        <a href="venta.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
             </div>

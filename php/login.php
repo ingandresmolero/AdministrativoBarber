@@ -10,13 +10,13 @@
 
 }else{
     $username =$_POST["usuario"];
-    $passw=$_POST["passw"];
-    $query=$conn->prepare("SELECT * FROM usuarios WHERE user='$username' and passw='$passw'");
+    $passw=md5($_POST["passw"]);
+    $query=$conn->prepare("SELECT * FROM tbladmin WHERE UserName='$username' and Password='$passw'");
     $query -> execute();
     $control=$query ->fetch();
     
     if($control>0){
-        $rol = $control['rol'];
+        $rol = $control['Role'];
         $_SESSION["username"]=$username;
         $_SESSION["rol"] =$rol;
         header("Location:views/dashboard.php");
