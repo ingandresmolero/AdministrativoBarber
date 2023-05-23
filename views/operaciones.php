@@ -1,7 +1,7 @@
 <?php
 include("../php/functions/validar.php");
 
-include("../php/functions/tasa.php");
+// include("../php/functions/tasa.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,33 +11,23 @@ include("../php/functions/tasa.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Operaciones</title>
+    <link rel="stylesheet" href="../css/styles.min.css">
 </head>
 <body>
 <?php
-    include("assets/header.php");
+    include("assets/headersintasa.php");
     ?>
     <section>
-        <div class="row justify-content-center mt-5">
-        <div class="col-3">
-                <div class="card" style="width: 18rem;">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Crear Codigo</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="./operacion/add_stock.php" class="btn btn-primary">Entrar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         
         <div class="row justify-content-center mt-5">
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Orden de Carga</h5>
+                        <h5 class="card-title">Cuentas por Cobrar</h5>
                         
-                        <a href="./operacion/anadir_stock.php" class="btn btn-primary">Entrar</a>
+                        <a href="#" class="btn btn-primary">Entrar</a>
                     </div>
                 </div>
             </div>
@@ -45,16 +35,61 @@ include("../php/functions/tasa.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Orden de Retiro</h5>
+                        <h5 class="card-title">Ventas por Rango</h5>
                         
-                        <a href="./operacion/out_stock.php" class="btn btn-primary">Entrar</a>
+                        <a href="#" class="btn btn-primary">Entrar</a>
                     </div>
+                    
                 </div>
             </div>
 
-            
-            
-          
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Config. Barbero</h5>
+                        
+                        <a href="#" class="btn btn-primary">Entrar</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+        <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Opcione 1</h5>
+                        
+                        <a href="#" class="btn btn-primary">Entrar</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Opcione 2</h5>
+                        
+                        <a href="#" class="btn btn-primary">Entrar</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Opcione 3</h5>
+                        
+                        <a href="#" class="btn btn-primary">Entrar</a>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
 
         

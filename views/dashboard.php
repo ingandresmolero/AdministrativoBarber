@@ -20,16 +20,15 @@ include("../php/functions/validar.php");
 
 <body>
     <?php
-    include("assets/header.php");
+    include("assets/headersintasa.php");
     ?>
-    <section>
-        <div class="row justify-content-center mt-5">
+    <section class="container-sm">
+        <div class="row justify-content-center mt-5 ">
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
                         <h5 class="card-title">Inventario</h5>
-                       
                         <a href="stock.php" class="btn btn-primary ">Go somewhere</a>
                     </div>
                 </div>
@@ -39,7 +38,6 @@ include("../php/functions/validar.php");
 
                     <div class="card-body">
                         <h5 class="card-title">Actualizar Tasa</h5>
-                       
                         <a href="tasa.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
@@ -49,8 +47,17 @@ include("../php/functions/validar.php");
 
                     <div class="card-body">
                         <h5 class="card-title">Operaciones</h5>
-                       
                         <a href="operaciones.php" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Lista de Facturas</h5>
+                        <a href="lista_facturas.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +69,6 @@ include("../php/functions/validar.php");
 
                     <div class="card-body">
                         <h5 class="card-title">Reportes</h5>
-                       
                         <a href="reportes.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
@@ -72,7 +78,7 @@ include("../php/functions/validar.php");
 
                     <div class="card-body">
                         <h5 class="card-title">Usuarios</h5>
-                       
+
                         <a href="usuarios.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
@@ -82,26 +88,26 @@ include("../php/functions/validar.php");
 
                     <div class="card-body">
                         <h5 class="card-title">Configuracion</h5>
-                       
+
                         <a href="configuracion.php" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-3">
+            <!-- <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Venta</h5>
-                       
-                        <a href="venta.php" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title">Facturacion</h5>
+
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
-        
-           
+
+
 
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

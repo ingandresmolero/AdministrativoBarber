@@ -1,7 +1,7 @@
 <?php
 include("../php/functions/validar.php");
 
-include("../php/functions/tasa.php");
+// include("../php/functions/tasa.php");
 include_once("../php/dbconn.php");
 $sql = 'SELECT * FROM reportes ';
 $stmt = $conn->prepare($sql);
@@ -32,7 +32,7 @@ $paginas = ceil($total_report / $report_x_pagina);
 </head>
 
 <body>
-    <?php include("../views/assets/header.php"); ?>
+    <?php include("../views/assets/headersintasa.php"); ?>
     
 
     <section class="container-fluid">
