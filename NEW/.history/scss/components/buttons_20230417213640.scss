@@ -1,0 +1,16 @@
+@import "variables";
+.table-btn {
+    color: #fff;
+    background-color: $accentColor;
+    padding: 5px 24px;
+    position: absolute;
+    border: 1px solid $accentColor;
+    line-height: initial;
+    border-radius: 30px;
+    transition: .3s;
+    &:hover {
+        color: #fff;
+        background-color: transparent;
+        color: $accentColor;
+    }
+}

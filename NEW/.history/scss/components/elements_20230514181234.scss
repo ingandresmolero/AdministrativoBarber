@@ -1,0 +1,57 @@
+@import "variables";
+
+.elements {
+    display: flex;
+    margin: 3rem 0;
+    justify-content: center;
+    flex-direction: column;
+
+    @media (min-width: 767px) {
+        //gap: 60px; //30px;
+        flex-direction: row;
+        margin: 2rem 0;
+    }
+
+    .item  {
+        transition: .3s;
+        width: 241px;
+        display: block;
+        padding: 46px 0;
+        margin: 0 auto;
+        text-align: center;
+        border: 2px solid #f3f3f3c4;
+        box-shadow: rgba(71, 75, 255, 0.075) 0px 2px 3px;
+        background: rgb(255, 255, 255);
+        text-decoration: none;
+
+        &:hover {
+            transform: scale(1.1);
+            box-shadow: rgba(71, 75, 255, 0.075) 0px 8px 12px;
+        }
+        p {
+            color: $accentColor;
+            font-size: 16px;
+            font-weight: bold;
+            padding-top: 10px;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 979px) {
+            text-align: center;
+        }
+        
+        @media only screen and (max-width: 767px) { 
+            width: 200px;
+            margin: 0 auto 30px;
+
+            &:last-child {
+                margin-bottom: initial;
+            }
+        }
+
+        img {
+            @media only screen and (max-width: 767px) {
+                width: 50px;
+            }
+        }
+    }
+}

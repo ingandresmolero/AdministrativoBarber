@@ -1,0 +1,22 @@
+@import "variables";
+
+#tasa {
+
+    main {
+        margin: 3rem 0;
+
+        .form-elements {
+            width: fit-content;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-style-1 {
+            width: 50%;
+            margin: 20px auto 0;
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+@import "variables";
+.table-btn {
+    color: #fff;
+    background-color: $accentColor;
+    padding: 5px 20px;
+    display: inline-block;
+    border: 1px solid $accentColor;
+    line-height: initial;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: .3s;
+    &:hover {
+        color: #fff;
+        background-color: transparent;
+        color: $accentColor;
+    }
+
+    @media only screen and (max-width: 767px) { 
+        padding: 5px 14px;
+        font-size: 14px;
+    }
+}

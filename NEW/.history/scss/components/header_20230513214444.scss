@@ -1,0 +1,22 @@
+@import "variables";
+
+nav {
+    .navbar-brand img {
+        max-width: 50px;
+        display: block;
+    }
+    a.nav-link {
+        color: $accentColor;
+        padding: 10px;
+        font-size: 16px;
+         
+        &.active {
+            color: $accentColor2 !important;
+        }
+    }
+
+    #navbarSupportedContent {
+        justify-content: right;
+        padding: 0 40px;
+    }
+}

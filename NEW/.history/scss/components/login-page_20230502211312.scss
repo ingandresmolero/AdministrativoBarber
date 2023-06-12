@@ -1,0 +1,22 @@
+@import "variables";
+
+.login-page {
+    background: rgb(47,49,72);
+    background: linear-gradient(90deg, rgba(47,49,72,1) 4%, rgba(88,112,153,1) 50%, rgba(47,49,72,1) 94%);
+    
+    .box {
+        width: fit-content;
+        margin: 0 auto;
+        background-color: rgba(255,255,255,.09);
+        //border: solid 2px #fff;
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0,0,0,.20);
+        
+    }
+
+    .box form {
+        width: fit-content;
+    }
+}

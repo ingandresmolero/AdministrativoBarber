@@ -1,0 +1,53 @@
+@import "variables";
+
+nav .pagination {
+    margin-bottom: 2rem;
+    @media (min-width: 768px) {
+        display: inline-block !important; 
+        text-align: center;
+        width: 100%;  
+    }
+    @media only screen and (max-width: 767px) { 
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    & > li {
+        @media (min-width: 768px) {
+            white-space: nowrap;
+            display: inline-block;
+        }
+        
+        margin: 0 5px;
+
+        &:first-child {
+            float: left;
+        } 
+        &:last-child {
+            float: right;
+        }
+        &.active a {
+            background-color: $accentColor;
+            color: #fff;
+            pointer-events: none;
+            opacity: 0.89;
+        }
+        &.disabled a {
+            background-color: $accentColor;
+            color: #fff;
+            opacity: 0.89;
+        }
+        .page-link {
+            color: $accentColor;
+            padding: 4px 20px;
+            border-radius: 30px !important;
+            border: 2px solid $accentColor;
+            border-color: $accentColor;
+            transition: .3s;
+            &:hover {
+               background-color: $accentColor; 
+               color: #fff;
+            }
+        }
+    }
+}

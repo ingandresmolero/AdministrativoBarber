@@ -1,0 +1,37 @@
+@import "variables";
+
+.form-style-1 {
+    .flex-element {
+        display: flex;
+
+        .flex-item .form-control {
+            border-radius: initial;
+        }
+
+        .flex-item:first-child {
+            margin-right: 10px;
+        }
+    }
+}
+
+.form-style-2 {
+    .card {
+        margin-bottom: 2rem;
+    }
+
+    .form-elements {
+        display: flex;
+    }
+
+    .submit-btn {
+        height: 40px;
+        width: 160px;
+        margin: 20px auto 0;
+        &:hover,
+        &:active {
+            border: 1px solid $accentColor;
+            background-color: transparent;
+            color: $accentColor;
+        }
+    }
+}

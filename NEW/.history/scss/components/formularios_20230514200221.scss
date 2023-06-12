@@ -1,0 +1,26 @@
+@import "variables";
+
+.form-style-1 {
+    .flex-element {
+        display: flex;
+
+        .flex-item .form-control {
+            border-radius: initial;
+        }
+
+        .flex-item:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    .submit-btn {
+        width: 160px;
+        margin: 20px auto 0;
+        &:hover,
+        &:active {
+            border: 1px solid $accentColor;
+            background-color: transparent;
+            color: $accentColor;
+        }
+    }
+}

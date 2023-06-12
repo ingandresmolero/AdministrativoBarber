@@ -1,0 +1,17 @@
+@import "variables";
+
+#configuracion-empresa {
+    .box-bg {
+        background-color: #fff;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .btn-style-1 {
+        width: 50%;
+        margin: 25px 0 0 auto;
+        display: block;
+    }
+}

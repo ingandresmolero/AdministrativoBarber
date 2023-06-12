@@ -1,0 +1,39 @@
+@import "variables";
+
+nav .pagination {
+    //width: fit-content;
+    //margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    display: inline-block !important; 
+    margin-bottom: 2rem;
+    // li {
+    //     white-space: nowrap;
+    // }
+    & > li {
+        white-space: nowrap;
+        display: inline-block;
+        margin: 0 5px;
+
+        &:first-child {
+            float: left;
+        } 
+        &:last-child {
+            float: right;
+        }
+        &.active a {
+            background-color: $accentColor;
+            color: #fff;
+            pointer-events: none;
+        }
+        .page-link {
+            //background-color: $accentColor;
+            color: $accentColor;
+            padding: 4px 22px;
+            border-radius: 30px !important;
+            border: 2px solid $accentColor;
+            border-color: $accentColor;
+            transition: .3s;
+        }
+    }
+}

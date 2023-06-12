@@ -1,0 +1,14 @@
+@import "variables";
+
+.modal {
+    .modal-title {
+        font-size: 20px;
+        color: $accentColor;
+    }
+
+    .btn-style-1 {
+        margin: 25px 0 15px auto;
+        display: block;
+        width: 50%;
+    }
+}

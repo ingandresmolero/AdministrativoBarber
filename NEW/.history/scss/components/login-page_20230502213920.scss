@@ -1,0 +1,36 @@
+@import "variables";
+
+.login-page {
+    background: rgb(47,49,72);
+    background: linear-gradient(90deg, rgba(47,49,72,1) 4%, rgba(88,112,153,1) 50%, rgba(47,49,72,1) 94%);
+    position: relative;
+    background-color: #eee;
+    height: 200px;
+
+    .box {
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+        background-color: rgba(255,255,255,.09);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        left: 50%;
+        margin: 0 auto;
+        min-width: 290px;
+        padding: 20px 40px 30px;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: fit-content;
+
+        p {
+            font-size: 18px;
+            color: white;
+        }
+    }
+
+    .box form {
+        width: fit-content;
+    }
+}

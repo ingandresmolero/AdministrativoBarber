@@ -1,0 +1,101 @@
+@import "variables";
+
+.form-style-1 {
+    .flex-element {
+        display: flex;
+        align-items: baseline;
+        .flex-item .form-control {
+            border-radius: initial;
+        }
+
+        .flex-item:first-child {
+            margin-right: 10px;
+        }
+
+        .form-label {
+            margin-right: 10px;
+        }
+
+        .margin-left {
+            margin-left: 10px;
+        }
+        
+    }
+}
+
+.form-style-2 {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    .card {
+        margin-bottom: 2rem;
+    }
+
+    .submit-btn {
+        height: 40px;
+        width: 160px;
+        margin: 20px auto 0;
+        &:hover,
+        &:active {
+            border: 1px solid $accentColor;
+            background-color: transparent;
+            color: $accentColor;
+        }
+    }
+}
+
+.form-style-3 {
+    label {
+        margin: 10px 0px;
+    }
+}
+
+.input-item {
+    
+    input.form-control {
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    }
+    @media only screen and (min-width: 479px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 10px;
+    }
+}
+
+.box-bg {
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    width: 75%;
+    margin: 0 auto;
+    @media only screen and (max-width: 767px) {
+        width: auto;
+        padding: 25px;
+    }
+
+    .btn-style-1 {
+        width: 50%;
+        margin: 25px 0 0 auto;
+        display: block;
+    }
+
+}
+.box-bg-2 {
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    width: auto;
+    margin: 0 auto;
+    @media only screen and (max-width: 767px) {
+        width: auto;
+        padding: 25px;
+    }
+
+    .btn-style-1 {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+.medium-sz {
+    width: 88.5%;
+    margin: 20px auto 40px;
+}

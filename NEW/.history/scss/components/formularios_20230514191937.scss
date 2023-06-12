@@ -1,0 +1,15 @@
+@import "variables";
+
+.form-style-1 {
+    .flex-element {
+        display: flex;
+
+        .flex-item .form-control {
+            border-radius: initial;
+        }
+
+        .flex-item:first-child {
+            margin-right: 10px;
+        }
+    }
+}

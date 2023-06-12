@@ -40,13 +40,13 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <h1 class="page-heading">Usuarios</h1>
         <!-- Button trigger modal -->
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Nuevo Usuario
-        </button>
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Nueva Factura
+        </button> -->
         <div class="row b-3">
             <div class="col-md">
                 <form action="" method="post">
-                    <input type="text" class="form-control" name="campo" placeholder="Usuario, nombre, rol...." id="">
+                    <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
                     <a href="lista_facturas.php" class="table-btn">Mostrar Todos</a>
                 </form>
@@ -60,6 +60,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">NroFactura</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Barbero</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Procesar</th>
                         <th scope="col">Eliminar</th>
 
@@ -80,7 +81,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT * FROM tblinvoice INNER JOIN tblcustomers on tblinvoice.Userid = tblcustomers.ID LIMIT :iniciar,:nusuarios";
+                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid ORDER BY tblinvoice.estado asc LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -88,19 +89,21 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
                         $resultado_usuario = $stm_usuario->fetchAll();
+                        $ctn=1;
                     ?>
 
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
-                                <th scope="row"><?php echo $usuario['id'];  ?></th>
+                                <th scope="row"><?php echo $ctn;  ?></th>
                                 <td><?php echo $usuario['BillingId']; ?></td>
                                 <td><?php echo $usuario['Name']; ?></td>
-                                <td><?php echo $usuario['assignedbarber']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?userid=<?php echo $usuario['id'] ?>">Procesar</a></td>
+                                <td><?php echo $usuario['barbero']; ?></td>
+                                <td><?php echo $usuario['estado']; ?></td>
+                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
                                 <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                             </tr>
-                        <?php endforeach  ?>
+                        <?php $ctn=$ctn+1; endforeach  ?>
                         <?php } else {
                         if (isset($_POST['busqueda'])) {
                             $busqueda = $_POST['campo'];

@@ -1,0 +1,25 @@
+@import "variables";
+
+nav .navigation {
+    //width: fit-content;
+    //margin: 0 auto;
+    text-align: center;
+    ul {
+        width: 100%;
+        display: inline-block !important;        
+        li {
+            white-space: nowrap;
+        }
+        & > li {
+            display: inline-block;
+            margin: 0 5px;
+            &:first-child {
+                float: left;
+            } 
+            &:last-child {
+                float: right;
+            }
+        }
+
+    }
+}

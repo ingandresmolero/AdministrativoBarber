@@ -1,0 +1,49 @@
+@import "variables";
+#users-page {
+    
+    table {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        thead {
+            background-color: $primaryColor;
+        }
+        thead tr {
+            color: #fff;
+            line-height: 35px;
+        }   
+        tbody {
+            
+            th {
+                color: $primaryColor;
+            }
+
+            tr {
+                &:hover {
+                    font-weight: bold;
+                    background-color: $primaryColor !important;
+                    color: #fff;
+                    transition: .3s;
+                    th {
+                        color: #fff;
+                        transition: .3s;
+                    }
+                }
+                &:nth-child(even){
+                    background-color: #f3f3f3;
+                }
+            }
+            
+            td a {
+                color: $accentColor;
+                text-decoration: none;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+
+        }
+
+    }
+}

@@ -1,0 +1,13 @@
+@import "variables";
+
+#estadisticas {
+    .options {
+        button[aria-expanded="true"] {
+            background-color: $accentColor;
+            color: #fff;
+        }
+        @media only screen and (max-width: 767px) {
+            text-align: center;
+        }
+    }
+}

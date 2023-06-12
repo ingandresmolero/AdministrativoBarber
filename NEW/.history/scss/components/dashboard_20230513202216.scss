@@ -1,0 +1,46 @@
+.elements {
+    display: flex;
+    margin: 3rem 0;
+    justify-content: center;
+    flex-direction: column;
+
+    @media (min-width: 767px) {
+        gap: 60px; //30px;
+        flex-direction: row;
+    }
+
+    .item {
+
+        @media only screen and (min-width: 768px) and (max-width: 979px) {
+            text-align: center;
+        }
+        
+        @media only screen and (max-width: 767px) { 
+            width: 85%;
+            margin: 0 auto 30px;
+
+            &:last-child {
+                margin-bottom: initial;
+            }
+        }
+    }
+
+    .item a {
+        transition: .3s;
+        width: 241px;
+        display: block;
+        padding: 46px;
+        margin: 0 auto;
+        text-align: center;
+        box-shadow: 0px 3px 9px rgb(0 0 0 / 18%);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        &.inventario {
+            background: rgb(202,163,52);
+            background: linear-gradient(0deg, rgba(202,163,52,1) 0%, rgba(237,192,61,1) 72%);
+        }
+    }
+}

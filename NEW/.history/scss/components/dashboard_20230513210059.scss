@@ -1,0 +1,45 @@
+.elements {
+    display: flex;
+    margin: 3rem 0;
+    justify-content: center;
+    flex-direction: column;
+
+    @media (min-width: 767px) {
+        gap: 60px; //30px;
+        flex-direction: row;
+    }
+
+    .item {
+
+        @media only screen and (min-width: 768px) and (max-width: 979px) {
+            text-align: center;
+        }
+        
+        @media only screen and (max-width: 767px) { 
+            width: 85%;
+            margin: 0 auto 30px;
+
+            &:last-child {
+                margin-bottom: initial;
+            }
+        }
+    }
+
+    .item  {
+        transition: .3s;
+        width: 241px;
+        display: block;
+        padding: 46px;
+        margin: 0 auto;
+        text-align: center;
+        box-shadow: rgba(71, 75, 255, 0.075) 0px 2px 3px;
+        background: rgb(255, 255, 255);
+        &:hover {
+            transform: scale(1.1);
+        }
+        p {
+            color: #2F3148;
+            text-decoration: none;
+        }
+    }
+}
