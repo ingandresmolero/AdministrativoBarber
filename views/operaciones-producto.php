@@ -55,3 +55,24 @@ if (isset($_POST['eliminarservicio'])){
     $stmt = mysqli_query($conexion,$sql3);
     header('location:venta.php?billing='.$invoice.'');
 };
+
+
+// TOTALIZAR OPERACION
+
+if(isset($_POST['totalizar'])){
+    $metodo = $_POST['metodo'];
+    $referencia = $_POST['referencia'];
+    $abono = $_POST['abono'];
+    $fecha = date("d/m/Y");
+    $tasa=$_POST['tasa'];
+
+    // $billing = $_POST['invoice'];
+    // $usuario = $_POST['invoice'];
+    // $estado = $_POST['invoice'];
+    // $detalle = $_POST['invoice'];
+    // $monto = $_POST['invoice'];
+    // $customer = $_POST['invoice'];
+    // $barbero = $_POST['invoice'];
+
+
+}

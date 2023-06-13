@@ -139,7 +139,7 @@ $resultado = $stmt->fetch();
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['ServiceName'] ?></td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
-                                    <td><input type="submit" value="Eliminar" name="eliminarservicio"></td>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
                             <?php
                                 $cnt = $cnt + 1;
@@ -178,7 +178,7 @@ $resultado = $stmt->fetch();
                                     <td><?php echo $row['nombre'] ?></td>
                                     <td><?php echo $cantidad = $row['cantidad'] ?></td>
                                     <td><?php echo $subtotal = $row['precio'] ?></td>
-                                    <td><input type="submit" value="Eliminar" name="eliminar"></td>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminar"></td>
 
                                 </tr>
                             <?php
@@ -200,39 +200,58 @@ $resultado = $stmt->fetch();
 
 
 
-<?php
-    $tasa="SELECT monto_bcv FROM tasabs";
-    $stmt3=$conn->prepare($tasa);
-    $fila1=$stmt3->fetch();
-    $tasa=floatval($fila1['monto_bcv']);
+                        <?php
+                        $tasasql = "SELECT * FROM tasabs";
+                        $tasaconx = mysqli_query($conexion, $tasasql);
+                        $fila2 = mysqli_fetch_array($tasaconx);
+                        $tasa = $fila2['monto_bcv'];
 
-?>
-
+                        ?>
+                        <input type="text" value="<?php echo $tasa ;?>" name="tasa" class="d-none">
 
 
 
 
                 </section>
             </div>
-            <div class="d-flex justify-content-start mt-5">
+            <div class="d-flex justify-content-evenly mt-5">
                 <div class="col-3">
-                    <h3>Monto: <?php echo floatval($monto); ?> $</h3>
-                    <h3>IVA: <?php echo $montoiva = (($monto * $tasa) *0.16);?></h3>
-                    <h3>Monto Total: 0$ 0Bs.s</h3>
+                    <h1>Monto: <?php echo floatval($monto); ?> $</h1>
+                    <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
+                    <hr>
+                    <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
+                    <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
+                </div>
+                <div class="col-3 mx-3">
+                    <label for="" class="form-label">Metodo de Pago</label>
+                    <select name="metodo" id="" class="form-control">
+                        <option value="--">--</option>
+                        <option value="Punto">Punto</option>
+                        <option value="Efectivo_dolar">Efectivo $</option>
+                        <option value="Efectivo_bs">Efectivo BS</option>
+                        <option value="Efectivo_bs">Transferencia BS</option>
+                        <option value="Efectivo_bs">ZELLE</option>
+                    </select>
+
+                    <label for="" class="form-label">Referencia</label>
+                    <input type="text" name="referencia" class="form-control">
+                    <label for="" class="form-label">Abono</label>
+                    <input type="text" name="abono" value="" class="form-control">
                 </div>
             </div>
-            </form>
+
+
             <div class="row mt-3">
-                <div class="col-auto">
-                    <a href="./lista_facturas.php" class="btn btn-success">TOTALIZAR</a>
+                <div class="col-md-auto">
+                    <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
                 </div>
-                <div class="col-auto">
+                <div class="col-md-auto">
                     <input type="submit" class="btn btn-warning" value="Guardar">
                 </div>
-                <div class="col-auto">
+                <!-- <div class="col-auto">
                     <input type="submit" class="btn btn-primary" value="Recuperar">
-                </div>
-
+                </div> -->
+                </form>
             </div>
 
         </section>
@@ -248,7 +267,7 @@ $resultado = $stmt->fetch();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form action="operacion/asignarservicio.php" method="post">
+                    <form action="operacion/asignarservicio.php" method="post">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <label for="" class="form-label">Servicio</label>
                         <select name="idservice" class="form-control" id="service">
@@ -264,11 +283,11 @@ $resultado = $stmt->fetch();
 
                         </select>
 
-                        
+
                         <!-- <label class="form-label" for="">Cantidad</label>
                         <input class="form-control" type="number" name="cantidad" id=""> -->
-                        
-                        
+
+
 
                         <input type="submit" class="btn btn-primary" name="asignarservicio" value="Guardar">
                     </form>
@@ -306,11 +325,11 @@ $resultado = $stmt->fetch();
 
                         </select>
 
-                        
+
                         <label class="form-label" for="">Cantidad</label>
                         <input class="form-control" type="number" name="cantidad" id="">
-                        
-                        
+
+
 
                         <input type="submit" class="btn btn-primary" name="asignar" value="Guardar">
                     </form>
