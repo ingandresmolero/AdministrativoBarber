@@ -3,8 +3,9 @@
 //OPERACION DE ELIMINAR UN PRODUCTO 
 include("../php/conex.php");
 $montototal=$_POST['montototal'];
+$barbero=$_POST['barbero'];
 var_dump($montototal);
-
+var_dump($barbero);
 
 if (isset($_POST['eliminar'])){
     echo "Elimiinar";
@@ -66,13 +67,23 @@ if(isset($_POST['totalizar'])){
     $fecha = date("d/m/Y");
     $tasa=$_POST['tasa'];
 
-    // $billing = $_POST['invoice'];
-    // $usuario = $_POST['invoice'];
-    // $estado = $_POST['invoice'];
-    // $detalle = $_POST['invoice'];
-    // $monto = $_POST['invoice'];
-    // $customer = $_POST['invoice'];
-    // $barbero = $_POST['invoice'];
+    $billing = $_POST['invoice'];
+    $customer = $_POST['customer'];
+    $estado = $_POST['estado'];
+    $detalle = $_POST['detalle'];
+    $monto = $_POST['montototal'];
+    $usuario = $_POST['usuario'];
+    $barbero = $_POST['barbero'];
+
+    $totalizar="INSERT INTO facturas( usuario, id_customer, billing, barbero, monto, detalle, estado, metodo, abono, tasa, fecha) VALUES ('$usuario','$customer','$billing','$barbero','$monto','$detalle','$estado','$metodo','$abono','$tasa','$fecha')";
+
+    $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
+
+
+    $stmt5=mysqli_query($conexion,$actu);
+
+    $stmt4= mysqli_query($conexion,$totalizar);
+    header('location:lista_facturas.php');
 
 
 }

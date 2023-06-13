@@ -37,13 +37,14 @@ $resultado = $stmt->fetch();
         $stmt1 = $conn->prepare($datosinvoice);
         $stmt1->execute();
         $row1 = $stmt1->fetch();
+        
 
         ?>
 
         <section class="container-sm  card  p-3 shadow p-3 mb-5 bg-white rounded mt-5">
             <div class=" row ">
                 <div class="col-md-3">
-                    <input type="button" class="btn btn-danger" value="Volver">
+                    <a class="btn btn-danger" href="lista_facturas.php">Volver </a>
                 </div>
                 <div class="col-md-6 justify-content-center">
                     <form action="" method="post">
@@ -69,7 +70,7 @@ $resultado = $stmt->fetch();
                     <form action="operaciones-producto.php" method="POST">
                         <div class="row">
 
-
+                        <input type="text" name="barbero" value="<?php echo $barbero = $row1['assignedbarber']; ?>" class="d-none">
                             <div class="col-md-3">
                                 <label class="form-label" for="">Nombre </label>
                                 <input class="form-control" type="text" name="" placeholder='<?php echo $row1['Name']; ?>' disabled>
@@ -83,7 +84,7 @@ $resultado = $stmt->fetch();
 
                             <div class="col-md-3">
                                 <label class="form-label" for="">Barbero</label>
-                                <input class="form-control" type="text" name="" placeholder="<?php echo $row1['assignedbarber']; ?>" disabled id="">
+                                <input class="form-control" type="text" name="barbero" placeholder="<?php echo $barbero; ?>" disabled id="">
                             </div>
                         </div>
                         <!-- Cuentas X Cobrar -->
@@ -128,13 +129,15 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "select tblservices.ServiceName,tblservices.Cost,tblinvoice.ServiceId  from  tblinvoice join tblservices on tblservices.ID=tblinvoice.ServiceId where tblinvoice.BillingId='$billing'");
+                            $ret = mysqli_query($conexion, "select tblservices.ServiceName,tblservices.Cost,tblinvoice.ServiceId ,tblinvoice.estado,tblinvoice.AssignedUserID,tblinvoice.Userid  from  tblinvoice join tblservices on tblservices.ID=tblinvoice.ServiceId where tblinvoice.BillingId='$billing'");
                             $cnt = 1;
                             $gtotal1 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
                             ?>
                                 <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
-                                <input type="text" name="serviceid" value="<?php echo $row['ServiceId']; ?>" class="d-none">
+                                <input type="text" name="estado" value="<?php echo $row['estado']; ?>" class="d-none">
+                                <input type="text" name="customer" value="<?php echo $row['Userid']; ?>" class="d-none">
+                                <input type="text" name="usuario" value="<?php echo $row['AssignedUserID']; ?>" class="d-none">
                                 <tr>
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['ServiceName'] ?></td>
@@ -221,6 +224,9 @@ $resultado = $stmt->fetch();
                     <hr>
                     <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
                     <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
+                    <?php $montototal = floatval($monto);?>
+                    <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
+               
                 </div>
                 <div class="col-3 mx-3">
                     <label for="" class="form-label">Metodo de Pago</label>
@@ -237,6 +243,8 @@ $resultado = $stmt->fetch();
                     <input type="text" name="referencia" class="form-control">
                     <label for="" class="form-label">Abono</label>
                     <input type="text" name="abono" value="" class="form-control">
+                    <label for="">Detalles</label>
+                    <input type="text" value="" name="detalle">
                 </div>
             </div>
 
