@@ -124,7 +124,10 @@ $resultado = $stmt->fetch();
                             <tr>
                                 <th>#</th>
                                 <th>Nombre de Servicio</th>
+                                <th>Barbero</th>
                                 <th>Costo</th>
+                            
+                                <th>Propina</th>
                                 <th>Accion</th>
                             </tr>
 
@@ -141,7 +144,10 @@ $resultado = $stmt->fetch();
                                 <tr>
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['ServiceName'] ?></td>
+                                    <td>Barbero</td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
+                               
+                                    <td>Propina</td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
                             <?php

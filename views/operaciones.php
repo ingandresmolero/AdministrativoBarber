@@ -57,7 +57,7 @@ include("../php/functions/validar.php");
         </div>
 
         <div class="row justify-content-center mt-5">
-        <div class="col-3">
+        <!-- <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
@@ -89,7 +89,7 @@ include("../php/functions/validar.php");
                     </div>
                     
                 </div>
-            </div>
+            </div> -->
         </div>
 
         
