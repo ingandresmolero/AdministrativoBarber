@@ -29,7 +29,7 @@ include("../php/functions/tasa.php");
         <a href="lista_facturas.php" class="item">
               
               <img src="../img/icons/inventario.png">
-              <p class="card-title">Facturacion</p>
+              <p class="card-title">Venta</p>
           </a>
             <a href="stock.php" class="item">
               
@@ -45,6 +45,11 @@ include("../php/functions/tasa.php");
             <a href="operaciones.php" class="item">
                 <img src="../img/icons/operaciones.png">
                 <p class="card-title">Operaciones</p>
+                
+            </a>
+            <a href="facturas.php" class="item">
+                <img src="../img/icons/operaciones.png">
+                <p class="card-title">Facturas</p>
                 
             </a>
         </div>
