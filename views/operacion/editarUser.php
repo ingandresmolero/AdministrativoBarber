@@ -1,7 +1,7 @@
 <?php include("../../php/functions/validar.php");
 include("../../php/dbconn.php");
 $id = $_GET['userid'];
-$sql = "SELECT * FROM usuarios where id_usuario='$id' ";
+$sql = "SELECT * FROM tbladmin where ID='$id' ";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -25,7 +25,7 @@ include("actualizarUser.php");
 </head>
 
 <body>
-    <?php include("../assets/header.php"); ?>
+    <?php include("../assets/headersintasa.php"); ?>
 
     <main>
 
@@ -38,13 +38,17 @@ include("actualizarUser.php");
                     <div class="row">
                         <div class="col-lg-3  ">
                             <label for="" class="form-label">Usuario:</label>
-                            <input type="text" class="form-control" name="user" id="" placeholder="<?php echo $user['user']?>" disabled>
+                            <input type="text" class="form-control" name="user" id="" placeholder="<?php echo $user['AdminName']?>" disabled>
 
                         </div>
 
                         <div class="col-lg-3">
+                            <label for="" class="form-label">Codigo:</label>
+                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['UserName'] ?>" id="nombre" disabled>
+                        </div>
+                        <div class="col-lg-3">
                             <label for="" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre">
+                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['UserName'] ?>" id="nombre" disabled>
                         </div>
 
 
@@ -55,11 +59,18 @@ include("actualizarUser.php");
                                 <input type="text" class="form-control" name="passw" id="passw">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Telefono:</label>
+                                <input type="text" class="form-control" name="telefono" value="" id="passw">
+                            </div>
+                        </div>
                         <div class="col-sm-3  mb-3">
                             <label for="" class="form-label">Rol</label>
                             <select class="form-select" name="rol" id="rol">
-                                <option value="usuario">Usuario</option>
-                                <option value="master">Master</option>
+                                <option value="protocolo">Protocolo</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="admin">Admininistrador</option>
                             </select>
                         </div>
 

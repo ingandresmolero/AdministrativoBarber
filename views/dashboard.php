@@ -59,9 +59,9 @@ include("../php/functions/tasa.php");
                 <p class="card-title">Reportes</p>
             </a>
 
-            <a href="usuarios.php" class="item">
+            <a href="mant_usuarios.php" class="item">
                 <img src="../img/icons/usuarios.png">
-                <p class="card-title">Usuarios</p>
+                <p class="card-title">Mantenimiento Usuarios</p>
                 </a>
 
             <a href="configuracion.php" class="item">

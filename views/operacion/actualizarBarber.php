@@ -3,10 +3,10 @@
 $id=$_GET['userid'];
     if(isset($_POST['actualizar'])){
         $nombre = $_POST['nombre'];
-        $contrasena = md5($_POST['passw']);
+        $contrasena = $_POST['passw'];
         $rol = $_POST['rol'];
 
-        $sql = "UPDATE tbladmin SET UserName='$nombre',Password='$contrasena',Role='$rol' WHERE id_usuario=$id";
+        $sql = "UPDATE usuarios SET nombre='$nombre',passw='$contrasena',rol='$rol' WHERE id_usuario=$id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
