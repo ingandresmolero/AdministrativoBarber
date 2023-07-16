@@ -5,7 +5,7 @@ include("../php/functions/validar.php");
 ?>
 <?php
 include("../php/dbconn.php");
-$sql = 'SELECT * FROM tbladmin';
+$sql = 'SELECT * FROM tblbarber';
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -29,7 +29,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.min.css">
-    <title>Usuarios</title>
+    <title>Barberos</title>
 </head>
 
 <body>
@@ -37,7 +37,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Usuarios</h1>
+        <h1 class="page-heading">Mantenimientos Barberos</h1>
         <!-- Button trigger modal -->
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -48,7 +48,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Usuario, nombre, rol...." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="usuarios.php" class="table-btn">Mostrar Todos</a>
+                    <a href="barberos.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
         </div>
@@ -58,8 +58,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Rol</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Posicion</th>
                         <th scope="col">Editar</th>
                         <th scope="col">Eliminar</th>
 
@@ -70,17 +70,17 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:usuarios.php?pagina=1');
+                        header('Location:barberos.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:usuarios.php?pagina=1');
+                        header('Location:barberos.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT * FROM tbladmin LIMIT :iniciar,:nusuarios";
+                        $sql_usuarios = "SELECT * FROM tblbarber LIMIT :iniciar,:nusuarios";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -92,12 +92,12 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
-                                <th scope="row"><?php echo $usuario['ID'];  ?></th>
-                                <td><?php echo $usuario['AdminName']; ?></td>
-                                <td><?php echo $usuario['UserName']; ?></td>
-                                <td><?php echo $usuario['Role']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['ID'] ?>">Ver</a></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td>
+                                <th scope="row"><?php echo $usuario['idbarber'];  ?></th>
+                                <td><?php echo $usuario['nombre']; ?></td>
+                                <td><?php echo $usuario['Codigo']; ?></td>
+                                <td><?php echo $usuario['Puesto']; ?></td>
+                                <td class="action"><a class="table-btn" href="../views/operacion/editarbarbero.php?userid=<?php echo $usuario['idbarber'] ?>">Ver</a></td>
+                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarbarbero.php?userid=<?php echo $usuario['idbarber'] ?>">Eliminar</a></td>
 
                             </tr>
                         <?php endforeach  ?>
@@ -106,7 +106,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT * FROM tbladmin WHERE (AdminName LIKE '%$busqueda%') OR (Role LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM tblbarber WHERE (nombre LIKE '%$busqueda%')  LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -119,12 +119,12 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
-                                    <th scope="row"><?php echo $usuario['ID'];  ?></th>
-                                    <td><?php echo $usuario['AdminName']; ?></td>
-                                    <td><?php echo $usuario['UserName']; ?></td>
-                                    <td><?php echo $usuario['Role']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['ID'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td>
+                                    <th scope="row"><?php echo $usuario['idbarber'];  ?></th>
+                                    <td><?php echo $usuario['nombre']; ?></td>
+                                    <td><?php echo $usuario['Codigo']; ?></td>
+                                    <td><?php echo $usuario['Puesto']; ?></td>
+                                    <td class="action"><a class="table-btn" href="../views/operacion/editarbarbero.php?userid=<?php echo $usuario['idbarber'] ?>">Ver</a></td>
+                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarbarbero.php?userid=<?php echo $usuario['idbarber'] ?>">Eliminar</a></td>
 
                                 </tr>
                             <?php endforeach  ?>
@@ -137,16 +137,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="usuarios.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="barberos.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="usuarios.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="barberos.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="usuarios.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="barberos.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>

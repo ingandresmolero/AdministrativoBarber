@@ -2,6 +2,7 @@
 
 include("../php/functions/validar.php");
 
+
 include("../php/functions/tasa.php");
 ?>
 
@@ -25,51 +26,113 @@ include("../php/functions/tasa.php");
     include("assets/header.php");
     ?>
     <section class="container">
-        <div class="elements">
-        <a href="lista_facturas.php" class="item">
-              
-              <img src="../img/icons/inventario.png">
-              <p class="card-title">Venta</p>
-          </a>
-            <a href="stock.php" class="item">
-              
-                <img src="../img/icons/inventario.png">
-                <p class="card-title">Inventario</p>
-            </a>
-            <a href="tasa.php" class="item">
-                
-                <img src="../img/icons/tasa.png">
-                <p class="card-title">Actualizar Tasa</p>
-            </a>
-           
-            <a href="operaciones.php" class="item">
-                <img src="../img/icons/operaciones.png">
-                <p class="card-title">Operaciones</p>
-                
-            </a>
-            <a href="facturas.php" class="item">
-                <img src="../img/icons/operaciones.png">
-                <p class="card-title">Facturas</p>
-                
-            </a>
-        </div>
-        <div class="elements">
-            <a href="reportes.php" class="item">
-                <img src="../img/icons/reportes.png">
-                <p class="card-title">Reportes</p>
-            </a>
 
-            <a href="mant_usuarios.php" class="item">
-                <img src="../img/icons/usuarios.png">
-                <p class="card-title">Mantenimiento Usuarios</p>
+        <?php if ($rol == 'manager') { ?>
+            <div class="elements">
+
+                <a href="lista_facturas.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Protocolo</p>
+                </a>
+                <a href="stock.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Inventario</p>
+                </a>
+            </div>
+
+        <?php } else if ($rol == 'servidor') { ?>
+
+            <div class="elements">
+
+                <a href="lista_facturas.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Reportes</p>
+                </a>
+                <a href="stock.php" class="item">
+                    <a href="lista_facturas.php" class="item">
+
+                        <img src="../img/icons/inventario.png">
+                        <p class="card-title">MI Informacion</p>
+                    </a>
+                    <a href="stock.php" class="item">
+
+                        <img src="../img/icons/inventario.png">
+                        <p class="card-title">Servicios</p>
+                    </a>
+                    <a href="tasa.php" class="item">
+
+                        <img src="../img/icons/tasa.png">
+                        <p class="card-title">Vales</p>
+                    </a>
+
+                    <a href="operaciones.php" class="item">
+                        <img src="../img/icons/operaciones.png">
+                        <p class="card-title">Consumo Interno</p>
+
+                    </a>
+                    <a href="facturas.php" class="item">
+                        <img src="../img/icons/operaciones.png">
+                        <p class="card-title">Clientes Atendidos</p>
+
+                    </a>
+            </div>
+
+
+        <?php } else if ($rol == 'admin') { ?>
+            <div class="elements">
+                <a href="tasa.php" class="item">
+
+                    <img src="../img/icons/tasa.png">
+                    <p class="card-title">Protocolo</p>
                 </a>
 
-            <a href="configuracion.php" class="item">
-                <img src="../img/icons/configuracion.png">
-                <p class="card-title">Configuracion</p>
-            </a>
-        </div>
+                <a href="lista_facturas.php" class="item">
 
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Caja</p>
+                </a>
+                <a href="stock.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Inventario</p>
+                </a>
+                <a href="tasa.php" class="item">
+
+                    <img src="../img/icons/tasa.png">
+                    <p class="card-title">Tasa</p>
+                </a>
+
+                <a href="operaciones.php" class="item">
+                    <img src="../img/icons/operaciones.png">
+                    <p class="card-title">Operaciones</p>
+
+                </a>
+                <a href="facturas.php" class="item">
+                    <img src="../img/icons/operaciones.png">
+                    <p class="card-title">Facturas</p>
+
+                </a>
+            </div>
+            <div class="elements">
+                <a href="reportes.php" class="item">
+                    <img src="../img/icons/reportes.png">
+                    <p class="card-title">Reportes</p>
+                </a>
+
+                <a href="mant_usuarios.php" class="item">
+                    <img src="../img/icons/usuarios.png">
+                    <p class="card-title">Mantenimiento Usuarios</p>
+                </a>
+
+                <a href="configuracion.php" class="item">
+                    <img src="../img/icons/configuracion.png">
+                    <p class="card-title">Configuracion</p>
+                </a>
+            </div>
+        <?php }; ?>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>

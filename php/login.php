@@ -18,7 +18,8 @@
     if($control>0){
         $rol = $control['Role'];
         $_SESSION["username"]=$username;
-        $_SESSION["rol"] =$rol;
+        $_SESSION["Role"] =$rol;
+        
         header("Location:views/dashboard.php");
      
     }

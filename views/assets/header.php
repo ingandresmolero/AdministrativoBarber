@@ -21,6 +21,13 @@
             <li><a class="dropdown-item" href="../views/reportes.php">Reportes</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../views/configuracion.php">Configuracion</a></li>
+
+            <!-- DATO PARA HACER LA VALIDACION DE USUARIO -->
+              <form action="../php/functions/logout.php" method="post">
+              <li><a class="dropdown-item user-name" id="rol"><?php echo $rol ?></a></li>
+                <input type="submit" value="Salir" name="logout" class="btn-menu">
+              </form>
+
           </ul>
         </li>
         <li class="nav-item">

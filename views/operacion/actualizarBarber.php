@@ -3,10 +3,15 @@
 $id=$_GET['userid'];
     if(isset($_POST['actualizar'])){
         $nombre = $_POST['nombre'];
+        $user = $_POST['user'];
+        $codigo = $_POST['Codigo'];
+        $porcentaje = $_POST['porcentaje'];
+        $puesto = $_POST['puesto'];
+        $telefono = $_POST['telefono'];
         $contrasena = $_POST['passw'];
-        $rol = $_POST['rol'];
+        
 
-        $sql = "UPDATE usuarios SET nombre='$nombre',passw='$contrasena',rol='$rol' WHERE id_usuario=$id";
+        $sql = "UPDATE tblbarber SET nombre='$nombre',usuario='$user',Codigo='$codigo',Puesto='$puesto',porcentaje='$porcentaje',puesto='$puesto',Telefono='$telefono',pass='$contrasena' WHERE idbarber=$id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -17,7 +22,7 @@ $id=$_GET['userid'];
 
         }else{
            echo '<script> alert("Actualizacion completa !")</script>';
-           header('Location: ../usuarios.php');
+           header('Location: ../barberos.php');
         }
     }
 
