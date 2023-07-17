@@ -6,7 +6,16 @@ include("../php/dbconn.php");
 include("../views/operacion/addparametros.php");
 
 ?>
+<?php
+include("../php/dbconn.php");
+$sql = 'SELECT * FROM tblconfig where id_empresa="1"';
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$config = $stmt->fetch();
 
+$nombre = $config["nombre_empresa"] ;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,18 +35,19 @@ include("../views/operacion/addparametros.php");
             <div class="container-fluid">
                 <h2>Datos Empresa</h2>
                 <hr>
+              
 
                 <form action="" method="post">
                     <label for="" class="form-label">Nombre:</label>
-                    <input type="tex" class="form-control" name="nombre" id="">
+                    <input type="text" class="form-control" value="<?php echo $nombre; ?>" name="nombre"  id="">
                     <label for="" class="form-label">Razon Social:</label>
-                    <input type="tex" class="form-control" name="rif" id="">
+                    <input type="text" class="form-control" value="<?php echo $config['razon_social'] ?>" name="rif" id="">
                     <label for="" class="form-label">Direccion:</label>
-                    <input type="tex" class="form-control" name="direccion" id="">
+                    <input type="text" class="form-control" value="<?php echo $config['direccion'] ?>" name="direccion" id="">
                     <label for="" class="form-label">Telefono:</label>
-                    <input type="tex" class="form-control" name="telefono" id="">
+                    <input type="text" class="form-control" value="<?php echo $config['telefono'] ?>" name="telefono" id="">
                     <label for="" class="form-label">No Control:</label>
-                    <input type="tex" class="form-control" name="n_control" id="">
+                    <input type="text" class="form-control" value="<?php echo $config['NControl'] ?>" name="n_control" id="">
 
                     <input type="submit" class="btn btn-primary mb-3" value="Guardar" name="guardar">
                 </form>

@@ -29,10 +29,9 @@ include("../php/functions/tasa.php");
 
         <?php if ($rol == 'manager') { ?>
             <div class="elements">
+                <a href="Protocolo.php" class="item">
 
-                <a href="lista_facturas.php" class="item">
-
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/tasa.png">
                     <p class="card-title">Protocolo</p>
                 </a>
                 <a href="stock.php" class="item">
@@ -83,7 +82,7 @@ include("../php/functions/tasa.php");
 
         <?php } else if ($rol == 'admin') { ?>
             <div class="elements">
-                <a href="tasa.php" class="item">
+                <a href="Protocolo.php" class="item">
 
                     <img src="../img/icons/tasa.png">
                     <p class="card-title">Protocolo</p>
