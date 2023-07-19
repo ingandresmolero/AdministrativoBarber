@@ -19,6 +19,7 @@
         $rol = $control['Role'];
         $_SESSION["username"]=$username;
         $_SESSION["Role"] =$rol;
+        $_SESSION["ID"] =$userid;
         
         header("Location:views/dashboard.php");
      

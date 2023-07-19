@@ -5,7 +5,8 @@ include("../php/functions/validar.php");
 ?>
 <?php
 
-$userid = $_SESSION['username'];
+$username = $_SESSION['username'];
+
 
 include("../php/dbconn.php");
 include("../php/conex.php");
@@ -63,8 +64,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Cedula</th>
-                        <th scope="col">Barbero</th>
-                        <th scope="col">Fecha</th>
+                        <!-- <th scope="col">Barbero</th>
+                        <th scope="col">Fecha</th> -->
                         <th scope="col">Tipo Cliente</th>
                         <th scope="col">Editar</th>
                         <!-- <th scope="col">Eliminar</th> -->
@@ -86,7 +87,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT * FROM tblcustomers LIMIT :iniciar,:nusuarios";
+                        $sql_usuarios = "SELECT * FROM tblcustomers ORDER BY ID DESC LIMIT :iniciar,:nusuarios";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -95,27 +96,28 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $resultado_usuario = $stm_usuario->fetchAll();
                     ?>
-
+                        <h2 class="mt-3">Listado de Cliente</h2>
+                        <?php var_dump($userid); ?>
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <form action="./operacion/asignarfactura.php" method="POST">
                                 <tr>
                                     <th scope="row"><?php echo $usuario['ID'];  ?></th>
                                     <td><?php echo $usuario['Name']; ?></td>
                                     <td><?php echo $usuario['cedula']; ?></td>
-                                    <td><?php echo $usuario['assignedbarber']; ?></td>
-                                    <td><?php echo $usuario['CreationDate']; ?></td>
+                                    <!-- <td><?php echo $usuario['assignedbarber']; ?></td>
+                                    <td><?php echo $usuario['CreationDate']; ?></td> -->
                                     <td><?php echo $usuario['Gender']; ?></td>
                                     <td class="action">
-                                        
+
                                         <input type="text" class="d-none" name="idcliente" value="<?php echo $usuario['ID'] ?>">
-                                        <input type="text" class="d-none" name="usuarioid" value="<?php echo $usuario['assignedBy'] ?>">
+                                        <input type="text" class="d-none" name="usuarioid" value="<?php echo $userid ?>">
 
 
                                         <input type="submit" class="table-btn" value="Procesar">
                                     </td>
 
                                     <!-- DETERMINAR LOGICA PARA ELIMINAR UN CLIENTE -->
-                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td> -->
+                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?username=<?php echo $usuario['ID'] ?>">Eliminar</a></td> -->
 
                                 </tr>
                             </form>
@@ -137,15 +139,28 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         ?>
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
+                                <form action="./operacion/asignarfactura.php" method="POST">
                                 <tr>
                                     <th scope="row"><?php echo $usuario['ID'];  ?></th>
-                                    <td><?php echo $usuario['AdminName']; ?></td>
-                                    <td><?php echo $usuario['UserName']; ?></td>
-                                    <td><?php echo $usuario['Role']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/AsignarUser.php?userid=<?php echo $usuario['ID'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td>
+                                    <td><?php echo $usuario['Name']; ?></td>
+                                    <td><?php echo $usuario['cedula']; ?></td>
+                                  
+                                  
+                                    <td><?php echo $usuario['Gender']; ?></td>
+                                    <td class="action">
+
+                                        <input type="text" class="d-none" name="idcliente" value="<?php echo $usuario['ID'] ?>">
+                                        <input type="text" class="d-none" name="usuarioid" value="<?php echo $userid ?>">
+
+
+                                        <input type="submit" class="table-btn" value="Procesar">
+                                    </td>
+
+                                    <!-- DETERMINAR LOGICA PARA ELIMINAR UN CLIENTE -->
+                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?username=<?php echo $usuario['ID'] ?>">Eliminar</a></td> -->
 
                                 </tr>
+                            </form>
                             <?php endforeach  ?>
                         <?php } ?>
                     <?php } ?>
@@ -181,12 +196,12 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                 </div>
                 <div class="modal-body">
                     <form action="operacion/crearcliente.php" method="post">
-                        <input type="text" name="userid" value="<?php echo $userid ?>" class="d-none">
+                        <input type="text" name="username" value="<?php echo $username ?>" class="d-none">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
                         <label class="form-label" for="">Cedula</label>
                         <input class="form-control" type="text" name="cedula" value="" id="">
-                        <label class="form-label" for="">Barbero</label>
+                        <!-- <label class="form-label" for="">Barbero</label>
                         <select name="idbarber" class="form-control" id="">
 
 
@@ -194,11 +209,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $consultabarber = "Select * from tblbarber";
                             $list_barber = mysqli_query($conexion, $consultabarber);
                             while ($row = mysqli_fetch_array($list_barber)) {
-                                echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
+                                echo "	<option value=" . $row['nombre'] . ">" . $row['nombre'] . "</option>";
                             };
                             ?>
 
-                        </select>
+                        </select> -->
 
 
                         <label class="form-label" for="">Tipo Cliente</label>
