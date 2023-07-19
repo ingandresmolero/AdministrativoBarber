@@ -18,10 +18,16 @@ nav.navbar {
         &:active, 
         &.nav-link.show {
             transition: .3s;
-            color: $textColor1 !important;
+            color: $textColor1;
+        }
+
+        &.dropdown-toggle {
+            color: $accentColor !important;
         }
     }
-
+    .nav-item .dropdown {
+     color: $accentColor;
+    }
     .navbar-collapse .dropdown-menu {
         left: -40px;
         border: 1px solid #ddd;
@@ -37,6 +43,7 @@ nav.navbar {
                     color: $textColor1;
                 }
             }
+            
         }
     }
 
@@ -51,6 +58,15 @@ nav.navbar {
                 border: unset;
             }
         }
+    }
+
+    .navbar-toggler {
+        background-color: $mobileBtnBorder !important;
+
+        .navbar-toggler-icon {
+            color: $mobileBtnIcon !important;
+        }
+        
     }
 
     #navbarSupportedContent {
