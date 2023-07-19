@@ -4,6 +4,9 @@ include("../php/functions/validar.php");
 // include("../php/functions/tasa.php");
 ?>
 <?php
+
+$userid = $_SESSION['username'];
+
 include("../php/dbconn.php");
 include("../php/conex.php");
 $sql = 'SELECT * FROM tblcustomers';
@@ -94,19 +97,28 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     ?>
 
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
-                            <tr>
-                                <th scope="row"><?php echo $usuario['ID'];  ?></th>
-                                <td><?php echo $usuario['Name']; ?></td>
-                                <td><?php echo $usuario['cedula']; ?></td>
-                                <td><?php echo $usuario['assignedbarber']; ?></td>
-                                <td><?php echo $usuario['CreationDate']; ?></td>
-                                <td><?php echo $usuario['Gender']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['ID'] ?>">Procesar</a></td>
+                            <form action="./operacion/asignarfactura.php" method="POST">
+                                <tr>
+                                    <th scope="row"><?php echo $usuario['ID'];  ?></th>
+                                    <td><?php echo $usuario['Name']; ?></td>
+                                    <td><?php echo $usuario['cedula']; ?></td>
+                                    <td><?php echo $usuario['assignedbarber']; ?></td>
+                                    <td><?php echo $usuario['CreationDate']; ?></td>
+                                    <td><?php echo $usuario['Gender']; ?></td>
+                                    <td class="action">
+                                        
+                                        <input type="text" class="d-none" name="idcliente" value="<?php echo $usuario['ID'] ?>">
+                                        <input type="text" class="d-none" name="usuarioid" value="<?php echo $usuario['assignedBy'] ?>">
 
-                                <!-- DETERMINAR LOGICA PARA ELIMINAR UN CLIENTE -->
-                                <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td> -->
 
-                            </tr>
+                                        <input type="submit" class="table-btn" value="Procesar">
+                                    </td>
+
+                                    <!-- DETERMINAR LOGICA PARA ELIMINAR UN CLIENTE -->
+                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Eliminar</a></td> -->
+
+                                </tr>
+                            </form>
                         <?php endforeach  ?>
                         <?php } else {
                         if (isset($_POST['busqueda'])) {
@@ -168,24 +180,25 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/crearusuario.php" method="post">
+                    <form action="operacion/crearcliente.php" method="post">
+                        <input type="text" name="userid" value="<?php echo $userid ?>" class="d-none">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
                         <label class="form-label" for="">Cedula</label>
-                        <input class="form-control" type="text" name="cedula" id="">
+                        <input class="form-control" type="text" name="cedula" value="" id="">
                         <label class="form-label" for="">Barbero</label>
-                        <select name="idservice" class="form-control" id="service">
+                        <select name="idbarber" class="form-control" id="">
 
 
-<?php
-$consultabarber = "Select * from tblbarber";
-$list_barber = mysqli_query($conexion, $consultabarber);
-while ($row = mysqli_fetch_array($list_barber)) {
-    echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
-};
-?>
+                            <?php
+                            $consultabarber = "Select * from tblbarber";
+                            $list_barber = mysqli_query($conexion, $consultabarber);
+                            while ($row = mysqli_fetch_array($list_barber)) {
+                                echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
+                            };
+                            ?>
 
-</select>
+                        </select>
 
 
                         <label class="form-label" for="">Tipo Cliente</label>
