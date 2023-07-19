@@ -1,13 +1,14 @@
 @import "variables";
 
 nav.navbar {
-    border-bottom: 2px solid #8b8eb1;
+    background-color: $bgColor !important;
+    border-bottom: 2px solid $accentColor;
     .navbar-brand img {
         max-width: 50px;
         display: block;
     }
     a.nav-link {
-        color: #0000008c;
+        color: $accentColor;
         padding: 10px 15px;
         font-size: 16px;
         font-weight: bold;
@@ -17,7 +18,7 @@ nav.navbar {
         &:active, 
         &.nav-link.show {
             transition: .3s;
-            color: $accentColor2 !important;
+            color: $textColor1 !important;
         }
     }
 
@@ -33,7 +34,7 @@ nav.navbar {
                 &:hover {
                     transition: .3s;
                     background-color: $primaryColor;
-                    color: #fff;
+                    color: $textColor1;
                 }
             }
         }

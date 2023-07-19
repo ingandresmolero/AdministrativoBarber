@@ -17,13 +17,13 @@ nav .pagination {
         
         &.active a {
             background-color: $accentColor;
-            color: #fff;
+            color: $textColor1;
             pointer-events: none;
             opacity: 0.89;
         }
         &.disabled a {
             background-color: $accentColor;
-            color: #fff;
+            color: $textColor1;
             opacity: 0.89;
         }
         .page-link {
@@ -35,7 +35,7 @@ nav .pagination {
             transition: .3s;
             &:hover {
                background-color: $accentColor; 
-               color: #fff;
+               color: $textColor1;
             }
         }
     }

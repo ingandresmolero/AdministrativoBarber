@@ -12,7 +12,7 @@
     <script src="./js/login-alert.js"></script>
 </head>
 
-<body class="login-page">
+<body id="login-page">
     <div class="box">
         <p>Iniciar Sesión</p>
         <form action="" method="post">
