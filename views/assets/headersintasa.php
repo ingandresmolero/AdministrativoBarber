@@ -21,6 +21,7 @@
             <li><a class="dropdown-item" href="../views/reportes.php">Reportes</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../views/configuracion.php">Configuracion</a></li>
+            <li><a class="dropdown-item user-name" id="rol"><?php echo $rol ?></a></li>
           </ul>
         </li>
         

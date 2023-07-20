@@ -16,7 +16,7 @@ $stmt->execute();
 
 $resultado = $stmt->fetchAll();
 
-$usuarios_x_pagina = 10;
+$usuarios_x_pagina = 3;
 
 $total_usuario = $stmt->rowCount();
 
@@ -96,8 +96,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $resultado_usuario = $stm_usuario->fetchAll();
                     ?>
-                        <h2 class="mt-3">Listado de Cliente</h2>
-                        <?php var_dump($userid); ?>
+                        <h2 class="page-heading">Listado de Cliente</h2>
+                        
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <form action="./operacion/asignarfactura.php" method="POST">
                                 <tr>

@@ -80,7 +80,10 @@ $resultado = $stmt->fetch();
                                 <label class="form-label" for="">Telefono</label>
                                 <input class="form-control" type="text" name="" placeholder="Telefono..." id="">
                             </div> -->
-
+                            <div class="col-md-3"> 
+                                <label class="form-label" for="">Cedula</label>
+                                <input class="form-control" type="text" name="barbero" placeholder="<?php echo $row1['cedula']; ?>" disabled id="">
+                            </div>
 
                             <div class="col-md-3">
                                 <label class="form-label" for="">Barbero</label>
@@ -132,22 +135,22 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "select tblservices.ServiceName,tblservices.Cost,tblinvoice.ServiceId ,tblinvoice.estado,tblinvoice.AssignedUserID,tblinvoice.Userid  from  tblinvoice join tblservices on tblservices.ID=tblinvoice.ServiceId where tblinvoice.BillingId='$billing'");
+                            $ret = mysqli_query($conexion, "SELECT tblservices.ServiceName,tblbarber.nombre,tblservices.Cost FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice ='$billing'");
                             $cnt = 1;
                             $gtotal1 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
                             ?>
                                 <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
-                                <input type="text" name="estado" value="<?php echo $row['estado']; ?>" class="d-none">
-                                <input type="text" name="customer" value="<?php echo $row['Userid']; ?>" class="d-none">
-                                <input type="text" name="usuario" value="<?php echo $row['AssignedUserID']; ?>" class="d-none">
+                                <input type="text" name="estado" value="<?php echo $row['ServiceName']; ?>" class="d-none">
+                                <input type="text" name="customer" value="<?php echo $row['nombre']; ?>" class="d-none">
+                                <input type="text" name="usuario" value="<?php echo $row['Cost']; ?>" class="d-none">
                                 <tr>
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['ServiceName'] ?></td>
-                                    <td>Barbero</td>
+                                    <td><?php echo $row['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
                                
-                                    <td>Propina</td>
+                                    <td><input type="text" name="propina" class="form-control"></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
                             <?php
@@ -223,8 +226,35 @@ $resultado = $stmt->fetch();
 
                 </section>
             </div>
+
+            
             <div class="d-flex justify-content-evenly mt-5">
+            <?php if ($rol == 'manager') { ?>
                 <div class="col-3">
+                    <h1>Monto: <?php echo floatval($monto); ?> $</h1>
+                    <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
+                    <hr>
+                    <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
+                    <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
+                    <?php $montototal = floatval($monto);?>
+                    <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
+               
+                </div>
+
+                <div class="row mt-3">
+                <div class="col-md-auto">
+                    <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
+                </div>
+                <div class="col-md-auto">
+                    <input type="submit" class="btn btn-warning" value="Guardar">
+                </div>
+                <!-- <div class="col-auto">
+                    <input type="submit" class="btn btn-primary" value="Recuperar">
+                </div> -->
+                </form>
+            </div>
+                <?php }else   if($rol == 'admin'){ ?>
+                    <div class="col-3">
                     <h1>Monto: <?php echo floatval($monto); ?> $</h1>
                     <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
                     <hr>
@@ -267,7 +297,7 @@ $resultado = $stmt->fetch();
                 </div> -->
                 </form>
             </div>
-
+<?php };?>
         </section>
 
 
@@ -292,6 +322,19 @@ $resultado = $stmt->fetch();
                             $list_product = mysqli_query($conexion, $consulta);
                             while ($row = mysqli_fetch_array($list_product)) {
                                 echo "	<option value=" . $row['ID'] . ">" . $row['ServiceName'] . "</option>";
+                            };
+                            ?>
+
+                        </select>
+                        <label class="form-label" for="">Barbero</label>
+                        <select name="idbarber" class="form-control" id="">
+
+
+                            <?php
+                            $consultabarber = "Select * from tblbarber";
+                            $list_barber = mysqli_query($conexion, $consultabarber);
+                            while ($row = mysqli_fetch_array($list_barber)) {
+                                echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
                             };
                             ?>
 
