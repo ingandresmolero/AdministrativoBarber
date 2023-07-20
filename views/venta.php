@@ -135,7 +135,7 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "SELECT tblservices.ServiceName,tblbarber.nombre,tblservices.Cost FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice ='$billing'");
+                            $ret = mysqli_query($conexion, "SELECT tblservices.ServiceName,tblbarber.nombre,tblservices.Cost,tblassignedservice.propina FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice ='$billing'");
                             $cnt = 1;
                             $gtotal1 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
@@ -150,7 +150,7 @@ $resultado = $stmt->fetch();
                                     <td><?php echo $row['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
                                
-                                    <td><input type="text" name="propina" class="form-control"></td>
+                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row['propina'] ?>" class="form-control"></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
                             <?php
