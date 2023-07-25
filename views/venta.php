@@ -37,7 +37,7 @@ $resultado = $stmt->fetch();
         $stmt1 = $conn->prepare($datosinvoice);
         $stmt1->execute();
         $row1 = $stmt1->fetch();
-        
+
 
         ?>
 
@@ -70,7 +70,7 @@ $resultado = $stmt->fetch();
                     <form action="operaciones-producto.php" method="POST">
                         <div class="row">
 
-                        <input type="text" name="barbero" value="<?php echo $barbero = $row1['assignedbarber']; ?>" class="d-none">
+                            <input type="text" name="barbero" value="<?php echo $barbero = $row1['assignedbarber']; ?>" class="d-none">
                             <div class="col-md-3">
                                 <label class="form-label" for="">Nombre </label>
                                 <input class="form-control" type="text" name="" placeholder='<?php echo $row1['Name']; ?>' disabled>
@@ -80,7 +80,7 @@ $resultado = $stmt->fetch();
                                 <label class="form-label" for="">Telefono</label>
                                 <input class="form-control" type="text" name="" placeholder="Telefono..." id="">
                             </div> -->
-                            <div class="col-md-3"> 
+                            <div class="col-md-3">
                                 <label class="form-label" for="">Cedula</label>
                                 <input class="form-control" type="text" name="barbero" placeholder="<?php echo $row1['cedula']; ?>" disabled id="">
                             </div>
@@ -129,7 +129,7 @@ $resultado = $stmt->fetch();
                                 <th>Nombre de Servicio</th>
                                 <th>Barbero</th>
                                 <th>Costo</th>
-                            
+
                                 <th>Propina</th>
                                 <th>Accion</th>
                             </tr>
@@ -149,7 +149,7 @@ $resultado = $stmt->fetch();
                                     <td><?php echo $row['ServiceName'] ?></td>
                                     <td><?php echo $row['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
-                               
+
                                     <td><input type="text" name="propina" value="" placeholder="<?php echo $row['propina'] ?>" class="form-control"></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
@@ -219,7 +219,7 @@ $resultado = $stmt->fetch();
                         $tasa = $fila2['monto_bcv'];
 
                         ?>
-                        <input type="text" value="<?php echo $tasa ;?>" name="tasa" class="d-none">
+                        <input type="text" value="<?php echo $tasa; ?>" name="tasa" class="d-none">
 
 
 
@@ -227,64 +227,102 @@ $resultado = $stmt->fetch();
                 </section>
             </div>
 
-            
+
             <div class="d-flex justify-content-evenly mt-5">
-            <?php if ($rol == 'manager') { ?>
-                <div class="col-3">
-                    <h1>Monto: <?php echo floatval($monto); ?> $</h1>
-                    <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
-                    <hr>
-                    <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
-                    <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
-                    <?php $montototal = floatval($monto);?>
-                    <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
-               
-                </div>
-
-                <div class="row mt-3">
-                <div class="col-md-auto">
-                    <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
-                </div>
-                <div class="col-md-auto">
-                    <input type="submit" class="btn btn-warning" value="Guardar">
-                </div>
-                <!-- <div class="col-auto">
-                    <input type="submit" class="btn btn-primary" value="Recuperar">
-                </div> -->
-                </form>
-            </div>
-                <?php }else   if($rol == 'admin'){ ?>
+                <?php if ($rol == 'manager') { ?>
                     <div class="col-3">
-                    <h1>Monto: <?php echo floatval($monto); ?> $</h1>
-                    <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
-                    <hr>
-                    <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
-                    <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
-                    <?php $montototal = floatval($monto);?>
-                    <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
-               
-                </div>
-                <div class="col-3 mx-3">
-                    <label for="" class="form-label">Metodo de Pago</label>
-                    <select name="metodo" id="" class="form-control">
-                        <option value="--">--</option>
-                        <option value="Punto">Punto</option>
-                        <option value="Efectivo_dolar">Efectivo $</option>
-                        <option value="Efectivo_bs">Efectivo BS</option>
-                        <option value="Efectivo_bs">Transferencia BS</option>
-                        <option value="Efectivo_bs">ZELLE</option>
-                    </select>
+                        <p>Monto: <?php echo floatval($monto); ?> $</p>
+                        <h4>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h4>
+                        <hr>
+                        <h4>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h4>
+                        <h4>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h4>
+                        <?php $montototal = floatval($monto); ?>
+                        <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
 
-                    <label for="" class="form-label">Referencia</label>
-                    <input type="text" name="referencia" class="form-control">
-                    <label for="" class="form-label">Abono</label>
-                    <input type="text" name="abono" value="" class="form-control">
-                    <label for="">Detalles</label>
-                    <input type="text" value="" name="detalle">
-                </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-auto">
+                            <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
+                        </div>
+                        <div class="col-md-auto">
+                            <input type="submit" class="btn btn-warning" value="Guardar">
+                        </div>
+                        </form>
+                    </div>
+                <?php } else   if ($rol == 'admin') { ?>
+
+                    <div class="col-3">
+                        <h1>Monto: <?php echo floatval($monto); ?> $</h1>
+                        <h3>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h3>
+                        <hr>
+                        <h3>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h3>
+                        <h2>Monto Total: <?php echo floatval($montobs + $montoiva); ?> Bs.s</h2>
+                        <?php $montototal = floatval($monto); ?>
+                        <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
+
+                    </div>
+
+                    
+                    <div class="col-3 mx-3">
+                        <label for="" class="form-label">Metodo de Pago</label>
+                        <!-- TABLA DE METODOS PAGO -->
+                        <table class="table table-bordered" width="100%" border="1">
+
+                            <tr>
+                                <th colspan="3">Detalle de Productos</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Metodo Pago</th>
+                                <th>Monto</th>
+                                <th>Accion</th>
+                                <!-- <th>Costo</th> -->
+                            </tr>
+
+                            <?php
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing'");
+                            $cnt = 1;
+                            $gtotal4 = 0;
+                            while ($row = mysqli_fetch_array($ret)) {
+                            ?>
+                                 <input type="text" value="<?php echo $row['idcuenta']; ?>" name="idcuenta" class="d-none">
+                                <tr>
+                               
+                                    <th><?php echo $cnt; ?></th>
+                                    <td><?php echo $row['nombre'] ?></td>
+                                    <td><?php echo $montototal = $row['monto'] ?></td>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+
+                                </tr>
+                            <?php
+                           $subtotal4 = floatval($montototal);
+                           $gtotal4 += $subtotal4;
+                                $cnt = $cnt + 1;
+
+                             } ?>
+
+                            <hr>
+
+
+
+                        </table>
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalmetodo">
+                            Agregar Pago
+                        </button>
+                    </div>
             </div>
 
-
+            <h1>SALDO FINAL: <?php
+              $totalpago = ( $monto - $gtotal4  ); 
+                             if($totalpago<0){
+                                echo ($totalpago)*(-1);
+                                echo '$ Abono';
+                             }else{
+                                echo $totalpago;
+                             }
+            ?> </h1>
             <div class="row mt-3">
                 <div class="col-md-auto">
                     <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
@@ -297,17 +335,19 @@ $resultado = $stmt->fetch();
                 </div> -->
                 </form>
             </div>
-<?php };?>
+        <?php }; ?>
         </section>
 
 
     </main>
-    <!-- Modal -->
+
+
+    <!-- Modal SERVICIO -->
     <div class="modal fade" id="modalservicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Servicios</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -357,12 +397,12 @@ $resultado = $stmt->fetch();
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal PRODUCTOS -->
     <div class="modal fade" id="producto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Productos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -399,6 +439,58 @@ $resultado = $stmt->fetch();
         </div>
     </div>
 
+    <!-- FIN MODAL PRODUCTOS -->
+
+    <!-- Modal METODO PAGO -->
+    <div class="modal fade" id="modalmetodo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="operacion/asignarpago.php" method="post">
+                        <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
+
+                        <label class="form-label" for="">Metodo Pago</label>
+                        <select name="idmetodo" class="form-control" id="">
+
+
+                            <?php
+                            $consultabarber = "Select * from metodos_pago";
+                            $list_barber = mysqli_query($conexion, $consultabarber);
+                            while ($row = mysqli_fetch_array($list_barber)) {
+                                echo "	<option value=" . $row['idmetodo'] . ">" . $row['nombre'] . "</option>";
+                            };
+                            ?>
+
+                        </select>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label class="form-label" for="">cantidad</label>
+                                <input type="number" name="monto_pago" class="form-control" placeholder="$ / BS">
+                            </div>
+                        </div>
+
+
+
+                        <!-- <label class="form-label" for="">Cantidad</label>
+                        <input class="form-control" type="number" name="cantidad" id=""> -->
+
+
+
+                        <input type="submit" class="btn btn-primary" name="asignarservicio" value="Guardar">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--FIN METODOS PAGOS MODAL -->
 
 </body>
 

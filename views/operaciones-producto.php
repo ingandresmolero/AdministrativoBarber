@@ -57,6 +57,16 @@ if (isset($_POST['eliminarservicio'])){
     header('location:venta.php?billing='.$invoice.'');
 };
 
+// OPERACION DE ELIMINAR METODO DE BILLING
+
+if (isset($_POST['eliminarmetodo'])){
+    echo "Elimiinar";
+    $invoice = $_POST['invoice'];
+    $idcuenta = $_POST['idcuenta'];
+    $sql3="DELETE FROM cuentas_cobrar WHERE invoice= '$invoice' AND idcuenta='$idcuenta'";
+    $stmt = mysqli_query($conexion,$sql3);
+    header('location:venta.php?billing='.$invoice.'');
+};
 
 // TOTALIZAR OPERACION
 
