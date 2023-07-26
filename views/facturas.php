@@ -3,7 +3,7 @@ include("../php/functions/validar.php");
 
 // include("../php/functions/tasa.php");
 include_once("../php/dbconn.php");
-$sql = 'SELECT * FROM facturas ';
+$sql = 'SELECT * FROM transacciones ';
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -36,17 +36,18 @@ $paginas = ceil($total_report / $report_x_pagina);
     
 
     <section class="container-fluid">
-    <h2>Facturas</h2>
+    <h1 class="page-heading">Facturas</h1>
     <div class="table-responsive-sm">
         <table class="table table-style">
             <thead>
                 <tr>
                    
                     <th scope="col">Factura</th>
+                    <th scope="col">Cedula</th>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Fecha</th>
-                    <th scope="col">Barbero</th>
-                    <th scope="col">Servidor</th>
+                
                     <th scope="col">Accion</th>
                 
                 </tr>
@@ -63,7 +64,7 @@ $paginas = ceil($total_report / $report_x_pagina);
 
     $iniciar = ($_GET['pagina']-1) * $report_x_pagina;
    
-    $sql_report = "SELECT DISTINCT facturas.billing, facturas.estado, facturas.fecha, facturas.barbero, tbladmin.AdminName as usuario FROM `facturas` JOIN tbladmin on tbladmin.ID = facturas.usuario WHERE estado='pagado' ORDER BY fecha DESC LIMIT :iniciar,:nusuarios";
+    $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID ORDER BY invoice DESC LIMIT :iniciar,:nusuarios";
     $stm_report = $conn->prepare($sql_report);
     $stm_report->bindParam(':iniciar' , $iniciar,PDO::PARAM_INT);
     $stm_report->bindParam(':nusuarios' , $report_x_pagina,PDO::PARAM_INT);
@@ -80,15 +81,16 @@ $paginas = ceil($total_report / $report_x_pagina);
 
                 <?php foreach ($resultado_report as $report) :   
                     
-                    $id=$report['billing'];
+                    $id=$report['invoice'];
                     ?>
                     <tr>
-                        <th scope="row" class="d-none"><?php echo $report['billing'];  ?></th>
-                        <td><?php echo $report['billing']; ?></td>
-                        <td><?php echo $report['estado']; ?></td>
-                        <td><?php echo $report['fecha']; ?></td>
-                        <td><?php echo $report['barbero']; ?></td>
-                        <td><?php echo $report['usuario']; ?></td>
+                        <th scope="row" class="d-none"><?php echo $report['idtransac'];  ?></th>
+                        <td><?php echo $report['invoice']; ?></td>
+                        <td><?php echo $report['cedula']; ?></td>
+                        <td><?php echo $report['Name']; ?></td>
+                        <td><?php echo $report['estatus']; ?></td>
+                        <td><?php echo $report['fecha_creacion']; ?></td>
+                      
                         <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo $id ?>">Detalles </a></td>
                         
                        

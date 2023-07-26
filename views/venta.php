@@ -85,7 +85,7 @@ $resultado = $stmt->fetch();
                                 <input class="form-control" type="text" name="barbero" placeholder="<?php echo $row1['cedula']; ?>" disabled id="">
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3 d-none">
                                 <label class="form-label" for="">Barbero</label>
                                 <input class="form-control" type="text" name="barbero" placeholder="<?php echo $barbero; ?>" disabled id="">
                             </div>
@@ -231,7 +231,7 @@ $resultado = $stmt->fetch();
             <div class="d-flex justify-content-evenly mt-5">
                 <?php if ($rol == 'manager') { ?>
                     <div class="col-3">
-                        <p>Monto: <?php echo floatval($monto); ?> $</p>
+                        <h1>Monto: <?php echo floatval($monto); ?> $</h1>
                         <h4>Monto: <?php echo $montobs = floatval($monto * $tasa); ?> Bs.S</h4>
                         <hr>
                         <h4>IVA: <?php echo $montoiva = (($monto * $tasa) * 0.16); ?> Bs.S</h4>
@@ -242,12 +242,12 @@ $resultado = $stmt->fetch();
                     </div>
 
                     <div class="row mt-3">
-                        <div class="col-md-auto">
+                        <!-- <div class="col-md-auto">
                             <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
-                        </div>
-                        <div class="col-md-auto">
+                        </div> -->
+                        <!-- <div class="col-md-auto">
                             <input type="submit" class="btn btn-warning" value="Guardar">
-                        </div>
+                        </div> -->
                         </form>
                     </div>
                 <?php } else   if ($rol == 'admin') { ?>
@@ -322,14 +322,35 @@ $resultado = $stmt->fetch();
                              }else{
                                 echo $totalpago;
                              }
-            ?> </h1>
+            ?> 
+
+            <!-- DATOS A ENVIAR -->
+         
+            <input type="text" class="d-none" name="invoice" value="<?php echo $billing ?>">
+            <input type="text" class="d-none" value="<?php echo $totalpago ?>">
+            <input type="text" class="d-none" value="<?php echo $tasa ?>">
+            <input type="text" class="d-none" value="<?php echo $monto?>" name="monto_cancelado">
+            <input type="text" class="d-none" name="estatus" value="<?php if($totalpago == '0' ){
+                             
+                                echo 'Totalizado';
+                             }else{
+                                if($totalpago<0){
+                                    echo 'Abono';
+                                }else{
+                                    echo 'Restante';
+                                }
+                             } ?>">
+
+
+            <!-- DATOS A ENVIAR -->
+            </h1>
             <div class="row mt-3">
                 <div class="col-md-auto">
                     <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
                 </div>
-                <div class="col-md-auto">
+                <!-- <div class="col-md-auto">
                     <input type="submit" class="btn btn-warning" value="Guardar">
-                </div>
+                </div> -->
                 <!-- <div class="col-auto">
                     <input type="submit" class="btn btn-primary" value="Recuperar">
                 </div> -->
@@ -396,6 +417,7 @@ $resultado = $stmt->fetch();
             </div>
         </div>
     </div>
+    <!-- FIN MODAL SERVICIO -->
 
     <!-- Modal PRODUCTOS -->
     <div class="modal fade" id="producto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

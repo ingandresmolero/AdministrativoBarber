@@ -34,6 +34,11 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/tasa.png">
                     <p class="card-title">Protocolo</p>
                 </a>
+                <a href="lista_facturas_prot.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Caja</p>
+                </a>
                 <a href="stock.php" class="item">
 
                     <img src="../img/icons/inventario.png">

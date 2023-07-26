@@ -1,4 +1,5 @@
-<?php include("../../php/functions/validar.php");
+<?php 
+// include("../../php/functions/validar.php");
 include("../../php/dbconn.php");
 $id = $_GET['userid'];
 $sql = "SELECT * FROM tblbarber where idbarber='$id' ";

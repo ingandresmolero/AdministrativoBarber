@@ -5,7 +5,7 @@ include("../php/functions/validar.php");
 ?>
 <?php
 include("../php/dbconn.php");
-$sql = 'SELECT * FROM tblinvoice';
+$sql = 'SELECT * FROM metodos_pago';
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -29,7 +29,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.min.css">
-    <title>Caja - Servicios</title>
+    <title>Metodos Pagos</title>
 </head>
 
 <body>
@@ -37,31 +37,27 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Caja - Servicios</h1>
+        <h1 class="page-heading">Metodos Pagos</h1>
         <!-- Button trigger modal -->
 
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Nueva Factura
-        </button> -->
-        <div class="row b-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Nuevo Metodo
+        </button>
+        <!-- <div class="row b-3">
             <div class="col-md">
                 <form action="" method="post">
-                    <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
+                    <input type="text" class="form-control" name="campo" placeholder="Usuario, nombre, rol...." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="lista_facturas.php" class="table-btn">Mostrar Todos</a>
+                    <a href="metodospagos.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
-        </div>
+        </div> -->
         <div class="table-responsive-sm">
             <table class="table table-style">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">NroFactura</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Cedula</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Procesar</th>
+                        <th scope="col">Metodo</th>
                         <th scope="col">Eliminar</th>
 
                     </tr>
@@ -71,17 +67,17 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:lista_facturas.php?pagina=1');
+                        header('Location:metodospagos.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:lista_facturas.php?pagina=1');
+                        header('Location:metodospagos.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT * FROM metodos_pago LIMIT :iniciar,:nusuarios";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -89,27 +85,23 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
                         $resultado_usuario = $stm_usuario->fetchAll();
-                        $ctn=1;
                     ?>
 
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
-                                <th scope="row"><?php echo $ctn;  ?></th>
-                                <td><?php echo $usuario['BillingId']; ?></td>
-                                <td><?php echo $usuario['Name']; ?></td>
-                                <td><?php echo $usuario['cedula']; ?></td>
-                                <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <th scope="row"><?php echo $usuario['idmetodo'];  ?></th>
+                                <td><?php echo $usuario['nombre']; ?></td>
+
+                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarmetodo.php?idmetodo=<?php echo $usuario['idmetodo'] ?>">Eliminar</a></td>
 
                             </tr>
-                        <?php $ctn=$ctn+1; endforeach  ?>
+                        <?php endforeach  ?>
                         <?php } else {
                         if (isset($_POST['busqueda'])) {
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT * FROM usuarios WHERE (nombre = '$busqueda') OR (rol='$busqueda') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM tbladmin WHERE (AdminName LIKE '%$busqueda%') OR (Role LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -122,12 +114,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
-                                    <th scope="row"><?php echo $usuario['ID'];  ?></th>
+                                    <th scope="row"><?php echo $usuario['idmetodo'];  ?></th>
                                     <td><?php echo $usuario['nombre']; ?></td>
-                                    <td><?php echo $usuario['user']; ?></td>
-                                    <td><?php echo $usuario['rol']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/venta.php?userid=<?php echo $usuario['ID'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+
+                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarmetodo.php?idmetodo=<?php echo $usuario['idmetodo'] ?>">Eliminar</a></td>
 
                                 </tr>
                             <?php endforeach  ?>
@@ -140,16 +130,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="metodospagos.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="lista_facturas.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="metodospagos.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="metodospagos.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>
@@ -160,22 +150,14 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Metodo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/crearusuario.php" method="post">
+                    <form action="operacion/crearmetodo.php" method="post">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
-                        <label class="form-label" for="">Usuario</label>
-                        <input class="form-control" type="text" name="usuario" id="">
-                        <label class="form-label" for="">Contrasena</label>
-                        <input class="form-control" type="password" name="clave" id="">
-                        <label class="form-label" for="">Rol</label>
-                        <select class="form-control" name="rol" id="">
-                            <option value="master">Master</option>
-                            <option value="usuario">Usuario</option>
-                        </select>
+
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
                     </form>

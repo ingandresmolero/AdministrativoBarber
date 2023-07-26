@@ -71,29 +71,60 @@ if (isset($_POST['eliminarmetodo'])){
 // TOTALIZAR OPERACION
 
 if(isset($_POST['totalizar'])){
-    $metodo = $_POST['metodo'];
-    $referencia = $_POST['referencia'];
-    $abono = $_POST['abono'];
     $fecha = date("d/m/Y");
     $tasa=$_POST['tasa'];
-
+    $monto_cancelado = $_POST['monto_cancelado'];
     $billing = $_POST['invoice'];
-    $customer = $_POST['customer'];
-    $estado = $_POST['estado'];
-    $detalle = $_POST['detalle'];
     $monto = $_POST['montototal'];
-    $usuario = $_POST['usuario'];
-    $barbero = $_POST['barbero'];
+    $estatus = $_POST['estatus'];
 
-    $totalizar="INSERT INTO facturas( usuario, id_customer, billing, barbero, monto, detalle, estado, metodo, abono, tasa, fecha) VALUES ('$usuario','$customer','$billing','$barbero','$monto','$detalle','$estado','$metodo','$abono','$tasa','$fecha')";
+
+
+
+//Insertar en tabla Transacciones ya con metodos de pagos varios
+    $totalizado_factura = "INSERT INTO transacciones( invoice, monto_total, tasa_dia, estatus, monto_cancelado, fecha_creacion) VALUES ('$billing','$monto','$tasa','$estatus','$monto_cancelado','$fecha')";
 
     $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
 
 
     $stmt5=mysqli_query($conexion,$actu);
 
-    $stmt4= mysqli_query($conexion,$totalizar);
+    $stmt4= mysqli_query($conexion,$totalizado_factura);
     header('location:lista_facturas.php');
 
 
 }
+
+
+// if(isset($_POST['totalizar'])){
+//     $metodo = $_POST['metodo'];
+//     $referencia = $_POST['referencia'];
+//     $abono = $_POST['abono'];
+//     $fecha = date("d/m/Y");
+//     $tasa=$_POST['tasa'];
+//     $monto_cancelado = $_POST['monto_cancelado'];
+
+//     $billing = $_POST['invoice'];
+//     $customer = $_POST['customer'];
+//     $estado = $_POST['estado'];
+//     $detalle = $_POST['detalle'];
+//     $monto = $_POST['montototal'];
+//     $usuario = $_POST['usuario'];
+//     $barbero = $_POST['barbero'];
+
+
+// //Insertar datos en tabla facturas
+//     $totalizar="INSERT INTO facturas( usuario, id_customer, billing, barbero, monto, detalle, estado, metodo, abono, tasa, fecha) VALUES ('$usuario','$customer','$billing','$barbero','$monto','$detalle','$estado','$metodo','$abono','$tasa','$fecha')";
+// //Insertar en tabla Transacciones ya con metodos de pagos varios
+//     $totalizado_factura = "INSERT INTO transacciones( invoice, monto_total, tasa_dia, estatus, monto_cancelado, fecha_creacion) VALUES ('$billing','$monto','$tasa','$estatus','$monto_cancelado','$fecha')";
+
+//     $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
+
+
+//     $stmt5=mysqli_query($conexion,$actu);
+
+//     $stmt4= mysqli_query($conexion,$$totalizado_factura);
+//     header('location:lista_facturas.php');
+
+
+// }
