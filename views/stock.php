@@ -100,7 +100,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                
                                 <td><?php echo $usuario['deposito']; ?></td>
                                 <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
 
                             </tr>
                         <?php endforeach  ?>
@@ -109,7 +109,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT * FROM tblproducts WHERE (nombre = '$busqueda') OR (deposito = '$busqueda') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM tblproducts WHERE (nombre LIKE '%$busqueda%') OR (deposito LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -129,7 +129,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                    
                                     <td><?php echo $usuario['deposito']; ?></td>
                                     <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
 
                                 </tr>
                             <?php endforeach  ?>
@@ -166,18 +166,21 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/crearusuario.php" method="post">
+                    <form action="operacion/crearproducto.php" method="post">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
-                        <label class="form-label" for="">Usuario</label>
-                        <input class="form-control" type="text" name="usuario" id="">
-                        <label class="form-label" for="">Contrasena</label>
-                        <input class="form-control" type="password" name="clave" id="">
-                        <label class="form-label" for="">Rol</label>
-                        <select class="form-control" name="rol" id="">
-                            <option value="master">Master</option>
-                            <option value="usuario">Usuario</option>
+                        <label class="form-label" for="">PVP</label>
+                        <input class="form-control" type="text" name="pvp" id="">
+                        <label class="form-label" for="">Cantidad</label>
+                        <input class="form-control" type="text" name="cantidad" id="">
+                        <label class="form-label" for="">Deposito</label>
+                        <select class="form-control" name="deposito" id="">
+                            <option value="Belleza">Belleza</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Snack">Snack</option>
+                            <option value="Otros">Otros</option>
                         </select>
+                        
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
                     </form>

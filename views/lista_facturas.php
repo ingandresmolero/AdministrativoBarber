@@ -109,7 +109,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT * FROM usuarios WHERE (nombre = '$busqueda') OR (rol='$busqueda') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT DISTINCT tblcustomers.cedula, tblcustomers.Name  ,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid  WHERE (Name LIKE  '%$busqueda%') OR (cedula LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -118,16 +118,18 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
                             $resultado_usuario = $stm_usuario->fetchAll();
+                            $ctn2=1;
                         ?>
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
-                                    <th scope="row"><?php echo $usuario['ID'];  ?></th>
-                                    <td><?php echo $usuario['nombre']; ?></td>
-                                    <td><?php echo $usuario['user']; ?></td>
-                                    <td><?php echo $usuario['rol']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/venta.php?userid=<?php echo $usuario['ID'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <th scope="row"><?php echo $ctn2;  ?></th>
+                                <td><?php echo $usuario['BillingId']; ?></td>
+                                <td><?php echo $usuario['Name']; ?></td>
+                                <td><?php echo $usuario['cedula']; ?></td>
+                                <td><?php echo $usuario['estado']; ?></td>
+                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
+                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                                 </tr>
                             <?php endforeach  ?>
