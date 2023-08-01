@@ -4,8 +4,7 @@
 include("../php/conex.php");
 $montototal=$_POST['montototal'];
 $barbero=$_POST['barbero'];
-var_dump($montototal);
-var_dump($barbero);
+
 
 if (isset($_POST['eliminar'])){
     echo "Elimiinar";
@@ -50,11 +49,14 @@ if(isset($_POST['procesar'])){
 
 if (isset($_POST['eliminarservicio'])){
     echo "Elimiinar";
+   
     $invoice = $_POST['invoice'];
-    $serviceide = $_POST['serviceid'];
-    $sql3="DELETE FROM tblinvoice WHERE BillingId= '$invoice' AND ServiceId='$serviceide'";
-    $stmt = mysqli_query($conexion,$sql3);
-    header('location:venta.php?billing='.$invoice.'');
+    // $serviceide = $_POST['serviceid'];
+    $idservicio = $_POST['idservicio2'];
+    $sql3="DELETE FROM tblassignedservice WHERE  idservicioasignado='$idservicio'";
+   
+     $stmt = mysqli_query($conexion,$sql3);
+     header('location:venta.php?billing='.$invoice.'');
 };
 
 // OPERACION DE ELIMINAR METODO DE BILLING

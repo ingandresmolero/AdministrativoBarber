@@ -135,22 +135,21 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "SELECT tblservices.ServiceName,tblbarber.nombre,tblservices.Cost,tblassignedservice.propina FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice ='$billing'");
+                            $ret = mysqli_query($conexion, "SELECT * FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice = '$billing'");
                             $cntservicio = 1;
                             $gtotal1 = 0;
-                            while ($row = mysqli_fetch_array($ret)) {
+                            while ($row2 = mysqli_fetch_array($ret)) {
                             ?>
                                 <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
-                                <input type="text" name="estado" value="<?php echo $row['ServiceName']; ?>" class="d-none">
-                                <input type="text" name="customer" value="<?php echo $row['nombre']; ?>" class="d-none">
-                                <input type="text" name="usuario" value="<?php echo $row['Cost']; ?>" class="d-none">
+             
+                                <input type="text" name="idservicio2" value="<?php echo $row2['idservicioasignado']; ?>" class="d-none">
                                 <tr>
-                                    <th><?php echo $cnt; ?></th>
-                                    <td><?php echo $row['ServiceName'] ?></td>
-                                    <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $subtotal = $row['Cost'] ?></td>
+                                    <th><?php echo $cntservicio; ?></th>
+                                    <td><?php echo $row2['ServiceName'] ?></td>
+                                    <td><?php echo $row2['nombre'] ?></td>
+                                    <td><?php echo $subtotal = $row2['Cost'] ?></td>
 
-                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row['propina'] ?>" class="form-control"></td>
+                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row2['propina'] ?>" class="form-control"></td>
                                     <td><input type="submit" class="btn btn-danger" value="+" name="propina"></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>

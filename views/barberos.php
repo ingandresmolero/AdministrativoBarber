@@ -41,7 +41,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <!-- Button trigger modal -->
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Nuevo Usuario
+            Nuevo Servidor
         </button>
         <div class="row b-3">
             <div class="col-md">
@@ -157,11 +157,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Servidor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/crearusuario.php" method="post">
+                    <form action="operacion/crearbarbero.php" method="post">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
                         <label class="form-label" for="">Usuario</label>
@@ -170,8 +170,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <input class="form-control" type="password" name="clave" id="">
                         <label class="form-label" for="">Rol</label>
                         <select class="form-control" name="rol" id="">
-                            <option value="master">Master</option>
-                            <option value="usuario">Usuario</option>
+                            <option value="servidor">Servidor</option>
+                           
                         </select>
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">

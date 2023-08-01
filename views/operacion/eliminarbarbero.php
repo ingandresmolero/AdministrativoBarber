@@ -4,6 +4,7 @@ $id=$_GET['userid'];
 
 
         $sql = "DELETE FROM tblbarber WHERE idbarber=$id";
+        
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
