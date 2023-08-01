@@ -48,13 +48,13 @@ include("../php/functions/tasa.php");
 
             <div class="elements">
 
-<a href="consumo_interno.php" class="item">
+                <a href="consumo_interno.php" class="item">
 
-    <img src="../img/icons/inventario.png">
-    <p class="card-title">Consumo Interno</p>
-</a>
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Consumo Interno</p>
+                </a>
 
-</div>
+            </div>
 
 
         <?php } else if ($rol == 'servidor') { ?>
@@ -94,7 +94,7 @@ include("../php/functions/tasa.php");
 
                     </a>
             </div>
-           
+
 
         <?php } else if ($rol == 'admin') { ?>
             <div class="elements">
@@ -146,6 +146,21 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/configuracion.png">
                     <p class="card-title">Configuracion</p>
                 </a>
+            </div>
+            <div class="elements">
+
+                <a href="consumo_interno.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Consumo Interno</p>
+                </a>
+
+                <a href="vales.php" class="item">
+
+                    <img src="../img/icons/inventario.png">
+                    <p class="card-title">Vales</p>
+                </a>
+
             </div>
         <?php }; ?>
     </section>
