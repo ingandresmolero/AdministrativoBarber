@@ -33,72 +33,109 @@ $paginas = ceil($total_report / $report_x_pagina);
 
 <body>
     <?php include("../views/assets/headersintasa.php"); ?>
-    
 
-    <section class="container-fluid">
-    <h1 class="page-heading">Facturas</h1>
-    <div class="table-responsive-sm">
-        <table class="table table-style">
-            <thead>
+
+    <section class="container">
+        <h1 class="page-heading">Facturas</h1>
+        <!-- Button trigger modal -->
+
+        <div class="row b-3">
+            <div class="col-md">
+                <form action="" method="post">
+                    <input type="text" class="form-control" name="campo" placeholder="Usuario, nombre, rol...." id="">
+                    <input type="submit" class="table-btn" value="busqueda" name="busqueda">
+                    <a href="facturas.php" class="table-btn">Mostrar Todos</a>
+                </form>
+            </div>
+        </div>
+        <div class="table-responsive-sm">
+            <table class="table table-style">
+                <thead>
                 <tr>
                    
-                    <th scope="col">Factura</th>
-                    <th scope="col">Cedula</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Fecha</th>
-                
-                    <th scope="col">Accion</th>
-                
-                </tr>
-            </thead>
-            <!-- Codigo PHP -->
-            <tbody>
+                   <th scope="col">Factura</th>
+                   <th scope="col">Cedula</th>
+                   <th scope="col">Nombre</th>
+                   <th scope="col">Estado</th>
+                   <th scope="col">Fecha</th>
+               
+                   <th scope="col">Accion</th>
+               
+               </tr>
+                </thead>
+                <!-- Codigo PHP -->
+                <tbody>
 
-<?php
-    if(!$_GET){
-        header('Location:facturas.php?pagina=1');
-    }if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ){
-        header('Location:facturas.php?pagina=1');
-    }
+                    <?php
+                    if (!$_GET) {
+                        header('Location:facturas.php?pagina=1');
+                    }
+                    if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
+                        header('Location:facturas.php?pagina=1');
+                    }
 
-    $iniciar = ($_GET['pagina']-1) * $report_x_pagina;
-   
-    $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID ORDER BY invoice DESC LIMIT :iniciar,:nusuarios";
-    $stm_report = $conn->prepare($sql_report);
-    $stm_report->bindParam(':iniciar' , $iniciar,PDO::PARAM_INT);
-    $stm_report->bindParam(':nusuarios' , $report_x_pagina,PDO::PARAM_INT);
-    $stm_report->execute();
+                    if (!isset($_POST['busqueda'])) {
 
+                        $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-    $resultado_report = $stm_report->fetchAll();
-
-
-
-?>
+                        $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID ORDER BY invoice DESC LIMIT :iniciar,:nusuarios";
+                        $stm_report = $conn->prepare($sql_report);
+                        $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
+                        $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);
+                        $stm_report->execute();
 
 
-
-                <?php foreach ($resultado_report as $report) :   
-                    
-                    $id=$report['invoice'];
+                        $resultado_usuario = $stm_report->fetchAll();
                     ?>
-                    <tr>
-                        <th scope="row" class="d-none"><?php echo $report['idtransac'];  ?></th>
-                        <td><?php echo $report['invoice']; ?></td>
-                        <td><?php echo $report['cedula']; ?></td>
-                        <td><?php echo $report['Name']; ?></td>
-                        <td><?php echo $report['estatus']; ?></td>
-                        <td><?php echo $report['fecha_creacion']; ?></td>
+
+                        <?php foreach ($resultado_usuario as $usuario) :   ?>
+                            <tr>
+                        <th scope="row" class="d-none"><?php echo $usuario['idtransac'];  ?></th>
+                        <td><?php echo $usuario['invoice']; ?></td>
+                        <td><?php echo $usuario['cedula']; ?></td>
+                        <td><?php echo $usuario['Name']; ?></td>
+                        <td><?php echo $usuario['estatus']; ?></td>
+                        <td><?php echo $usuario['fecha_creacion']; ?></td>
                       
-                        <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo $id ?>">Detalles </a></td>
+                        <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo $usuario['invoice']; ?>">Detalles </a></td>
                         
                        
                     </tr>
-            </tbody>
-        <?php endforeach ?>
+                        <?php endforeach  ?>
+                        <?php } else {
+                        if (isset($_POST['busqueda'])) {
+                            $busqueda = $_POST['campo'];
+                            $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-        </table>
+                            $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE (invoice LIKE '%$busqueda%')   LIMIT :iniciar,:nusuarios";
+                            $stm_report = $conn->prepare($sql_report);
+                            $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
+                            $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);
+                            $stm_report->execute();
+
+
+
+                            $resultado_usuario = $stm_report->fetchAll();
+                        ?>
+
+                            <?php foreach ($resultado_usuario as $usuario) :   ?>
+                                <tr>
+                                <th scope="row" class="d-none"><?php echo $usuario['idtransac'];  ?></th>
+                        <td><?php echo $usuario['invoice']; ?></td>
+                        <td><?php echo $usuario['cedula']; ?></td>
+                        <td><?php echo $usuario['Name']; ?></td>
+                        <td><?php echo $usuario['estatus']; ?></td>
+                        <td><?php echo $usuario['fecha_creacion']; ?></td>
+                      
+                        <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo  $usuario['invoice'];  ?>">Detalles </a></td>
+                        
+
+                                </tr>
+                            <?php endforeach  ?>
+                        <?php } ?>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -107,7 +144,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                 "><a class="page-link" href="facturas.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="facturas.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="facturas.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
@@ -117,6 +154,9 @@ $paginas = ceil($total_report / $report_x_pagina);
             </ul>
         </nav>
     </section>
+
+
+ 
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

@@ -7,7 +7,7 @@
         $contrasena = $_POST['clave'];
         $rol = $_POST['rol'];
 
-        $sql = "INSERT INTO usuarios(nombre, user, passw, rol) VALUES ('$nombre','$usuario','$contrasena','$rol')";
+        $sql = "INSERT INTO tbladmin (AdminName, UserName, Password, Role) VALUES ('$nombre','$usuario','$contrasena','$rol')";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 

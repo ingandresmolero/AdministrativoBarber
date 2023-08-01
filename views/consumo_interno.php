@@ -5,7 +5,7 @@ include("../php/functions/validar.php");
 ?>
 <?php
 include("../php/dbconn.php");
-$sql = "SELECT DISTINCT tblcustomers.Name ,tblcustomers.Gender, tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' and tblcustomers.Gender != 'interno'";
+$sql = 'SELECT * FROM tblinvoice';
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -29,7 +29,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.min.css">
-    <title>Servicios</title>
+    <title>Caja - Servicios</title>
 </head>
 
 <body>
@@ -37,7 +37,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Lista de Clientes Atendidos</h1>
+        <h1 class="page-heading">Caja - Servicios</h1>
         <!-- Button trigger modal -->
 
         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -48,7 +48,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="lista_facturas_prot.php" class="table-btn">Mostrar Todos</a>
+                    <a href="consumo_interno.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
         </div>
@@ -59,7 +59,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">#</th>
                         <th scope="col">NroFactura</th>
                         <th scope="col">Cliente</th>
-                        <!-- <th scope="col">Barbero</th> -->
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Procesar</th>
                         <th scope="col">Eliminar</th>
@@ -71,17 +72,17 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:lista_facturas_prot.php?pagina=1');
+                        header('Location:consumo_interno.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:lista_facturas_prot.php?pagina=1');
+                        header('Location:consumo_interno.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name ,tblcustomers.Gender, tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' and tblcustomers.Gender != 'interno' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name ,tblcustomers.Gender, tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblcustomers.Gender LIKE '%Interno%' AND tblinvoice.estado != 'pagado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -97,9 +98,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <th scope="row"><?php echo $ctn;  ?></th>
                                 <td><?php echo $usuario['BillingId']; ?></td>
                                 <td><?php echo $usuario['Name']; ?></td>
-                                <!-- <td><?php echo $usuario['barbero']; ?></td> -->
+                                <td><?php echo $usuario['cedula']; ?></td>
+                                <td><?php echo $usuario['Gender']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Procesar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
                                 <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                             </tr>
@@ -109,7 +111,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' AND (BillingID LIKE '%$busqueda%') ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios";
+                            $sql_usuarios = "SELECT DISTINCT tblcustomers.Name ,tblcustomers.Gender, tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE (Name LIKE  '%$busqueda%') OR (cedula LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -118,17 +120,18 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
                             $resultado_usuario = $stm_usuario->fetchAll();
+                            $ctn2=1;
                         ?>
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
-                                
+                                <th scope="row"><?php echo $ctn2;  ?></th>
                                 <td><?php echo $usuario['BillingId']; ?></td>
-                                    <td><?php echo $usuario['BillingId']; ?></td>
                                 <td><?php echo $usuario['Name']; ?></td>
-                                <!-- <td><?php echo $usuario['barbero']; ?></td> -->
+                                <td><?php echo $usuario['cedula']; ?></td>
+                                <td><?php echo $usuario['Gender']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Procesar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
                                 <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                                 </tr>
@@ -142,16 +145,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas_prot.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="consumo_interno.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="lista_facturas_prot.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="consumo_interno.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas_prot.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="consumo_interno.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>

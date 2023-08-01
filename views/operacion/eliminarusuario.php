@@ -3,7 +3,7 @@
 $id=$_GET['userid'];
 
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario=$id";
+        $sql = "DELETE FROM tbladmin WHERE ID=$id";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 

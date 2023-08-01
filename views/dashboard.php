@@ -46,6 +46,17 @@ include("../php/functions/tasa.php");
                 </a>
             </div>
 
+            <div class="elements">
+
+<a href="consumo_interno.php" class="item">
+
+    <img src="../img/icons/inventario.png">
+    <p class="card-title">Consumo Interno</p>
+</a>
+
+</div>
+
+
         <?php } else if ($rol == 'servidor') { ?>
 
             <div class="elements">
@@ -83,7 +94,7 @@ include("../php/functions/tasa.php");
 
                     </a>
             </div>
-
+           
 
         <?php } else if ($rol == 'admin') { ?>
             <div class="elements">
