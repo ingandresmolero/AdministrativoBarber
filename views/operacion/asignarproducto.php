@@ -1,28 +1,34 @@
 <?php
     include("../../php/dbconn.php");
+    include("../../php/conex.php");
+
 
     if(isset($_POST['asignar'])){
         $producto = $_POST['product'];
         $cantidad = $_POST['cantidad'];
         $invoice = $_POST['invoice'];
         $sql3="SELECT * FROM tblproducts WHERE idproducts='$producto'";
-        $stmtc= $conn->prepare($sql3);
-        $fila=$stmtc->fetchColumn();
+        $stmtc= mysqli_query($conexion,$sql3);
+        $fila = mysqli_fetch_array($stmtc);
+        
         $monto = $fila['precio'];
+        $cantidad_stock = $fila['cantidad'];
+
+        $monto_final = intval($cantidad_stock) - intval($cantidad);
 
         $sql = "INSERT INTO tblassignedproducts (invoice, id_products, cantidad,monto) VALUES ('$invoice','$producto','$cantidad','$monto')";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+       
+        $actsql = "UPDATE tblproducts SET cantidad='$monto_final' WHERE idproducts='$producto'";
+        var_dump($actsql);
 
-      var_dump($stmtc);
+        $stmt = $conn->prepare($sql);
+        $stmtact = $conn->prepare($actsql);
+        $stmt->execute();
+        $stmtact->execute();
+
         header('location:../venta.php?billing='.$invoice.'');
         
     }
-
-
-    
-
-
 
 
 ?>

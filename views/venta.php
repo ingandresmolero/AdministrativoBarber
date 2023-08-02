@@ -179,12 +179,14 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "SELECT tblassignedproducts.id_assigned, tblproducts.nombre,tblassignedproducts.cantidad, tblproducts.precio as precio FROM tblassignedproducts JOIN tblproducts on tblassignedproducts.id_products = tblproducts.idproducts where invoice='$billing'");
+                            $ret = mysqli_query($conexion, "SELECT tblassignedproducts.id_assigned, tblproducts.nombre,tblassignedproducts.cantidad, tblproducts.precio as precio,tblproducts.idproducts as idproducto FROM tblassignedproducts JOIN tblproducts on tblassignedproducts.id_products = tblproducts.idproducts where invoice='$billing'");
                             $cnt = 1;
                             $gtotal2 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
                             ?>
                                 <input type="text" value="<?php echo $row['id_assigned']; ?>" name="product" class="d-none">
+                                <input type="text" value="<?php echo $row['idproducto']; ?>" name="idproducto" class="d-none">
+                                <input type="text" value="<?php echo $row['cantidad']; ?>" name="cantidad" class="d-none">
                                 <tr>
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['nombre'] ?></td>

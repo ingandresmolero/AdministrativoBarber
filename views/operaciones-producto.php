@@ -7,12 +7,24 @@ $barbero=$_POST['barbero'];
 
 
 if (isset($_POST['eliminar'])){
-    echo "Elimiinar";
+    
     $invoice = $_POST['invoice'];
     $idproduct = $_POST['product'];
+    $idproducto = $_POST['idproducto'];
+    $cantidad = $_POST['cantidad'];
+
+    $sql3="SELECT * FROM tblproducts WHERE idproducts='$idproducto'";
+        $stmtc= mysqli_query($conexion,$sql3);
+        $fila = mysqli_fetch_array($stmtc);
+        $cantidad_stock = $fila['cantidad'];
+
+        $monto_final =  intval($cantidad) + intval($cantidad_stock);
+
     $sql1="DELETE FROM tblassignedproducts WHERE id_assigned='$idproduct'";
 
-
+    $actsql = "UPDATE tblproducts SET cantidad='$monto_final' WHERE idproducts='$idproducto'";
+    
+    $stmtact = mysqli_query($conexion,$actsql);
     $stmt = mysqli_query($conexion,$sql1);
     header('location:venta.php?billing='.$invoice.'');
 };
