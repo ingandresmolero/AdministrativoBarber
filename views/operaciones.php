@@ -57,40 +57,33 @@ include("../php/functions/validar.php");
         </div>
 
         <div class="row justify-content-center mt-5">
-        <!-- <div class="col-3">
-                <div class="card" style="width: 18rem;">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Opcione 1</h5>
-                        
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
-                    
-                </div>
-            </div>
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Opcione 2</h5>
+                        <h5 class="card-title">Orden de Compra</h5>
                         
                         <a href="#" class="btn btn-primary">Entrar</a>
                     </div>
-                    
                 </div>
             </div>
+            
+
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Opcione 3</h5>
+                        <h5 class="card-title">Orden de Descarga</h5>
                         
-                        <a href="#" class="btn btn-primary">Entrar</a>
+                        <a href="operacion/out_stock.php" class="btn btn-primary">Entrar</a>
                     </div>
                     
                 </div>
-            </div> -->
+            </div>
         </div>
+
+    
+       
 
         
            
