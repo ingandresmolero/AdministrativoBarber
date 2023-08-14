@@ -58,6 +58,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Metodo</th>
+                        <th scope="col">Unidad</th>
                         <th scope="col">Eliminar</th>
 
                     </tr>
@@ -91,6 +92,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             <tr>
                                 <th scope="row"><?php echo $usuario['idmetodo'];  ?></th>
                                 <td><?php echo $usuario['nombre']; ?></td>
+                                <td><?php echo $usuario['unidad']; ?></td>
 
                                 <td class="action"><a class="table-btn" href="../views/operacion/eliminarmetodo.php?idmetodo=<?php echo $usuario['idmetodo'] ?>">Eliminar</a></td>
 
@@ -157,7 +159,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <form action="operacion/crearmetodo.php" method="post">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
-
+                        <label for="" class="form-label">Unidad</label>
+                        <select class="form-control" name="unidad" id="">
+                            <option value="usd">Dolares</option>
+                            <option value="bs">Bolivares</option>
+                        </select>
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
                     </form>

@@ -145,12 +145,13 @@ $resultado = $stmt->fetch();
                                 <input type="text" name="idservicio2" value="<?php echo $row2['idservicioasignado']; ?>" class="d-none">
                                 <tr>
                                     <th><?php echo $cntservicio; ?></th>
+                                    <th><?php echo $row2['idservicioasignado']; ?></th>
                                     <td><?php echo $row2['ServiceName'] ?></td>
                                     <td><?php echo $row2['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row2['Cost'] ?></td>
 
                                     <td><input type="text" name="propina" value="" placeholder="<?php echo $row2['propina'] ?>" class="form-control"></td>
-                                    <td><input type="submit" class="btn btn-danger" value="+" name="propina"></td>
+                                    <td><a href="propinas.php?idservicio=<?php echo $row2['idservicioasignado'] ?>">+</a></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>
                             <?php
@@ -267,12 +268,12 @@ $resultado = $stmt->fetch();
 
                     
                     <div class="col-3 mx-3">
-                        <label for="" class="form-label">Metodo de Pago</label>
+               
                         <!-- TABLA DE METODOS PAGO -->
                         <table class="table table-bordered" width="100%" border="1">
 
                             <tr>
-                                <th colspan="3">Detalle de Productos</th>
+                                <th colspan="3">pagos USD</th>
                             </tr>
                             <tr>
                                 <th>#</th>
@@ -283,7 +284,7 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing'");
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad ,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='usd'");
                             $cnt = 1;
                             $gtotal4 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
@@ -310,14 +311,64 @@ $resultado = $stmt->fetch();
 
                         </table>
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalmetodo">
-                            Agregar Pago
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
+                            Agregar Pago $
+                        </button>
+                       
+                    </div>
+
+                    <div class="col-3 mx-3">
+              
+                        <!-- TABLA DE METODOS PAGO -->
+                        <table class="table table-bordered" width="100%" border="1">
+
+                            <tr>
+                                <th colspan="3">Pagos BS.S</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Metodo Pago</th>
+                                <th>Monto</th>
+                                <th>Accion</th>
+                                <!-- <th>Costo</th> -->
+                            </tr>
+
+                            <?php
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='bs'");
+                            $cnt = 1;
+                            $gtotal5 = 0;
+                            while ($row = mysqli_fetch_array($ret)) {
+                            ?>
+                                 <input type="text" value="<?php echo $row['idcuenta']; ?>" name="idcuenta" class="d-none">
+                                <tr>
+                               
+                                    <th><?php echo $cnt; ?></th>
+                                    <td><?php echo $row['nombre'] ?></td>
+                                    <td><?php echo $montototal = $row['monto'] ?></td>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+
+                                </tr>
+                            <?php
+                           $subtotal5 = floatval($montototal);
+                           $gtotal5 += $subtotal5;
+                                $cnt = $cnt + 1;
+
+                             } ?>
+
+                            <hr>
+
+
+
+                        </table>
+
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalmetodobs">
+                            Agregar Pago BS
                         </button>
                     </div>
             </div>
 
             <h1>SALDO FINAL: <?php
-              $totalpago = ( $monto - $gtotal4  ); 
+              $totalpago = ( $monto - ($gtotal4 + $gtotal5)  ); 
                              if($totalpago<0){
                                 echo ($totalpago)*(-1);
                                 echo '$ Abono';
@@ -325,6 +376,19 @@ $resultado = $stmt->fetch();
                                 echo $totalpago;
                              }
             ?> 
+            <h1>SAlDO FINAL BS: <?php
+              $totalpago = floatval(( $monto - ($gtotal4 + $gtotal5) )* $tasa);
+              if($totalpago<0){
+                echo ($totalpago)*(-1);
+               
+             }else{
+                echo $totalpago;
+             } 
+                             
+            ?> 
+
+
+            </h1>
 
             <!-- DATOS A ENVIAR -->
          
@@ -465,7 +529,7 @@ $resultado = $stmt->fetch();
 
     <!-- FIN MODAL PRODUCTOS -->
 
-    <!-- Modal METODO PAGO -->
+    <!-- Modal METODO PAGO DOLARES -->
     <div class="modal fade" id="modalmetodo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -482,7 +546,63 @@ $resultado = $stmt->fetch();
 
 
                             <?php
-                            $consultabarber = "Select * from metodos_pago";
+                            $consultabarber = "Select * from metodos_pago where unidad='usd'";
+                            $list_barber = mysqli_query($conexion, $consultabarber);
+                            while ($row = mysqli_fetch_array($list_barber)) {
+                                echo "	<option value=" . $row['idmetodo'] . ">" . $row['nombre'] . "</option>";
+                            };
+                            ?>
+
+                        </select>
+                        
+                    
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label class="form-label" for="">cantidad</label>
+                                <input type="number" name="monto_pago" class="form-control" placeholder="$ / BS">
+                            </div>
+                        </div>
+
+                            
+                        <label class="form-label" for="">Detalle</label>
+                        <input type="text" name="detalles" value="" class="form-control mb-3">
+
+
+                        <!-- <label class="form-label" for="">Cantidad</label>
+                        <input class="form-control" type="number" name="cantidad" id=""> -->
+
+
+
+                        <input type="submit" class="btn btn-primary" name="asignarmetodousd" value="Guardar">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--FIN METODOS PAGOS MODAL DOLARES -->
+
+        <!-- Modal METODO PAGO BS -->
+        <div class="modal fade" id="modalmetodobs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos Bolivares</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="operacion/asignarpago.php" method="post">
+                        <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
+
+                        <label class="form-label" for="">Metodo Pago</label>
+                        <select name="idmetodo" class="form-control" id="">
+
+
+                            <?php
+                            $consultabarber = "Select * from metodos_pago where unidad='bs'";
                             $list_barber = mysqli_query($conexion, $consultabarber);
                             while ($row = mysqli_fetch_array($list_barber)) {
                                 echo "	<option value=" . $row['idmetodo'] . ">" . $row['nombre'] . "</option>";
@@ -493,18 +613,21 @@ $resultado = $stmt->fetch();
                         <div class="row">
                             <div class="col-sm-3">
                                 <label class="form-label" for="">cantidad</label>
-                                <input type="number" name="monto_pago" class="form-control" placeholder="$ / BS">
+                                <input type="number" name="monto_pagobs" class="form-control" placeholder="$ / BS">
                             </div>
                         </div>
-
+                        
+                        <input type="text" name="tasa" value="<?php echo $tasa ?>" class="d-none">
 
 
                         <!-- <label class="form-label" for="">Cantidad</label>
                         <input class="form-control" type="number" name="cantidad" id=""> -->
 
+                        <label class="form-label" for="">Detalle</label>
+                        <input type="text" name="detallesbs" value="" class="form-control mb-3">
 
 
-                        <input type="submit" class="btn btn-primary" name="asignarservicio" value="Guardar">
+                        <input type="submit" class="btn btn-primary" name="asignarmetodobs" value="Guardar">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -514,7 +637,7 @@ $resultado = $stmt->fetch();
             </div>
         </div>
     </div>
-    <!--FIN METODOS PAGOS MODAL -->
+    <!--FIN METODOS PAGOS MODAL BS -->
 
 </body>
 

@@ -40,7 +40,7 @@ include("../php/functions/validar.php");
                     <div class="card-body">
                         <h5 class="card-title">Metodos Pago</h5>
                         
-                        <a href="metodospago.php" class="btn btn-primary">Entrar</a>
+                        <a href="metodospagos.php" class="btn btn-primary">Entrar</a>
                     </div>
                     
                 </div>
