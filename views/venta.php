@@ -344,7 +344,8 @@ $resultado = $stmt->fetch();
                                
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $montototal = $row['monto'] ?></td>
+                                    <td><?php echo $montototalmostrar = intval($row['monto']) * $tasa ?></td>
+                                    <td class="d-none"><?php echo $montototal = $row['monto'] ?>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
 
                                 </tr>

@@ -27,7 +27,7 @@ include("../php/functions/validar.php");
                     <div class="card-body">
                         <h5 class="card-title">Cuentas por Cobrar</h5>
                         
-                        <a href="#" class="btn btn-primary">Entrar</a>
+                        <a href="cuentasxcobrar.php" class="btn btn-primary">Entrar</a>
                     </div>
                 </div>
             </div>
@@ -43,20 +43,9 @@ include("../php/functions/validar.php");
                 </div>
             </div>
 
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Config. Barbero</h5>
-                        
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
-                    
-                </div>
-            </div>
         </div>
 
-        <div class="row justify-content-center mt-5">
+        <!-- <div class="row justify-content-center mt-5">
             <div class="col-3">
                 <div class="card" style="width: 18rem;">
 
@@ -80,7 +69,7 @@ include("../php/functions/validar.php");
                     
                 </div>
             </div>
-        </div>
+        </div> -->
 
     
        

@@ -38,6 +38,11 @@ $resultado = $stmt->fetch();
         $stmt1->execute();
         $row1 = $stmt1->fetch();
 
+        $datostransacciones = "SELECT * FROM transacciones WHERE invoice='$billing'";
+        $stmt2 = $conn->prepare($datostransacciones);
+        $stmt2->execute();
+        $row2 = $stmt2->fetch();
+
 
         ?>
 
@@ -46,7 +51,7 @@ $resultado = $stmt->fetch();
                 <div class="col-md-3">
                     <a class="btn btn-danger" href="lista_facturas.php">Volver </a>
                 </div>
-                <div class="col-md-6 justify-content-center">
+                <div class="col-md-3 justify-content-center">
                     <form action="" method="post">
 
                         <label for="" class="form-label">Numero de Documento</label>
@@ -56,9 +61,15 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="col-md-3">
-                    <label for="" class="form-label">Fecha</label>
-                    <input class="form-control" type="text" name="" value="<?php echo $row1['PostingDate'] ?>" id="">
+                    <label for="" class="form-label">Fecha Creado</label>
+                    <input class="form-control" type="text" name="" value="<?php echo $row1['PostingDate'] ?>" id="" disabled>
+                   
                 </div>
+                <div class="col-md-3">
+                <label for="" class="form-label">Fecha Totalizado</label>
+                    <input class="form-control" type="text" name="" value="<?php echo $row2['fecha_creacion'] ?>" id="" disabled>
+                </div>
+                
             </div>
             <div class="">
 
@@ -150,7 +161,7 @@ $resultado = $stmt->fetch();
                                     <td><?php echo $row['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row['Cost'] ?></td>
 
-                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row['propina'] ?>" class="form-control"></td>
+                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row['propina'] ?>" class="form-control" disabled></td>
                                     <!-- <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td> -->
                                 </tr>
                             <?php
@@ -261,6 +272,110 @@ $resultado = $stmt->fetch();
                         <?php $montototal = floatval($monto); ?>
                         <input type="text" name="montototal" value="<?php echo $montototal; ?>" class="d-none">
 
+                    </div>
+
+                    <div class="col-3 mx-3">
+               
+                        <!-- TABLA DE METODOS PAGO -->
+                        <table class="table table-bordered" width="100%" border="1">
+
+                            <tr>
+                                <th colspan="3">pagos USD</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Metodo Pago</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Accion</th>
+                                <!-- <th>Costo</th> -->
+                            </tr>
+
+                            <?php
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad ,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre,cuentas_cobrar.fecha_creacion FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='usd'");
+                            $cnt = 1;
+                            $gtotal4 = 0;
+                            while ($row = mysqli_fetch_array($ret)) {
+                            ?>
+                                 <input type="text" value="<?php echo $row['idcuenta']; ?>" name="idcuenta" class="d-none">
+                                <tr>
+                               
+                                    <th><?php echo $cnt; ?></th>
+                                    <td><?php echo $row['nombre'] ?></td>
+                                    <td><?php echo $montototal = $row['monto'] ?></td>
+                                    <td><?php echo $row['fecha_creacion'] ?></td>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+
+                                </tr>
+                            <?php
+                           $subtotal4 = floatval($montototal);
+                           $gtotal4 += $subtotal4;
+                                $cnt = $cnt + 1;
+
+                             } ?>
+
+                            <hr>
+
+
+
+                        </table>
+
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
+                            Agregar Pago $
+                        </button>
+                       
+                    </div>
+
+                    <div class="col-3 mx-3">
+              
+                        <!-- TABLA DE METODOS PAGO -->
+                        <table class="table table-bordered" width="100%" border="1">
+
+                            <tr>
+                                <th colspan="3">Pagos BS.S</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Metodo Pago</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Accion</th>
+                           
+                            </tr>
+
+                            <?php
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre,cuentas_cobrar.fecha_creacion FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='bs'");
+                            $cnt = 1;
+                            $gtotal5 = 0;
+                            while ($row = mysqli_fetch_array($ret)) {
+                            ?>
+                                 <input type="text" value="<?php echo $row['idcuenta']; ?>" name="idcuenta" class="d-none">
+                                <tr>
+                               
+                                    <th><?php echo $cnt; ?></th>
+                                    <td><?php echo $row['nombre'] ?></td>
+                                    <td><?php echo $montototalmostrar = intval($row['monto']) * $tasa ?></td>
+                                    <td><?php echo $row['fecha_creacion'] ?></td>
+                                    <td class="d-none"><?php echo $montototal = $row['monto'] ?>
+                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+
+                                </tr>
+                            <?php
+                           $subtotal5 = floatval($montototal);
+                           $gtotal5 += $subtotal5;
+                                $cnt = $cnt + 1;
+
+                             } ?>
+
+                            <hr>
+
+
+
+                        </table>
+
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalmetodobs">
+                            Agregar Pago BS
+                        </button>
                     </div>
 
                     
