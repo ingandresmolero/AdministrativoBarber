@@ -16,7 +16,7 @@ $stmt->execute();
 
 $resultado = $stmt->fetchAll();
 
-$usuarios_x_pagina = 3;
+$usuarios_x_pagina = 10;
 
 $total_usuario = $stmt->rowCount();
 
