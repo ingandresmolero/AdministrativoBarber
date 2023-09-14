@@ -57,25 +57,15 @@ include("../php/functions/tasa.php");
             </div>
 
 
-        <?php } else if ($rol == 'servidor') { ?>
+        <?php } else if ($rol == 'usuario')  { ?>
 
             <div class="elements">
 
-                <a href="lista_facturas.php" class="item">
-
-                    <img src="../img/icons/inventario.png">
-                    <p class="card-title">Reportes</p>
-                </a>
-                <a href="stock.php" class="item">
-                    <a href="lista_facturas.php" class="item">
+               
+                    <a href="ServiciosRealizados.php" class="item">
 
                         <img src="../img/icons/inventario.png">
-                        <p class="card-title">MI Informacion</p>
-                    </a>
-                    <a href="stock.php" class="item">
-
-                        <img src="../img/icons/inventario.png">
-                        <p class="card-title">Servicios</p>
+                        <p class="card-title">Servicios Realizados</p>
                     </a>
                     <a href="tasa.php" class="item">
 
@@ -91,6 +81,11 @@ include("../php/functions/tasa.php");
                     <a href="facturas.php" class="item">
                         <img src="../img/icons/operaciones.png">
                         <p class="card-title">Clientes Atendidos</p>
+
+                    </a>
+                    <a href="facturas.php" class="item">
+                        <img src="../img/icons/operaciones.png">
+                        <p class="card-title">Reportes</p>
 
                     </a>
             </div>
@@ -141,14 +136,6 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Mantenimiento Usuarios</p>
                 </a>
-
-                <a href="configuracion.php" class="item">
-                    <img src="../img/icons/configuracion.png">
-                    <p class="card-title">Configuracion</p>
-                </a>
-            </div>
-            <div class="elements">
-
                 <a href="consumo_interno.php" class="item">
 
                     <img src="../img/icons/inventario.png">
@@ -161,7 +148,12 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Vales</p>
                 </a>
 
+                <a href="configuracion.php" class="item">
+                    <img src="../img/icons/configuracion.png">
+                    <p class="card-title">Configuracion</p>
+                </a>
             </div>
+         
         <?php }; ?>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

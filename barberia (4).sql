@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-06-2023 a las 03:51:28
+-- Tiempo de generación: 13-09-2023 a las 17:33:59
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -24,6 +24,39 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cuentas_cobrar`
+--
+
+CREATE TABLE `cuentas_cobrar` (
+  `idcuenta` int NOT NULL,
+  `invoice` int NOT NULL,
+  `idmetodo` int NOT NULL,
+  `monto` varchar(45) NOT NULL,
+  `detalle` varchar(100) NOT NULL,
+  `fecha_creacion` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `cuentas_cobrar`
+--
+
+INSERT INTO `cuentas_cobrar` (`idcuenta`, `invoice`, `idmetodo`, `monto`, `detalle`, `fecha_creacion`) VALUES
+(8, 28, 1, '20', '', '26/07/2023'),
+(9, 31, 1, '2', '', '26/07/2023'),
+(10, 32, 4, '23', '', '26/07/2023'),
+(12, 27, 1, '15', '', '01/08/2023'),
+(30, 34, 2, '17', '', '14/08/2023'),
+(31, 34, 1, '10', '', '14/08/2023'),
+(32, 34, 2, '7', '', '14/08/2023'),
+(33, 35, 2, '32', 'ref 1234', '18/08/2023'),
+(34, 35, 1, '20', 'deja en fondo', '18/08/2023'),
+(55, 36, 1, '20', '', '06/09/2023'),
+(56, 36, 2, '140', '', '06/09/2023'),
+(57, 30, 2, '840', '', '06/09/2023');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `facturas`
 --
 
@@ -32,9 +65,9 @@ CREATE TABLE `facturas` (
   `usuario` varchar(45) NOT NULL,
   `id_customer` int NOT NULL DEFAULT '0',
   `billing` varchar(45) NOT NULL DEFAULT '0',
-  `barbero` varchar(45) NOT NULL,
-  `id_services` int NOT NULL DEFAULT '0',
-  `id_products` int NOT NULL DEFAULT '0',
+  `id_services` varchar(25) NOT NULL DEFAULT '0',
+  `id_products` varchar(25) NOT NULL DEFAULT '0',
+  `barbero` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
   `monto` varchar(45) NOT NULL DEFAULT '0',
   `detalle` varchar(45) NOT NULL DEFAULT '0',
   `estado` varchar(45) NOT NULL DEFAULT '0',
@@ -48,8 +81,30 @@ CREATE TABLE `facturas` (
 -- Volcado de datos para la tabla `facturas`
 --
 
-INSERT INTO `facturas` (`id_factura`, `usuario`, `id_customer`, `billing`, `barbero`, `id_services`, `id_products`, `monto`, `detalle`, `estado`, `metodo`, `abono`, `tasa`, `fecha`) VALUES
-(3, '1', 24, '992472958', '', 26, 8, '53', '0', '0', '0', '0', '0', '0');
+INSERT INTO `facturas` (`id_factura`, `usuario`, `id_customer`, `billing`, `id_services`, `id_products`, `barbero`, `monto`, `detalle`, `estado`, `metodo`, `abono`, `tasa`, `fecha`) VALUES
+(3, '1', 24, '992472958', '0', '0', '', '53', '0', '0', '0', '0', '0', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `metodos_pago`
+--
+
+CREATE TABLE `metodos_pago` (
+  `idmetodo` int NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `unidad` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `metodos_pago`
+--
+
+INSERT INTO `metodos_pago` (`idmetodo`, `nombre`, `unidad`) VALUES
+(1, 'Efectivo', 'usd'),
+(2, 'Bs Pago Movil', 'bs'),
+(4, 'Binance', 'usd'),
+(5, 'Zelle', 'usd');
 
 -- --------------------------------------------------------
 
@@ -69,7 +124,7 @@ CREATE TABLE `tasabs` (
 --
 
 INSERT INTO `tasabs` (`id_tasa`, `fecha_creacion`, `monto_bcv`, `monto_paral`) VALUES
-(1, '17.05.23', '27', '28');
+(1, '13.06.23', '28', '');
 
 -- --------------------------------------------------------
 
@@ -94,9 +149,11 @@ CREATE TABLE `tbladmin` (
 
 INSERT INTO `tbladmin` (`ID`, `AdminName`, `UserName`, `MobileNumber`, `Email`, `Password`, `AdminRegdate`, `Role`) VALUES
 (1, 'Administrador', 'admin', 7898799798, 'msevillab@cweb.com', '21232f297a57a5a743894a0e4a801fc3', '2019-07-25 06:21:50', 'admin'),
-(2, 'Andre', 'Andre', 5464121813, 'andre@algo.com', 'cosa', '2023-03-02 01:17:56', ''),
 (3, 'pingudev', 'pingudev', 123456, 'administrativo3@onserviceve.com', '81dc9bdb52d04dc20036dbd8313ed055', '2023-03-14 19:50:53', 'manager'),
-(4, 'andres', 'armo', 424610413, 'ing.andresmolero@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2023-06-08 13:05:18', 'barber');
+(4, 'andres', 'armo', 424610413, 'ing.andresmolero@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2023-06-08 13:05:18', 'servidor'),
+(14, 'FERNANDO', '01', NULL, NULL, '1234', '2023-08-18 15:16:52', 'usuario'),
+(15, 'armo', 'armo', NULL, NULL, '1234', '2023-09-06 18:20:11', 'usuario'),
+(16, 'pingu', 'pingu', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', '2023-09-06 18:22:41', 'usuario');
 
 -- --------------------------------------------------------
 
@@ -153,7 +210,27 @@ CREATE TABLE `tblassignedproducts` (
 
 INSERT INTO `tblassignedproducts` (`id_assigned`, `invoice`, `id_products`, `cantidad`, `monto`) VALUES
 (28, 992472958, 8, 1, '10'),
-(37, 237544137, 12, 1, '');
+(37, 237544137, 12, 1, ''),
+(38, 755135508, 12, 1, '1.5'),
+(39, 682007570, 12, 1, '1.5'),
+(40, 440488161, 9, 1, ''),
+(41, 557968476, 9, 1, ''),
+(42, 21, 5, 1, ''),
+(44, 23, 11, 1, ''),
+(45, 24, 5, 0, ''),
+(46, 28, 8, 2, ''),
+(48, 29, 8, 3, ''),
+(49, 26, 9, 2, ''),
+(50, 31, 10, 1, ''),
+(51, 32, 7, 1, ''),
+(52, 33, 9, 1, ''),
+(57, 27, 8, 2, ''),
+(58, 34, 7, 1, ''),
+(59, 34, 8, 1, ''),
+(62, 34, 12, 1, '1.5'),
+(67, 35, 17, 1, '10'),
+(68, 37, 17, 1, '10'),
+(69, 30, 17, 3, '10');
 
 -- --------------------------------------------------------
 
@@ -162,12 +239,33 @@ INSERT INTO `tblassignedproducts` (`id_assigned`, `invoice`, `id_products`, `can
 --
 
 CREATE TABLE `tblassignedservice` (
-  `id_service` int NOT NULL,
-  `billing` int NOT NULL,
+  `idservicioasignado` int NOT NULL,
+  `invoice` int NOT NULL,
   `servicio` int NOT NULL,
-  `cantidad` varchar(45) NOT NULL DEFAULT '1',
-  `detalle` varchar(45) NOT NULL DEFAULT '0'
+  `idbarbero` int NOT NULL,
+  `cantidad` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `detalle` varchar(45) NOT NULL DEFAULT '0',
+  `propina` varchar(20) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `tblassignedservice`
+--
+
+INSERT INTO `tblassignedservice` (`idservicioasignado`, `invoice`, `servicio`, `idbarbero`, `cantidad`, `detalle`, `propina`) VALUES
+(13, 29, 20, 5, '1', '0', '0'),
+(14, 29, 23, 9, '1', '0', '0'),
+(15, 32, 20, 8, '1', '0', '0'),
+(16, 33, 20, 3, '1', '0', '0'),
+(20, 20, 20, 3, '1', '0', '0'),
+(21, 30, 20, 3, '1', '0', '0'),
+(24, 30, 20, 3, '1', '0', '0'),
+(25, 27, 20, 3, '1', '0', '0'),
+(27, 34, 20, 3, '1', 'otra prueba', '10'),
+(29, 35, 23, 17, '1', '0', '0'),
+(30, 35, 20, 17, '1', '0', '0'),
+(31, 36, 20, 18, '1', 'REGALO', '30'),
+(32, 36, 22, 17, '1', '', '40');
 
 -- --------------------------------------------------------
 
@@ -180,26 +278,43 @@ CREATE TABLE `tblbarber` (
   `nombre` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `porcentaje` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `usuario` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pass` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `pass` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Codigo` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-',
+  `Puesto` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-',
+  `Telefono` varchar(45) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tblbarber`
 --
 
-INSERT INTO `tblbarber` (`idbarber`, `nombre`, `porcentaje`, `usuario`, `pass`) VALUES
-(3, 'Fernando', '10', 'Fernando', '81dc9bdb52d04dc20036dbd8313ed055'),
-(4, 'Jose Lopez', '10', 'JoseL', '81dc9bdb52d04dc20036dbd8313ed055'),
-(5, 'Anthony', '10', 'Anthony', '81dc9bdb52d04dc20036dbd8313ed055'),
-(6, 'Jose Toto', '', 'Toto', '81dc9bdb52d04dc20036dbd8313ed055'),
-(7, 'Exon', '10', 'Exon', '81dc9bdb52d04dc20036dbd8313ed055'),
-(8, 'Pedro', '10', 'Pedro', '81dc9bdb52d04dc20036dbd8313ed055'),
-(9, 'Belkis', '10', 'Belkis', '81dc9bdb52d04dc20036dbd8313ed055'),
-(10, 'Jessica', '10', 'Jessica', '81dc9bdb52d04dc20036dbd8313ed055'),
-(11, 'Wuyll', '10', 'Wuyll', '81dc9bdb52d04dc20036dbd8313ed055'),
-(12, 'Mariby', '10', 'Mariby', '81dc9bdb52d04dc20036dbd8313ed055'),
-(13, 'William', '10', 'William', '81dc9bdb52d04dc20036dbd8313ed055'),
-(14, 'Michelle Perez', '10', 'Michelle', '81dc9bdb52d04dc20036dbd8313ed055');
+INSERT INTO `tblbarber` (`idbarber`, `nombre`, `porcentaje`, `usuario`, `pass`, `Codigo`, `Puesto`, `Telefono`) VALUES
+(17, 'rodney', '0', 'rodney', '1234', '0', '0', '0'),
+(18, 'FERNANDO', '15', '', '1234', '01', '01', '04246104132'),
+(19, 'armo', '0', 'armo', '1234', '0', '0', '0'),
+(20, 'pingu', '0', 'pingu', '81dc9bdb52d04dc20036dbd8313ed055', '0', '0', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tblconfig`
+--
+
+CREATE TABLE `tblconfig` (
+  `id_empresa` int NOT NULL,
+  `nombre_empresa` varchar(45) DEFAULT NULL,
+  `razon_social` varchar(45) DEFAULT NULL,
+  `direccion` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `NControl` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `tblconfig`
+--
+
+INSERT INTO `tblconfig` (`id_empresa`, `nombre_empresa`, `razon_social`, `direccion`, `telefono`, `NControl`) VALUES
+(1, 'Barberia Activo C.A', '123456', 'maracaibo', '12345678', 38);
 
 -- --------------------------------------------------------
 
@@ -214,6 +329,7 @@ CREATE TABLE `tblcustomers` (
   `Email` varchar(200) DEFAULT NULL,
   `MobileNumber` bigint DEFAULT NULL,
   `Gender` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `cedula` varchar(45) NOT NULL,
   `Details` mediumtext,
   `assignedBy` varchar(45) NOT NULL,
   `CreationDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -224,10 +340,23 @@ CREATE TABLE `tblcustomers` (
 -- Volcado de datos para la tabla `tblcustomers`
 --
 
-INSERT INTO `tblcustomers` (`ID`, `Name`, `assignedbarber`, `Email`, `MobileNumber`, `Gender`, `Details`, `assignedBy`, `CreationDate`, `UpdationDate`) VALUES
-(24, 'andres molero', 'Anthony', NULL, NULL, 'Interno', '', '1', '2023-06-12 12:48:40', NULL),
-(25, 'Testo', 'Fernando', NULL, NULL, 'Eventual', '', '1', '2023-06-12 13:59:17', NULL),
-(26, 'fernando', 'Pedro', NULL, NULL, 'Cortesia', '', '1', '2023-06-12 18:44:26', NULL);
+INSERT INTO `tblcustomers` (`ID`, `Name`, `assignedbarber`, `Email`, `MobileNumber`, `Gender`, `cedula`, `Details`, `assignedBy`, `CreationDate`, `UpdationDate`) VALUES
+(24, 'andres molero', 'Anthony', NULL, NULL, 'Interno', '', '', '1', '2023-06-12 12:48:40', NULL),
+(25, 'Testo', 'Fernando', NULL, NULL, 'Eventual', '', '', '1', '2023-06-12 13:59:17', NULL),
+(26, 'fernando', 'Pedro', NULL, NULL, 'Cortesia', '', '', '1', '2023-06-12 18:44:26', NULL),
+(27, 'daybelin', 'Jose', NULL, NULL, 'Cortesia', '', '', '1', '2023-06-13 15:27:26', NULL),
+(28, 'adrinka', 'Anthony', NULL, NULL, 'Eventual', '', '', '1', '2023-06-13 15:30:27', NULL),
+(29, 'Kelly', 'Fernando', NULL, NULL, 'Cortesia', '', '', '1', '2023-06-13 18:28:50', NULL),
+(30, 'Fer', 'Fernando', NULL, NULL, 'Interno', '', '', '1', '2023-06-13 18:36:41', NULL),
+(31, 'maryory', 'Pedro', NULL, NULL, 'Eventual', '', '', '1', '2023-06-30 01:59:18', NULL),
+(32, 'andres', '3', '0', 0, 'eventual', '25673277', '0', '1', '2023-07-19 15:10:36', NULL),
+(33, 'Sofia', 'Pedro', '0', 0, 'vip', '29000', '0', '1', '2023-07-19 15:13:18', NULL),
+(34, 'Adrinka', 'Belkis', '0', 0, 'interno', '', '0', '1', '2023-07-19 15:15:18', NULL),
+(35, 'David Ortega', '0', '0', 0, 'interno', '123456', '0', '1', '2023-07-19 15:34:39', NULL),
+(36, 'Nestor Gutierrez', '0', '0', 0, 'cortesia', '19576368', '0', '', '2023-07-19 15:44:39', NULL),
+(37, 'Luis Duran', '0', '0', 0, 'eventual', '1234567', '0', '', '2023-07-20 14:24:56', NULL),
+(38, 'martia', '0', '0', 0, 'interno', '123456', '0', '', '2023-07-20 14:43:00', NULL),
+(39, 'peche', '0', '0', 0, 'interno', '12804410', '0', '', '2023-08-18 15:10:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -250,10 +379,16 @@ CREATE TABLE `tblinvoice` (
 --
 
 INSERT INTO `tblinvoice` (`id`, `Userid`, `ServiceId`, `AssignedUserID`, `BillingId`, `PostingDate`, `estado`) VALUES
-(74, 24, 20, 1, 992472958, '2023-06-12 12:48:47', 'procesada'),
-(75, 24, 26, 1, 992472958, '2023-06-12 12:48:47', 'procesada'),
-(76, 25, 24, 1, 237544137, '2023-06-12 13:59:23', 'pendiente'),
-(80, 26, 28, 1, 361232179, '2023-06-12 18:44:41', 'pendiente');
+(94, 36, 23, 1, 23, '2023-07-19 18:14:37', 'pendiente'),
+(103, 38, 20, 3, 29, '2023-07-20 14:59:30', 'pagado'),
+(104, 38, NULL, 1, 30, '2023-07-25 18:35:35', 'pagado'),
+(105, 32, NULL, 1, 31, '2023-07-26 14:20:42', 'pagado'),
+(106, 38, NULL, 3, 32, '2023-07-26 17:03:55', 'pagado'),
+(107, 25, NULL, 1, 33, '2023-07-26 17:25:45', 'pagado'),
+(108, 24, NULL, 3, 34, '2023-08-01 15:26:54', 'pagado'),
+(109, 36, NULL, 1, 35, '2023-08-18 14:40:02', 'pagado'),
+(110, 39, NULL, 1, 36, '2023-08-18 15:10:24', 'pagado'),
+(111, 39, NULL, 1, 37, '2023-08-18 15:10:36', 'pagado');
 
 -- --------------------------------------------------------
 
@@ -299,17 +434,7 @@ CREATE TABLE `tblproducts` (
 --
 
 INSERT INTO `tblproducts` (`idproducts`, `nombre`, `cantidad`, `precio`, `deposito`) VALUES
-(5, 'Cera roqvel', 5, '10', 'Belleza'),
-(6, 'Cera Nishman', 5, '12', 'Belleza'),
-(7, 'After Shave', 5, '10', 'Belleza'),
-(8, 'Cera Polvo', 5, '10', 'Belleza'),
-(9, 'Coca-Cola', 10, '1', 'Bebida'),
-(10, 'Te', 5, '2', 'Bebida'),
-(11, 'Redbull', 5, '4', 'Bebida'),
-(12, 'Dorito', 5, '1.5', 'Snack'),
-(13, 'Pepito', 5, '1.5', 'Snack'),
-(14, 'Maquina', 1, '50', 'Otros'),
-(15, 'Cera Rolda', 30, '2', 'Belleza');
+(17, 'dorito', -4, '10', 'snacks');
 
 -- --------------------------------------------------------
 
@@ -339,15 +464,81 @@ INSERT INTO `tblservices` (`ID`, `ServiceName`, `Cost`, `CreationDate`) VALUES
 (28, 'Peinado', 5, '2023-05-17 15:36:01'),
 (29, 'Consumo Interno', 0, '2023-06-09 16:20:45');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transacciones`
+--
+
+CREATE TABLE `transacciones` (
+  `idtransac` int NOT NULL,
+  `invoice` int NOT NULL,
+  `monto_total` varchar(45) NOT NULL,
+  `tasa_dia` varchar(45) NOT NULL,
+  `estatus` varchar(45) NOT NULL,
+  `monto_cancelado` varchar(45) NOT NULL,
+  `fecha_creacion` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `transacciones`
+--
+
+INSERT INTO `transacciones` (`idtransac`, `invoice`, `monto_total`, `tasa_dia`, `estatus`, `monto_cancelado`, `fecha_creacion`) VALUES
+(1, 29, '53', '28', 'Totalizado', '53', '26/07/2023'),
+(2, 28, '20', '28', 'Totalizado', '20', '26/07/2023'),
+(8, 35, '33', '28', 'Abono', '33', '18/08/2023'),
+(9, 37, '10', '28', 'Restante', '10', '18/08/2023'),
+(10, 29, '0', '28', 'Totalizado', '0', '18/08/2023'),
+(11, 36, '25', '28', 'Totalizado', '25', '06/09/2023'),
+(12, 30, '30', '28', 'Totalizado', '30', '06/09/2023');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vales`
+--
+
+CREATE TABLE `vales` (
+  `idvale` int NOT NULL,
+  `idbarber` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `monto` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `detalle` varchar(200) NOT NULL,
+  `fecha` varchar(45) NOT NULL,
+  `metodo_pago` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `vales`
+--
+
+INSERT INTO `vales` (`idvale`, `idbarber`, `monto`, `detalle`, `fecha`, `metodo_pago`) VALUES
+(1, '3', '20', 'Prueba', '01-08-2023', '1'),
+(2, '3', '20', 'Prueba', '01-08-2023', '1'),
+(3, '6', '60bs', 'Prueba', '01-08-2023', '2'),
+(4, '17', '50', 'Prueba', '18-08-2023', '1');
+
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `cuentas_cobrar`
+--
+ALTER TABLE `cuentas_cobrar`
+  ADD PRIMARY KEY (`idcuenta`);
 
 --
 -- Indices de la tabla `facturas`
 --
 ALTER TABLE `facturas`
   ADD PRIMARY KEY (`id_factura`);
+
+--
+-- Indices de la tabla `metodos_pago`
+--
+ALTER TABLE `metodos_pago`
+  ADD PRIMARY KEY (`idmetodo`);
 
 --
 -- Indices de la tabla `tasabs`
@@ -377,13 +568,19 @@ ALTER TABLE `tblassignedproducts`
 -- Indices de la tabla `tblassignedservice`
 --
 ALTER TABLE `tblassignedservice`
-  ADD PRIMARY KEY (`id_service`);
+  ADD PRIMARY KEY (`idservicioasignado`);
 
 --
 -- Indices de la tabla `tblbarber`
 --
 ALTER TABLE `tblbarber`
   ADD PRIMARY KEY (`idbarber`);
+
+--
+-- Indices de la tabla `tblconfig`
+--
+ALTER TABLE `tblconfig`
+  ADD PRIMARY KEY (`id_empresa`);
 
 --
 -- Indices de la tabla `tblcustomers`
@@ -418,14 +615,38 @@ ALTER TABLE `tblservices`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indices de la tabla `transacciones`
+--
+ALTER TABLE `transacciones`
+  ADD PRIMARY KEY (`idtransac`);
+
+--
+-- Indices de la tabla `vales`
+--
+ALTER TABLE `vales`
+  ADD PRIMARY KEY (`idvale`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `cuentas_cobrar`
+--
+ALTER TABLE `cuentas_cobrar`
+  MODIFY `idcuenta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `id_factura` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_factura` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `metodos_pago`
+--
+ALTER TABLE `metodos_pago`
+  MODIFY `idmetodo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tasabs`
@@ -437,7 +658,7 @@ ALTER TABLE `tasabs`
 -- AUTO_INCREMENT de la tabla `tbladmin`
 --
 ALTER TABLE `tbladmin`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tblappointment`
@@ -449,31 +670,37 @@ ALTER TABLE `tblappointment`
 -- AUTO_INCREMENT de la tabla `tblassignedproducts`
 --
 ALTER TABLE `tblassignedproducts`
-  MODIFY `id_assigned` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_assigned` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `tblassignedservice`
 --
 ALTER TABLE `tblassignedservice`
-  MODIFY `id_service` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idservicioasignado` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `tblbarber`
 --
 ALTER TABLE `tblbarber`
-  MODIFY `idbarber` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idbarber` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `tblconfig`
+--
+ALTER TABLE `tblconfig`
+  MODIFY `id_empresa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tblcustomers`
 --
 ALTER TABLE `tblcustomers`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `tblinvoice`
 --
 ALTER TABLE `tblinvoice`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT de la tabla `tblpage`
@@ -485,13 +712,25 @@ ALTER TABLE `tblpage`
 -- AUTO_INCREMENT de la tabla `tblproducts`
 --
 ALTER TABLE `tblproducts`
-  MODIFY `idproducts` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idproducts` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `tblservices`
 --
 ALTER TABLE `tblservices`
   MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT de la tabla `transacciones`
+--
+ALTER TABLE `transacciones`
+  MODIFY `idtransac` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `vales`
+--
+ALTER TABLE `vales`
+  MODIFY `idvale` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

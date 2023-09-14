@@ -9,6 +9,7 @@
         echo "<center><h1>Usuario y contrasena no deben estar vacios</h1></center>";
 
 }else{
+    
     $username =$_POST["usuario"];
     $passw=md5($_POST["passw"]);
     $query=$conn->prepare("SELECT * FROM tbladmin WHERE UserName='$username' and Password='$passw'");

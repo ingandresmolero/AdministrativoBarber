@@ -49,7 +49,7 @@ $resultado = $stmt->fetch();
         <section class="container-sm  card  p-3 shadow p-3 mb-5 bg-white rounded mt-5">
             <div class=" row ">
                 <div class="col-md-3">
-                    <a class="btn btn-danger" href="lista_facturas.php">Volver </a>
+                    <a class="btn btn-danger" href="facturas.php">Volver </a>
                 </div>
                 <div class="col-md-3 justify-content-center">
                     <form action="" method="post">
@@ -321,7 +321,7 @@ $resultado = $stmt->fetch();
                         </table>
 
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
-                            Agregar Pago $
+                            Agregar Abono Pago $
                         </button>
                        
                     </div>
@@ -344,7 +344,7 @@ $resultado = $stmt->fetch();
                             </tr>
 
                             <?php
-                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre,cuentas_cobrar.fecha_creacion FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='bs'");
+                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, metodos_pago.unidad,cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre, cuentas_cobrar.fecha_creacion FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing' AND unidad='bs'");
                             $cnt = 1;
                             $gtotal5 = 0;
                             while ($row = mysqli_fetch_array($ret)) {
@@ -354,9 +354,9 @@ $resultado = $stmt->fetch();
                                
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $montototalmostrar = intval($row['monto']) * $tasa ?></td>
-                                    <td><?php echo $row['fecha_creacion'] ?></td>
-                                    <td class="d-none"><?php echo $montototal = $row['monto'] ?>
+                                    <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
+                                    <td><?php echo $row['fecha_creacion']; ?></td>
+                                    <td class="d-none"><?php echo $montototal = $row['monto'] / $tasa ?>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
 
                                 </tr>
@@ -374,70 +374,34 @@ $resultado = $stmt->fetch();
                         </table>
 
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalmetodobs">
-                            Agregar Pago BS
+                            Agregar Abono Pago BS
                         </button>
                     </div>
-
-                    
-                    <!-- <div class="col-3 mx-3">
-                        <label for="" class="form-label">Metodo de Pago</label>
-                        
-                        <table class="table table-bordered" width="100%" border="1">
-
-                            <tr>
-                                <th colspan="3">Detalle de Productos</th>
-                            </tr>
-                            <tr>
-                                <th>#</th>
-                                <th>Metodo Pago</th>
-                                <th>Monto</th>
-                                <th>Accion</th>
-                                 <th>Costo</th> 
-                            </tr>
-
-                            <?php
-                            $ret = mysqli_query($conexion, "SELECT cuentas_cobrar.idcuenta, cuentas_cobrar.invoice,cuentas_cobrar.monto,metodos_pago.nombre FROM cuentas_cobrar JOIN metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo where invoice='$billing'");
-                            $cnt = 1;
-                            $gtotal4 = 0;
-                            while ($row = mysqli_fetch_array($ret)) {
-                            ?>
-                                 <input type="text" value="<?php echo $row['idcuenta']; ?>" name="idcuenta" class="d-none">
-                                <tr>
-                               
-                                    <th><?php echo $cnt; ?></th>
-                                    <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $montototal = $row['monto'] ?></td>
-                                    <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
-
-                                </tr>
-                            <?php
-                           $subtotal4 = floatval($montototal);
-                           $gtotal4 += $subtotal4;
-                                $cnt = $cnt + 1;
-
-                             } ?>
-
-                            <hr>
-
-
-
-                        </table>
-
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalmetodo">
-                            Agregar Pago
-                        </button>
-                    </div> -->
             </div>
 
-            <h1>SALDO FINAL: <?php
-              $totalpago = ( $monto - $gtotal4  ); 
+                    
+                    <h1>SALDO FINAL: <?php
+              $totalpago = round( ($monto - ($gtotal4 + $gtotal5)), 2, PHP_ROUND_HALF_ODD  ); 
                              if($totalpago<0){
-                                echo ($totalpago)*(-1);
+                                echo ( $totalpago)*(-1);
                                 echo '$ Abono';
                              }else{
                                 echo $totalpago;
                              }
             ?> 
+            <h1>SAlDO FINAL BS: <?php
+              $totalpago = floatval(( $monto - ($gtotal4 + $gtotal5) )* $tasa);
+              if($totalpago<0){
+                echo ($totalpago)*(-1);
+               
+             }else{
+                echo $totalpago;
+             } 
+            
+            ?> 
+
+
+            </h1>
 
             <!-- DATOS A ENVIAR -->
          

@@ -4,7 +4,7 @@
     if(isset($_POST['crear'])){
         $nombre = $_POST['nombre'];
         $usuario = $_POST['usuario'];
-        $contrasena = $_POST['clave'];
+        $contrasena = md5($_POST['clave']);
         $rol = $_POST['rol'];
         
 

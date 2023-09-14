@@ -269,7 +269,7 @@ $resultado = $stmt->fetch();
                     
                     <div class="col-3 mx-3">
                
-                        <!-- TABLA DE METODOS PAGO -->
+                        <!-- TABLA DE METODOS PAGO DOLARES -->
                         <table class="table table-bordered" width="100%" border="1">
 
                             <tr>
@@ -294,7 +294,7 @@ $resultado = $stmt->fetch();
                                
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $montototal = $row['monto'] ?></td>
+                                    <td><?php echo $montototal = floatval($row['monto']) ?></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
 
                                 </tr>
@@ -319,7 +319,7 @@ $resultado = $stmt->fetch();
 
                     <div class="col-3 mx-3">
               
-                        <!-- TABLA DE METODOS PAGO -->
+                        <!-- TABLA DE METODOS PAGO BOLIVARES-->
                         <table class="table table-bordered" width="100%" border="1">
 
                             <tr>
@@ -344,8 +344,8 @@ $resultado = $stmt->fetch();
                                
                                     <th><?php echo $cnt; ?></th>
                                     <td><?php echo $row['nombre'] ?></td>
-                                    <td><?php echo $montototalmostrar = intval($row['monto']) * $tasa ?></td>
-                                    <td class="d-none"><?php echo $montototal = $row['monto'] ?>
+                                    <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
+                                    <td class="d-none"><?php echo $montototal = $row['monto'] / $tasa ?>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
 
                                 </tr>
@@ -369,9 +369,9 @@ $resultado = $stmt->fetch();
             </div>
 
             <h1>SALDO FINAL: <?php
-              $totalpago = ( $monto - ($gtotal4 + $gtotal5)  ); 
+              $totalpago = round( ($monto - ($gtotal4 + $gtotal5)), 2, PHP_ROUND_HALF_ODD  ); 
                              if($totalpago<0){
-                                echo ($totalpago)*(-1);
+                                echo ( $totalpago)*(-1);
                                 echo '$ Abono';
                              }else{
                                 echo $totalpago;
@@ -385,7 +385,7 @@ $resultado = $stmt->fetch();
              }else{
                 echo $totalpago;
              } 
-                             
+            
             ?> 
 
 
@@ -513,7 +513,7 @@ $resultado = $stmt->fetch();
 
 
                         <label class="form-label" for="">Cantidad</label>
-                        <input class="form-control" type="number" name="cantidad" id="">
+                        <input class="form-control" type="text" name="cantidad" id="">
 
 
 
@@ -560,7 +560,7 @@ $resultado = $stmt->fetch();
                         <div class="row">
                             <div class="col-sm-3">
                                 <label class="form-label" for="">cantidad</label>
-                                <input type="number" name="monto_pago" class="form-control" placeholder="$ / BS">
+                                <input type="text" name="monto_pago" class="form-control" placeholder="$ / BS">
                             </div>
                         </div>
 
@@ -614,7 +614,7 @@ $resultado = $stmt->fetch();
                         <div class="row">
                             <div class="col-sm-3">
                                 <label class="form-label" for="">cantidad</label>
-                                <input type="number" name="monto_pagobs" class="form-control" placeholder="$ / BS">
+                                <input type="text" name="monto_pagobs" class="form-control" placeholder="$ / BS">
                             </div>
                         </div>
                         
