@@ -15,6 +15,10 @@
     $query=$conn->prepare("SELECT * FROM tbladmin WHERE UserName='$username' and Password='$passw'");
     $query -> execute();
     $control=$query ->fetch();
+
+   
+   
+
     
     if($control>0){
         $rol = $control['Role'];
@@ -29,4 +33,5 @@
   }
 
 }
+  
 ?>

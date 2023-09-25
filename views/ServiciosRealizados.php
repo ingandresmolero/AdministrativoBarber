@@ -99,7 +99,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                         <td><?php echo $usuario['fecha']; ?></td>
                        
                       
-                        <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo $usuario['invoiceid']; ?>">Detalles </a></td>
+                        <!-- <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo $usuario['invoiceid']; ?>">Detalles </a></td> -->
                         
                        
                     </tr>
@@ -129,7 +129,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                         <td><?php echo $usuario['estatus']; ?></td>
                         <td><?php echo $usuario['fecha_creacion']; ?></td>
                       
-                        <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo  $usuario['invoice'];  ?>">Detalles </a></td>
+                        <!-- <td class="action"><a class="table-btn" href="ventadetalles.php?billing=<?php echo  $usuario['invoice'];  ?>">Detalles </a></td> -->
                         
 
                                 </tr>
