@@ -48,9 +48,9 @@ $add = $stmt->fetchAll();
         <section>
             <div class="container-sm">
             <form action="" method="post">
-                <label class="form-label" for="">Tasa 1 del Dia</label>
+                <label class="form-label text-light" for="">Tasa 1 del Dia</label>
                 <input class="form-control col-sm-3" type="text" name="tasa" id="tasa" placeholder="Tasa BS del dia...">
-                <label class="form-label" for="">Tasa 2 del Dia</label>
+                <label class="form-label text-light" for="">Tasa 2 del Dia</label>
                 <input class="form-control col-sm-3 mb-3" type="text" name="tasa2" id="tasa2" placeholder="Tasa paralela del dia...">
                 <input type="submit" class="btn btn-primary mb-3" value="Guardar" name="guardar">
             </form>

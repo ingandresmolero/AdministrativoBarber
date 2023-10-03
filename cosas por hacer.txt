@@ -1,19 +1,25 @@
 LISTA DE COSAS POR HACER
 
+Listos:
+7)  ∆∆∆AJUSTAR VISTA DE PARAMETROS
+8)  ∆∆∆Ocultar Usuario y codigo de Header
+5)  ∆∆∆ajustar letras a colores acordes
+1) ∆∆∆Arreglar redireccion de listado de facturas o agregar facturas de protocolo
+
+
 VISTA ADMINISTRADOR:
 1)  ELIMINAR ORDENES PARA PROCESAR / CANCELAR FACTURAS
 2)  CREAR VISTA DE CONSUMO INTERNO (LISTADO PARA ASIGNAR AL BARBERO UN ITEM DEL INVENTARIO)
 3)  Cancelar los vales (tomarlos como pago) (ponerle un estatus de cancelado o pagado o abono)
 4)  Registro de Pago de Nomina
-5)  ajustar letras a colores acordes
+
 6)  Vista de OPERACIONES TERMINAR
-7)  AJUSTAR VISTA DE PARAMETROS
-8)  Ocultar Usuario y codigo de Header
+
 
 
 VISTA PROTOCOLO
 
-1) Arreglar redireccion de listado de facturas o agregar facturas de protocolo
+
 2) Inventario de Procolo solo consultar precios, no cantidad
 3) Consumo Internno
 

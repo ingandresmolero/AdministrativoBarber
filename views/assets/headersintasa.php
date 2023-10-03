@@ -22,8 +22,8 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../views/configuracion.php">Configuracion</a></li>
             <li><a class="dropdown-item user-name" id="rol"><?php echo $rol ?></a></li>
-            <li> <a class=""> <?php echo $userid ?> </a> </li>
-            <li> <a class=""> <?php echo $_SESSION["username"] ?> </a> </li>
+            <li> <a class="d-none"> <?php echo $userid ?> </a> </li>
+            <li> <a class="d-none"> <?php echo $_SESSION["username"] ?> </a> </li>
           </ul>
         </li>
         

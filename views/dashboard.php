@@ -34,7 +34,7 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/tasa.png">
                     <p class="card-title">Protocolo</p>
                 </a>
-                <a href="lista_facturas_prot.php" class="item">
+                <a href="./lista_facturas.php" class="item">
 
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Caja</p>

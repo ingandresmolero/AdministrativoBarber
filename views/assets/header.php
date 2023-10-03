@@ -25,8 +25,8 @@
             <!-- DATO PARA HACER LA VALIDACION DE USUARIO -->
               <form action="../php/functions/logout.php" method="post">
               <li><a class="dropdown-item user-name" id="rol"><?php echo $rol ?></a></li>
-              <li> <a> <?php echo $userid ?> </a> </li>
-              <li> <a> <?php echo $_SESSION["username"] ?> </a> </li>
+              <li> <a class="d-none"> <?php echo $userid ?> </a> </li>
+              <li> <a class="d-none"> <?php echo $_SESSION["username"] ?> </a> </li>
                 <input type="submit" value="Salir" name="logout" class="btn-menu">
               </form>
 
