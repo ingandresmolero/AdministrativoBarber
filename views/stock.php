@@ -40,6 +40,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <h1 class="page-heading">Inventario</h1>
         <!-- Button trigger modal -->
 
+
+
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Nuevo Producto
         </button>
@@ -54,18 +56,40 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         </div>
         <div class="table-responsive-sm">
             <table class="table table-style">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">PVP</th>
-                        <th scope="col">Deposito</th>
-                        <th scope="col">Informacion</th>
-                        <th scope="col">Eliminar</th>
 
-                    </tr>
-                </thead>
+                <?php if ($rol == 'manager') { ?>
+
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+
+                            <th scope="col">PVP</th>
+                            <th scope="col">Deposito</th>
+                           
+
+                        </tr>
+                    </thead>
+
+                    <?php } else {
+                    if ($rol == 'admin') { ?>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">PVP</th>
+                                <th scope="col">Deposito</th>
+                                <th scope="col">Informacion</th>
+                                <th scope="col">Eliminar</th>
+
+                            </tr>
+                        </thead>
+                <?php }
+                } ?>
+
+
                 <!-- Codigo PHP -->
                 <tbody>
 
@@ -92,17 +116,32 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     ?>
 
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
-                            <tr>
-                                <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
-                                <td><?php echo $usuario['nombre']; ?></td>
-                                <td><?php echo $usuario['cantidad']; ?></td>
-                                <td><?php echo $usuario['precio']; ?></td>
-                               
-                                <td><?php echo $usuario['deposito']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                            <?php if ($rol == 'admin') { ?>
+                                <tr>
+                                    <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
+                                    <td><?php echo $usuario['nombre']; ?></td>
+                                    <td><?php echo $usuario['cantidad']; ?></td>
+                                    <td><?php echo $usuario['precio']; ?></td>
 
-                            </tr>
+                                    <td><?php echo $usuario['deposito']; ?></td>
+                                    <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
+                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+
+                                </tr>
+                                <?php } else {
+                                if ($rol == 'manager') { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
+                                        <td><?php echo $usuario['nombre']; ?></td>
+                                       
+                                        <td><?php echo $usuario['precio']; ?></td>
+                                        <td><?php echo $usuario['deposito']; ?></td>
+                                       
+
+                                    </tr>
+                            <?php }
+                            } ?>
+
                         <?php endforeach  ?>
                         <?php } else {
                         if (isset($_POST['busqueda'])) {
@@ -121,17 +160,33 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         ?>
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
-                                <tr>
+
+                                <?php if($rol =='manager'){?>
+                                    <tr>
+                                    <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
+                                    <td><?php echo $usuario['nombre']; ?></td>
+                                   
+                                    <td><?php echo $usuario['precio']; ?></td>
+
+                                    <td><?php echo $usuario['deposito']; ?></td>
+                                    
+
+                                </tr>
+                              <?php  }else{
+                                if($rol == 'admin'){ ?>
+  <tr>
                                     <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
                                     <td><?php echo $usuario['nombre']; ?></td>
                                     <td><?php echo $usuario['cantidad']; ?></td>
                                     <td><?php echo $usuario['precio']; ?></td>
-                                   
+
                                     <td><?php echo $usuario['deposito']; ?></td>
                                     <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
                                     <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
 
                                 </tr>
+                                <?php }} ?>
+                                
                             <?php endforeach  ?>
                         <?php } ?>
                     <?php } ?>
@@ -180,7 +235,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             <option value="Snack">Snack</option>
                             <option value="Otros">Otros</option>
                         </select>
-                        
+
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
                     </form>

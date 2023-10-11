@@ -5,6 +5,7 @@ Listos:
 8)  ∆∆∆Ocultar Usuario y codigo de Header
 5)  ∆∆∆ajustar letras a colores acordes
 1) ∆∆∆Arreglar redireccion de listado de facturas o agregar facturas de protocolo
+2) +++++Inventario de Procolo solo consultar precios, no cantidad
 
 
 VISTA ADMINISTRADOR:
@@ -12,15 +13,12 @@ VISTA ADMINISTRADOR:
 2)  CREAR VISTA DE CONSUMO INTERNO (LISTADO PARA ASIGNAR AL BARBERO UN ITEM DEL INVENTARIO)
 3)  Cancelar los vales (tomarlos como pago) (ponerle un estatus de cancelado o pagado o abono)
 4)  Registro de Pago de Nomina
-
 6)  Vista de OPERACIONES TERMINAR
 
 
 
 VISTA PROTOCOLO
 
-
-2) Inventario de Procolo solo consultar precios, no cantidad
 3) Consumo Internno
 
 VISTA BARBERO
