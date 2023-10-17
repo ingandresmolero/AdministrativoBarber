@@ -107,7 +107,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-                            $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE (invoice LIKE '%$busqueda%')   LIMIT :iniciar,:nusuarios";
+                            $sql_report = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE (invoice LIKE '%$busqueda%') OR (cedula LIKE '%$busqueda%') OR (estatus LIKE '%$busqueda%') OR (Name LIKE '%$busqueda%')    LIMIT :iniciar,:nusuarios";
                             $stm_report = $conn->prepare($sql_report);
                             $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);

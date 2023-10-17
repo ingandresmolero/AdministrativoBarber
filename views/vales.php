@@ -127,8 +127,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['metodo']; ?></td>
                                 <td><?php echo $usuario['monto']; ?></td>
                                 <td><?php echo $usuario['fecha']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idvale'] ?>">Ver</a></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['idvale'] ?>">Eliminar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/operacion/detallesvale.php?userid=<?php echo $usuario['idvale'] ?>">Ver</a></td>
+                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarvale.php?userid=<?php echo $usuario['idvale'] ?>">Eliminar</a></td>
 
                             </tr>
                             <?php endforeach  ?>

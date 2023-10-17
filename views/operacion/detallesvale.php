@@ -74,6 +74,16 @@ include("actualizarUser.php");
                             <input type="text" class="form-control" name="nombre" value="<?php echo $user['detalle'] ?>" id="nombre" disabled>
                         </div>
 </div>
+
+<div class="row">
+<div class="col-lg-6">
+                            <label for="" class="form-label">Estatus:</label>
+                            <select name="estatus" id="">
+                                <option value="Pagado">Pagado</option>
+                                <option value="SinEfecto">Sin Efecto</option>
+                            </select>
+                        </div>
+</div>
                  
 
                     <input type="submit" class="btn btn-success mb-3" value="actualizar" name="actualizar">

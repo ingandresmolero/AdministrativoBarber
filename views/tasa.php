@@ -1,30 +1,29 @@
 <?php include("../php/functions/validar.php");
 
-// include("../php/functions/tasa.php");?>
-<?php 
+// include("../php/functions/tasa.php");
+?>
+<?php
 if (isset($_POST['guardar'])) {
 
-include("../php/dbconn.php");
-$fecha = date("d.m.y");
-$tasa=$_POST['tasa'];
-$tasa2=$_POST['tasa2'];
-$sql = "UPDATE tasabs SET fecha_creacion='$fecha',monto_bcv='$tasa',monto_paral='$tasa2'";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
+    include("../php/dbconn.php");
+    $fecha = date("d.m.y");
+    $tasa = $_POST['tasa'];
+    $tasa2 = $_POST['tasa2'];
+    $sql = "UPDATE tasabs SET fecha_creacion='$fecha',monto_bcv='$tasa',monto_paral='$tasa2'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 
 
 
-$add = $stmt->fetchAll();
+    $add = $stmt->fetchAll();
 
-    if($add > 0){
-        echo '<script>alert("Se agrego tasa '.$tasa.'Bs.S y '.$tasa2.'Bs.S")</script>';
+    if ($add > 0) {
+        echo '<script>alert("Se agrego tasa ' . $tasa . 'Bs.S y ' . $tasa2 . 'Bs.S")</script>';
         header("Location: dashboard.php");
-    }else{
+    } else {
         echo 'Hubo un error!';
     }
-
-
-}?>
+} ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,17 +42,29 @@ $add = $stmt->fetchAll();
 
     <main>
 
-      
+
 
         <section>
             <div class="container-sm">
-            <form action="" method="post">
-                <label class="form-label text-light" for="">Tasa 1 del Dia</label>
-                <input class="form-control col-sm-3" type="text" name="tasa" id="tasa" placeholder="Tasa BS del dia...">
-                <label class="form-label text-light" for="">Tasa 2 del Dia</label>
-                <input class="form-control col-sm-3 mb-3" type="text" name="tasa2" id="tasa2" placeholder="Tasa paralela del dia...">
-                <input type="submit" class="btn btn-primary mb-3" value="Guardar" name="guardar">
-            </form>
+                <form action="" method="post">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label text-light" for="">Tasa 1 del Dia</label>
+                            <input class="form-control col-sm-3" type="text" name="tasa" id="tasa" placeholder="Tasa BS del dia...">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label text-light" for="">Tasa 2 del Dia</label>
+                            <input class="form-control col-sm-3 mb-3" type="text" name="tasa2" id="tasa2" placeholder="Tasa paralela del dia...">
+
+                        </div>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary mb-3" value="Guardar" name="guardar">
+                </form>
             </div>
         </section>
 

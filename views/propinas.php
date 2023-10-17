@@ -32,14 +32,14 @@ $row = mysqli_fetch_array($consulta);
         <section>
             <div class="container-sm mt-3 " id="prueba1">
                 <form action="operacion/asignarpropina.php" method="post">
-                <input type="text" name="idservicioasignado" value="<?php echo $idservicio ?>">
-                <input type="text" name="billing" value="<?php echo $row['invoice'] ?>">
+                <input type="text" class="d-none" name="idservicioasignado" value="<?php echo $idservicio ?>">
+                <input type="text" class="d-none" name="billing" value="<?php echo $row['invoice'] ?>">
                     <div class="row">
-                        <div class="col">
+                        <div class="col text-light">
                             <h2>Barbero</h2>
                             <h2><?php echo $row['nombre'] ?></h2>
                         </div>
-                        <div class="col">
+                        <div class="col text-light">
                             <h2>Servicio</h2>
                             <h2><?php echo $row['ServiceName'] ?></h2>
                         </div>
@@ -52,7 +52,7 @@ $row = mysqli_fetch_array($consulta);
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-sm-5">
 
                             <label for="" class="form-label text-white">Detalles</label>
                             <input type="text" name="detalle" value="" id="" class="form-control">
