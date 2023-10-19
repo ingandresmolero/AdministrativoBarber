@@ -62,6 +62,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">Metodo</th>
                         <th scope="col">Monto</th>
                         <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Editar</th>
                         <th scope="col">Eliminar</th>
 
@@ -82,7 +83,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT vales.idvale,tblbarber.nombre as barbero, vales.monto, metodos_pago.nombre as metodo, vales.fecha FROM vales inner join tblbarber on vales.idbarber = tblbarber.idbarber inner join metodos_pago on vales.metodo_pago = metodos_pago.idmetodo LIMIT :iniciar,:nusuarios";
+                        $sql_usuarios = "SELECT vales.idvale,tblbarber.nombre as barbero, vales.monto,vales.estado, metodos_pago.nombre as metodo, vales.fecha FROM vales inner join tblbarber on vales.idbarber = tblbarber.idbarber inner join metodos_pago on vales.metodo_pago = metodos_pago.idmetodo LIMIT :iniciar,:nusuarios";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -99,6 +100,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['metodo']; ?></td>
                                 <td><?php echo $usuario['monto']; ?></td>
                                 <td><?php echo $usuario['fecha']; ?></td>
+                                <td><?php echo $usuario['estado']; ?></td>
                                 <td class="action"><a class="table-btn" href="../views/operacion/detallesvale.php?userid=<?php echo $usuario['idvale'] ?>">Ver</a></td>
                                 <td class="action"><a class="table-btn" href="../views/operacion/eliminarvale.php?userid=<?php echo $usuario['idvale'] ?>">Eliminar</a></td>
 
@@ -109,7 +111,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT vales.idvale,tblbarber.nombre as barbero, vales.monto, metodos_pago.nombre as metodo, vales.fecha FROM vales inner join tblbarber on vales.idbarber = tblbarber.idbarber inner join metodos_pago on vales.metodo_pago = metodos_pago.idmetodo  WHERE (tblbarber.nombre LIKE '%$busqueda%') OR (metodos_pago.nombre LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT vales.idvale,tblbarber.nombre as barbero, vales.monto,vales.estado, metodos_pago.nombre as metodo, vales.fecha FROM vales inner join tblbarber on vales.idbarber = tblbarber.idbarber inner join metodos_pago on vales.metodo_pago = metodos_pago.idmetodo  WHERE (tblbarber.nombre LIKE '%$busqueda%') OR (metodos_pago.nombre LIKE '%$busqueda%') OR (vales.estado LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -127,6 +129,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['metodo']; ?></td>
                                 <td><?php echo $usuario['monto']; ?></td>
                                 <td><?php echo $usuario['fecha']; ?></td>
+                                <td><?php echo $usuario['estado']; ?></td>
                                 <td class="action"><a class="table-btn" href="../views/operacion/detallesvale.php?userid=<?php echo $usuario['idvale'] ?>">Ver</a></td>
                                 <td class="action"><a class="table-btn" href="../views/operacion/eliminarvale.php?userid=<?php echo $usuario['idvale'] ?>">Eliminar</a></td>
 

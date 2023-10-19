@@ -2,7 +2,7 @@
 // include("../../php/functions/validar.php");
 include("../../php/dbconn.php");
 $id = $_GET['userid'];
-$sql = "SELECT vales.monto,tblbarber.nombre as barbero, metodos_pago.nombre as metodos_pago,vales.detalle ,metodos_pago.unidad, vales.fecha FROM vales INNER JOIN tblbarber ON vales.idbarber = tblbarber.idbarber INNER JOIN metodos_pago ON vales.metodo_pago = metodos_pago.idmetodo where idvale='$id' ";
+$sql = "SELECT vales.monto,vales.idvale,tblbarber.nombre as barbero, metodos_pago.nombre as metodos_pago,vales.detalle ,metodos_pago.unidad, vales.fecha FROM vales INNER JOIN tblbarber ON vales.idbarber = tblbarber.idbarber INNER JOIN metodos_pago ON vales.metodo_pago = metodos_pago.idmetodo where idvale='$id' ";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -80,7 +80,8 @@ include("actualizarUser.php");
 <div class="row">
 <div class="col-lg-6">
                             <label for="" class="form-label">Estatus:</label>
-                            <select class="form-select" ame="estatus" id="">
+                            <input type="text" name="idvale" value="<?php echo $user['idvale'] ?>" class="d-none">
+                            <select class="form-select" name="estado" id="">
                                 <option value="Pagado">Pagado</option>
                                 <option value="SinEfecto">Sin Efecto</option>
                             </select>
