@@ -24,6 +24,8 @@ include("actualizarUser.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/styles.min.css">
+
     <title>Detalles vale</title>
 </head>
 
@@ -35,9 +37,9 @@ include("actualizarUser.php");
 
 
         <section>
-            <div class="container-sm">
+            <div class="container-sm text-light">
             <?php foreach ($resultado as $user) : ?> 
-                <form action="" method="post">
+                <form action="actualizarvale.php" method="post">
                     <div class="row">
                         <div class="col-lg-3  ">
                             <label for="" class="form-label">Usuario:</label>
@@ -78,7 +80,7 @@ include("actualizarUser.php");
 <div class="row">
 <div class="col-lg-6">
                             <label for="" class="form-label">Estatus:</label>
-                            <select name="estatus" id="">
+                            <select class="form-select" ame="estatus" id="">
                                 <option value="Pagado">Pagado</option>
                                 <option value="SinEfecto">Sin Efecto</option>
                             </select>
