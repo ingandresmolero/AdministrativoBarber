@@ -150,7 +150,7 @@ $resultado = $stmt->fetch();
                                     <td><?php echo $row2['nombre'] ?></td>
                                     <td><?php echo $subtotal = $row2['Cost'] ?></td>
 
-                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row2['propina'] ?>" class="form-control"></td>
+                                    <td><input type="text" name="propina" value="" placeholder="<?php echo $row2['propina'] ?>" class="form-control" disabled></td>
                                     <td><a class="btn btn-warning" href="propinas.php?idservicio=<?php echo $row2['idservicioasignado'] ?>">+</a></td>
                                     <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                 </tr>

@@ -13,4 +13,14 @@ $select = "SELECT * FROM transacciones where fecha_creacion = '$fechaactual'";
 
    $row= $stmt->fetch();
 
-   var_dump($row);
+  foreach ($row as $usuario) :   {
+   echo "<tr>
+    <th scope="row" class="d-none">.'$usuario['idvale']'.</th>
+<td>.'  $usuario['fecha_creacion']'. </td>
+<td>.'  $usuario['monto']'.</td>
+<td>.'  $usuario['estado'] .'</td>
+
+
+
+    </tr> ";
+  endforeach;  } }

@@ -132,11 +132,14 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['cedula']; ?></td>
                                     <td><?php echo $usuario['Gender']; ?></td>
                                     <td><?php echo $usuario['estado']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
-
-                                </tr>
-                            <?php endforeach  ?>
+                                    <?php if(!$rol == 'manager'){
+                                        echo '
+                                        <td class="action"><a class="table-btn" href="../views/venta.php?billing='.$usuario['BillingId'].'">Facturar</a></td>
+                                        <td class="action"><a class="table-btn" href="#">Eliminar</a></td>';
+                                ?>
+                                    
+                                        </tr>
+                            <?php }endforeach  ?>
                         <?php } ?>
                     <?php } ?>
                 </tbody>

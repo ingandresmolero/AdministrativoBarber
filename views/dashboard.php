@@ -57,7 +57,7 @@ include("../php/functions/tasa.php");
             </div>
 
 
-        <?php } else if ($rol == 'usuario')  { ?>
+        <?php } else if ($rol == 'servidor')  { ?>
 
             <div class="elements">
 
@@ -67,13 +67,13 @@ include("../php/functions/tasa.php");
                         <img src="../img/icons/inventario.png">
                         <p class="card-title">Servicios Realizados</p>
                     </a>
-                    <a href="tasa.php" class="item">
+                    <a href="vales.php" class="item">
 
                         <img src="../img/icons/tasa.png">
                         <p class="card-title">Vales</p>
                     </a>
 
-                    <a href="operaciones.php" class="item">
+                    <a href="consumo_interno.php" class="item">
                         <img src="../img/icons/operaciones.png">
                         <p class="card-title">Consumo Interno</p>
 
@@ -81,11 +81,6 @@ include("../php/functions/tasa.php");
                     <a href="facturas.php" class="item">
                         <img src="../img/icons/operaciones.png">
                         <p class="card-title">Clientes Atendidos</p>
-
-                    </a>
-                    <a href="facturas.php" class="item">
-                        <img src="../img/icons/operaciones.png">
-                        <p class="card-title">Reportes</p>
 
                     </a>
             </div>

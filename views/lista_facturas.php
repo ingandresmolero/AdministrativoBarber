@@ -37,7 +37,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Caja - Servicios</h1>
+        <h1 class="page-heading">Servicios Abiertos</h1>
         <!-- Button trigger modal -->
 
         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
