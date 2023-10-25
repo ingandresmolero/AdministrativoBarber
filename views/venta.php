@@ -708,7 +708,7 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrary s</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
@@ -726,7 +726,7 @@ $resultado = $stmt->fetch();
                     <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/asignarpago.php" method="post">
+                    <form action="operacion/asignaradicional.php" method="post">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
 
                         <label class="form-label" for="">Metodo Pago</label>
