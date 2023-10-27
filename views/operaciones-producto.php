@@ -82,6 +82,17 @@ if (isset($_POST['eliminarmetodo'])){
     header('location:venta.php?billing='.$invoice.'');
 };
 
+
+// ELIMINAR SERVICIO ADICIONAL
+if (isset($_POST['eliminaradicional'])){
+   
+    $invoice = $_POST['invoice'];
+    $idadicional = $_POST['idservicioadicional'];
+    $sql3="DELETE FROM servicios_adicional WHERE id_billing= '$invoice' AND idservicioadicional='$idadicional'";
+    $stmt = mysqli_query($conexion,$sql3);
+    header('location:venta.php?billing='.$invoice.'');
+};
+
 // TOTALIZAR OPERACION
 
 if(isset($_POST['totalizar'])){

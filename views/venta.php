@@ -209,8 +209,7 @@ $resultado = $stmt->fetch();
                                     $subtotal2 = floatval($subtotal) * floatval($cantidad);
                                     $gtotal2 += $subtotal2;
                                 }
-                                $montoproducto = floatval($gtotal2);
-                                $monto = floatval($montoproducto + $montoservicio);
+                                
                                 ?>
 
 
@@ -221,6 +220,64 @@ $resultado = $stmt->fetch();
                             <!-- <input type="submit" name="procesar" value="Procesar "> -->
                         </div>
 
+                        <div class="card shadow p-3 mb-3">
+                        <h2>Servicios Adicionales</h2>
+                        <div class="row">
+                            <div class="col">
+
+                                <!-- TABLA DE Servicios adicionales-->
+                                <table class="table " width="100%" border="1">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3">Servicios Adicionales</th>
+                                        </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Metodo Pago</th>
+                                            <th>Monto</th>
+                                            <th>Accion</th>
+                                            <!-- <th>Costo</th> -->
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    $ret = mysqli_query($conexion, "SELECT  * FROM servicios_adicional JOIN tbladmin ON tbladmin.ID = servicios_adicional.id_usuario INNER JOIN metodos_pago on metodos_pago.idmetodo = servicios_adicional.id_metodo where id_billing='$billing' ");
+                                    $cnt = 1;
+                                    $gtotal7 = 0;
+                                    while ($row = mysqli_fetch_array($ret)) {
+                                    ?>
+                                        <input type="text" value="<?php echo $row['idservicioadicional']; ?>" name="idservicioadicional" class="d-none">
+                                        <tbody>
+                                            <tr>
+
+                                                <th><?php echo $cnt; ?></th>
+                                                <td><?php echo $row['AdminName'] ?></td>
+                                                <td><?php echo $montototaladicional = $row['monto']  ?></td>
+                                                <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminaradicional"></td>
+
+                                            </tr>
+                                        
+                                    <?php
+                                    $cnt = $cnt + 1;
+                                        $subtotal7 = floatval($montototaladicional);
+                                        $gtotal7 += $subtotal7;
+                                        
+                                    } 
+                                    $montoproducto = floatval($gtotal2);
+                                $monto = floatval($montoproducto + $montoservicio + $gtotal7);
+                                    ?>
+
+                                    <hr>
+
+
+
+                                </table>
+
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaladicional">
+                                    Agregar Servicio Adicional BS
+                                </button>
+                            </div> <!-- Servicio Adicional-->
+                        </div>
+                    </div>
 
 
 
@@ -264,61 +321,7 @@ $resultado = $stmt->fetch();
                     </div>
                 <?php } else   if ($rol == 'admin') { ?>
 
-                    <div class="card shadow p-3 mb-3">
-                        <h2>Servicios Adicionales</h2>
-                        <div class="row">
-                            <div class="col">
-
-                                <!-- TABLA DE METODOS PAGO BOLIVARES-->
-                                <table class="table " width="100%" border="1">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="3">Servicios Adicionales</th>
-                                        </tr>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Metodo Pago</th>
-                                            <th>Monto</th>
-                                            <th>Accion</th>
-                                            <!-- <th>Costo</th> -->
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                    $ret = mysqli_query($conexion, "SELECT  * FROM servicios_adicional JOIN tbladmin ON tbladmin.ID = servicios_adicional.id_usuario INNER JOIN metodos_pago on metodos_pago.idmetodo = servicios_adicional.id_metodo where id_billing='$billing' ");
-                                    $cnt = 1;
-                                    $gtotal7 = 0;
-                                    while ($row = mysqli_fetch_array($ret)) {
-                                    ?>
-                                        <input type="text" value="<?php echo $row['idservicioadicional']; ?>" name="idcuenta" class="d-none">
-                                        <tbody>
-                                            <tr>
-
-                                                <th><?php echo $cnt; ?></th>
-                                                <td><?php echo $row['AdminName'] ?></td>
-                                                <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
-                                                <td class="d-none"><?php echo $montototal = $row['monto'] / $tasa ?>
-                                                <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
-
-                                            </tr>
-                                        </tbody>
-                                    <?php
-                                        $subtotal7 = floatval($montototal);
-                                        $gtotal7 += $subtotal7;
-                                        $cnt = $cnt + 1;
-                                    } ?>
-
-                                    <hr>
-
-
-
-                                </table>
-
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modaladicional">
-                                    Agregar Servicio Adicional BS
-                                </button>
-                            </div> <!-- Servicio Adicional-->
-                        </div>
-                    </div>
+                    
 
                     <div class="shadow p-3 mb-3 bg-white rounded">
                         <h2>Metodos Pagos</h2>
@@ -447,6 +450,7 @@ $resultado = $stmt->fetch();
 
 
                         <h1 style="color:red">SALDO FINAL: <?php
+                        
                                             $totalpago = round(($monto - ($gtotal4 + $gtotal5 )), 2, PHP_ROUND_HALF_ODD);
                                             if ($totalpago < 0) {
                                                 echo ($totalpago) * (-1);
@@ -514,7 +518,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Servicios</h1>
-                    <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
+                    <button type="button" class="btn-warning" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarservicio.php" method="post">
@@ -556,7 +560,7 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrary s</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
@@ -570,7 +574,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Productos</h1>
-                    <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
+                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarproducto.php" method="post">
@@ -599,7 +603,7 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrary s</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
@@ -614,7 +618,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos</h1>
-                    <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
+                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpago.php" method="post">
@@ -656,7 +660,7 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrary s</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
@@ -670,7 +674,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos Bolivares</h1>
-                    <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
+                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpago.php" method="post">
@@ -725,7 +729,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
-                    <button type="button" class="btn-Cerrary s" data-bs-dismiss="modal" aria-label="Cerrary s"></button>
+                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignaradicional.php" method="post">
@@ -780,7 +784,7 @@ $resultado = $stmt->fetch();
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrary s</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
