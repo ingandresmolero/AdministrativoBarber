@@ -91,6 +91,26 @@ $resultado = $stmt->fetch();
                                 <label class="form-label" for="">Barbero</label>
                                 <input class="form-control" type="text" name="barbero" placeholder="<?php echo $barbero; ?>" disabled id="">
                             </div>
+
+                            <?php 
+                                $clienteid = $row1['ID'];
+                                $consultasaldo = "SELECT SUM(saldo) FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='abono'";
+
+                                $stmtsaldo = $conn->prepare($consultasaldo);
+                                $stmtsaldo->execute();
+                                $rowsaldo = $stmtsaldo->fetch();
+
+                                if($rowsaldo['SUM(saldo)'] >= 1){
+                                    echo '
+                                    <div class="col-md-3">
+                                <label for="" class="form-label">Saldo Cliente:</label>
+                                <input type="text" class="form-control" name="saldocliente" value="'.$rowsaldo['SUM(saldo)'].'">
+                            </div>
+                                    ';
+                                }
+                            
+                            ?>
+                            
                         </div>
                         <!-- Cuentas X Cobrar -->
                         <hr>
@@ -476,7 +496,7 @@ $resultado = $stmt->fetch();
             <!-- DATOS A ENVIAR -->
 
             <input type="text" class="d-none" name="invoice" value="<?php echo $billing ?>">
-            <input type="text" class="d-none" value="<?php echo $totalpago ?>">
+            <input type="text" class="d-none" name="saldofinal" value="<?php echo $totalpagofinal= ($monto - ($gtotal4 + $gtotal5 ))* (-1) ?>">
             <input type="text" class="d-none" value="<?php echo $tasa ?>">
             <input type="text" class="d-none" value="<?php echo $monto ?>" name="monto_cancelado">
             <input type="text" class="d-none" name="estatus" value="<?php if ($totalpago == '0') {

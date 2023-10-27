@@ -102,12 +102,12 @@ if(isset($_POST['totalizar'])){
     $billing = $_POST['invoice'];
     $monto = $_POST['montototal'];
     $estatus = $_POST['estatus'];
-
+    $saldo = $_POST['saldofinal'];
 
 
 
 //Insertar en tabla Transacciones ya con metodos de pagos varios
-    $totalizado_factura = "INSERT INTO transacciones( invoice, monto_total, tasa_dia, estatus, monto_cancelado, fecha_creacion) VALUES ('$billing','$monto','$tasa','$estatus','$monto_cancelado','$fecha')";
+    $totalizado_factura = "INSERT INTO transacciones( invoice, monto_total, tasa_dia, estatus, monto_cancelado,saldo,fecha_creacion) VALUES ('$billing','$monto','$tasa','$estatus','$monto_cancelado','$saldo','$fecha')";
 
     $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
 
