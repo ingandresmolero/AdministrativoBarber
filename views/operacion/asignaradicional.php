@@ -1,50 +1,20 @@
 <?php
 include("../../php/conex.php");
 
-if(isset($_POST['asignarmetodobs'])){
+if(isset($_POST['asignaradicional'])){
   $invoice = $_POST['invoice'];
   $idmetodo=$_POST['idmetodo'];
-  $detallebs = $_POST['detallesbs'];
-  $montobs =$_POST['monto_pagobs'];
+  $detalle = $_POST['detalles'];
+  $monto =$_POST['monto_pago'];
   $tasa = $_POST['tasa'];
   $fecha_pago = date("d/m/Y");
+  $idusuario = $_POST['idusuario'];
 
 //   $montousd = intval($montobs / $tasa); 
-echo 'monto';
-var_dump($montobs);
+
  
-  $sqlinsertpago = "INSERT INTO cuentas_cobrar( invoice, idmetodo, monto,detalle,fecha_creacion) VALUES ('$invoice','$idmetodo','$montobs','$detallebs','$fecha_pago')";
+  $sqlinsertadicional = "INSERT INTO servicios_adicional( id_billing, id_usuario, id_metodo,monto,detalles) VALUES ('$invoice','$idusuario','$idmetodo','$monto','$detalle')";
   
-     $stmt3 = mysqli_query($conexion,$sqlinsertpago);
+     $stmt3 = mysqli_query($conexion,$sqlinsertadicional);
      header('location:../venta.php?billing='.$invoice.'');
-
 }
-
-   
-      if(isset($_POST['asignarmetodousd'])){
-        $invoice = $_POST['invoice'];
-        $idmetodo=$_POST['idmetodo'];
-        $monto =$_POST['monto_pago'];
-        $detalle = $_POST['detalles'];
-        $fecha_pago = date("d/m/Y");
-    
- 
-   $sqlinsertpago = "INSERT INTO cuentas_cobrar( invoice, idmetodo, monto,detalle,fecha_creacion) VALUES ('$invoice','$idmetodo','$monto','$detalle','$fecha_pago')";
-   echo 'PAGO DOLARES';
-
-//    var_dump($sqlinsert);
-//    echo '<hr>';
-//    var_dump($sqlinsertservicio);
-
-     $stmt2 = mysqli_query($conexion,$sqlinsertpago);
-     header('location:../venta.php?billing='.$invoice.'');
-       
-        
-    }
-
-
-
-
-
-
-?>

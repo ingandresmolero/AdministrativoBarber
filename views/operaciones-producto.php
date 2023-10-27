@@ -109,6 +109,51 @@ if(isset($_POST['totalizar'])){
 
 }
 
+// SUMAR Y RESTA DE PRODUCTOS
+
+if(isset($_POST['sumar'])){
+    $invoice = $_POST['invoice'];
+    $idproduct = $_POST['product'];
+    $idproducto = $_POST['idproducto'];
+    $cantidad = $_POST['cantidad'];
+
+    $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
+        $stmtc= mysqli_query($conexion,$sql3);
+        $fila = mysqli_fetch_array($stmtc);
+        $cantidad_stock = $fila['cantidad'];
+
+        $monto_final =  intval($cantidad) + 1;
+
+    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
+
+    
+    
+    $stmt = mysqli_query($conexion,$sql1);
+    header('location:venta.php?billing='.$invoice.'');
+
+}
+
+if(isset($_POST['restar'])){
+    $invoice = $_POST['invoice'];
+    $idproduct = $_POST['product'];
+    $idproducto = $_POST['idproducto'];
+    $cantidad = $_POST['cantidad'];
+
+    $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
+        $stmtc= mysqli_query($conexion,$sql3);
+        $fila = mysqli_fetch_array($stmtc);
+        $cantidad_stock = $fila['cantidad'];
+
+        $monto_final =  intval($cantidad) - 1;
+
+    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
+
+    
+    
+    $stmt = mysqli_query($conexion,$sql1);
+    header('location:venta.php?billing='.$invoice.'');
+
+}
 
 // if(isset($_POST['totalizar'])){
 //     $metodo = $_POST['metodo'];
