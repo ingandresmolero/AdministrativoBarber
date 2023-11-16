@@ -27,6 +27,8 @@ include("../php/functions/tasa.php");
     ?>
     <section class="container">
 
+
+
         <?php if ($rol == 'manager') { ?>
             <div class="elements">
                 <a href="Protocolo.php" class="item">
@@ -57,34 +59,70 @@ include("../php/functions/tasa.php");
             </div>
 
 
-        <?php } else if ($rol == 'servidor')  { ?>
+        <?php } else if ($rol == 'servidor') { ?>
 
-            <div class="elements">
+            <section class="container-fluid">
 
-               
-                    <a href="ServiciosRealizados.php" class="item">
+                <div class="row d-flex justify-content-between align-content-between shadow-lg p-2 m-3 mb-4 mt-4 rounded-5">
 
-                        <img src="../img/icons/inventario.png">
-                        <p class="card-title">Servicios Realizados</p>
-                    </a>
-                    <a href="vales.php" class="item">
+                    <div class="col-sm-2 p-2">
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <p class="text-center text-light">Clientes Atendidos</p>
+                    </div>
+                    <div class="col-sm-2 p-2 text-ligh">
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <p class="text-center text-light">Consumo</p>
+                    </div>
+                    <div class="col-sm-2 p-2">
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <p class="text-center text-light">Vales</h< /p>
+                    </div>
+                    <div class="col-sm-2 p-2">
+                        <h3 class="text-light text-center " style="color: #a4d61d !important;">N</h3>
+                        <p class="text-center text-light">Propina</p>
+                    </div>
+                </div>
 
-                        <img src="../img/icons/tasa.png">
-                        <p class="card-title">Vales</p>
-                    </a>
+                <div class="row d-flex justify-content-center align-content-center shadow-lg m-3 p-3 rounded-5">
 
-                    <a href="consumo_interno.php" class="item">
-                        <img src="../img/icons/operaciones.png">
-                        <p class="card-title">Consumo Interno</p>
+                    <div class="col pb-3 pt-3">
 
-                    </a>
-                    <a href="facturas.php" class="item">
-                        <img src="../img/icons/operaciones.png">
-                        <p class="card-title">Clientes Atendidos</p>
+                        <div class="row justify-content-center">
 
-                    </a>
-            </div>
+                            <div class="row text-dark p-2 justify-content-center">
+                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Clientes atendidos</button>
+                            </div>
 
+                        </div>
+
+                        <div class="row justify-content-center">
+
+                            <div class="row text-dark p-2 justify-content-center">
+                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Consumo</button>
+                            </div>
+
+                        </div>
+
+                        <div class="row justify-content-center">
+
+                            <div class="row text-dark p-2 justify-content-center">
+                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Vales</button>
+                            </div>
+
+                        </div>
+
+                        <div class="row justify-content-center">
+
+                            <div class="row text-dark p-2 justify-content-center">
+                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Propinas</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
 
         <?php } else if ($rol == 'admin') { ?>
             <div class="elements">
@@ -126,6 +164,10 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/reportes.png">
                     <p class="card-title">Reportes</p>
                 </a> -->
+                <a href="cierrediario.php" class="item">
+                    <img src="../img/icons/usuarios.png">
+                    <p class="card-title">Cierre</p>
+                </a>
 
                 <a href="mant_usuarios.php" class="item">
                     <img src="../img/icons/usuarios.png">
@@ -148,7 +190,7 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Configuracion</p>
                 </a>
             </div>
-         
+
         <?php }; ?>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
