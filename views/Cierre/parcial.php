@@ -1,8 +1,64 @@
+<?php
+    include("../../php/dbconn.php");
+
+    $query  = "SELECT SUM(monto_total) FROM transacciones; "; //total de operaciones
+    $query2 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'totalizado'"; //total totalizado
+    $query3 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'abono'"; //total de facturas con abono
+    $query4 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'restante' "; //total de pendiente por pagar cliente
+    $Query5 = "SELECT SUM(monto) from vales;";
+
+    $querymetodos  = "SELECT SUM(monto) FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo WHERE cuentas_cobrar.idmetodo='1'; "; //total de operaciones
+    $querymetodos2 = "SELECT SUM(monto) FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo WHERE cuentas_cobrar.idmetodo='2'; "; //total totalizado
+    $querymetodos3 = "SELECT SUM(monto) FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo WHERE cuentas_cobrar.idmetodo='4'; "; //total de facturas con abono
+    $querymetodos4 = "SELECT SUM(monto) FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo WHERE cuentas_cobrar.idmetodo='5'; "; //total de pendiente por pagar cliente
+    $Querymetodos5 = "SELECT SUM(monto) from vales;";
+    
+    $exequery  = $conn->prepare($query);
+    $exequery2 = $conn->prepare($query2);
+    $exequery3 = $conn->prepare($query3);
+    $exequery4 = $conn->prepare($query4);
+    $exequery5 = $conn->prepare($Query5);
+
+    $exequerymetodos  = $conn->prepare($querymetodos);
+    $exequerymetodos2 = $conn->prepare($querymetodos2);
+    $exequerymetodos3 = $conn->prepare($querymetodos3);
+    $exequerymetodos4 = $conn->prepare($querymetodos4);
+    $exequerymetodos5 = $conn->prepare($Querymetodos5);
+
+    $exequery->execute();
+    $exequery2->execute();
+    $exequery3->execute();
+    $exequery4->execute();
+    $exequery5->execute();
+
+    $exequerymetodos->execute();
+    $exequerymetodos2->execute();
+    $exequerymetodos3->execute();
+    $exequerymetodos4->execute();
+    $exequerymetodos5->execute();
+
+    $row1 = $exequery->fetch();
+    $row2 = $exequery2->fetch();
+    $row3 = $exequery3->fetch();
+    $row4 = $exequery4->fetch();
+    $row5 = $exequery5->fetch();
+
+    $rowmetodos1 = $exequerymetodos->fetch();
+    $rowmetodos2 = $exequerymetodos2->fetch();
+    $rowmetodos3 = $exequerymetodos3->fetch();
+    $rowmetodos4 = $exequerymetodos4->fetch();
+    $rowmetodos5 = $exequerymetodos5->fetch();
+
+
+
+
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+<head></head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,14 +81,14 @@
                 <input type="text" class="d-none" name="billing" value="<?php echo $row['invoice'] ?>">
                     <div class="row">
                         <div class="col text-light">
-                            <label for="">Fecha</label>
+                            <label for="">General</label>
                            <ul>
-                            <li>Total Venta</li>
-                            <li>Total Propinas</li>
-                            <li>Total Ventas de productos</li>
-                            <li>Total de Consumo Interno</li>
-                            <li>Total de Vales</li>
-                            <li>Prueba1</li>
+                            <li>Total transacciones: $<?php echo $row['SUM(monto_total)'] ?></li>
+                            <li>Total cuentas totalizadas: $<?php echo $row2['SUM(monto_total)'] ?></li>
+                            <li>Total cuentas x cobrar: $<?php echo $row3['SUM(monto_total)'] ?></li>
+                            <li>Total de cuentas x pagar: $<?php echo $row4['SUM(monto_total)'] ?></li>
+                            <li>Total de Vales: $<?php echo $row5['SUM(monto_total)'] ?></li>
+                            
                            </ul>
                         </div>
                         <!-- <div class="col text-light">
@@ -42,18 +98,21 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5">
-                            <label for="" class="form-label text-white">Propinas</label>
-                            <input type="text" class="form-control" value="" name="propina" placeholder="$...">
-                        </div>
+                        <h3>Metodos pagos:</h3>
+                        <ul>
+                            <li>Zelle: $ <?php echo $rowmetodos1['SUM(monto)']; ?></li>
+                            <li>Efectivo: $ <?php echo $rowmetodos2['SUM(monto)']; ?></li>
+                            <li>Binance: $ <?php echo $rowmetodos3['SUM(monto)']; ?></li>
+                            <li>Pago Movil: $ <?php echo $rowmetodos4['SUM(monto)']; ?></li>
+                        </ul>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-5">
 
                             <label for="" class="form-label text-white">Detalles</label>
                             <input type="text" name="detalle" value="" id="" class="form-control">
                         </div>
-                    </div>
+                    </div> -->
 
 
 

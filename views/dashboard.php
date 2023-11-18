@@ -4,6 +4,46 @@ include("../php/functions/validar.php");
 
 
 include("../php/functions/tasa.php");
+// include("../php/dbconn.php");
+
+
+
+                    $nombreservidor = $_SESSION["username"];
+                    $contadorsql = "select * from tbladmin inner join tblbarber on tbladmin.AdminName = tblbarber.nombre WHERE tblbarber.nombre = '$nombreservidor'";
+
+                    $stmt = $conn->prepare($contadorsql);
+                    $stmt->execute();
+                    $row = $stmt->fetch();
+
+
+                    $idbarbero = $row['idbarber'];
+                    // var_dump($idbarbero);
+                    // var_dump($rol);
+
+                    //CONTADORES
+
+                    $contador1 = "SELECT DISTINCT usuario FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+                    $contador2 = "SELECT * from consumo_interno inner join tblbarber on consumo_interno.servidor = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+                    $contador3 = "SELECT * from vales inner join tblbarber on vales.idbarber = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+                    $contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+
+                    $stmt1 = $conn->prepare($contador1);
+                    $stmt2 = $conn->prepare($contador2);
+                    $stmt3 = $conn->prepare($contador3);
+                    $stmt4 = $conn->prepare($contador4);
+
+                    $stmt1->execute();
+                    $stmt2->execute();
+                    $stmt3->execute();
+                    $stmt4->execute();
+
+                    $row1 = $stmt1->rowCount();
+                    $row2 = $stmt2->fetch();
+                    $row3 = $stmt3->rowCount();
+                    $row4 = $stmt4->fetch();
+
+
+                    
 ?>
 
 <!DOCTYPE html>
@@ -64,21 +104,22 @@ include("../php/functions/tasa.php");
             <section class="container-fluid">
 
                 <div class="row d-flex justify-content-between align-content-between shadow-lg p-2 m-3 mb-4 mt-4 rounded-5">
-
+                    <h1 style="color: #a4d61d !important;">Fecha del dia: <?php echo $date=date("d.m.Y"); ?></h1>
+                    
                     <div class="col-sm-2 p-2">
-                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row1 ?></h3>
                         <p class="text-center text-light">Clientes Atendidos</p>
                     </div>
                     <div class="col-sm-2 p-2 text-ligh">
-                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;">$ <?php echo '0' ?></h3>
                         <p class="text-center text-light">Consumo</p>
                     </div>
                     <div class="col-sm-2 p-2">
-                        <h3 class="text-light text-center" style="color: #a4d61d !important;">N</h3>
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row3 ?></h3>
                         <p class="text-center text-light">Vales</h< /p>
                     </div>
                     <div class="col-sm-2 p-2">
-                        <h3 class="text-light text-center " style="color: #a4d61d !important;">N</h3>
+                        <h3 class="text-light text-center " style="color: #a4d61d !important;">$ <?php echo $row4['SUM(propina)'] ?></h3>
                         <p class="text-center text-light">Propina</p>
                     </div>
                 </div>
@@ -90,7 +131,7 @@ include("../php/functions/tasa.php");
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Clientes atendidos</button>
+                                <button type="button" onclick="location.href='assets/barberos/clientesatendidos.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Clientes atendidos</button>
                             </div>
 
                         </div>
@@ -98,7 +139,7 @@ include("../php/functions/tasa.php");
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Consumo</button>
+                                <button type="button" onclick="location.href='assets/barberos/consumobarbero.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Consumo</button>
                             </div>
 
                         </div>
@@ -106,7 +147,7 @@ include("../php/functions/tasa.php");
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Vales</button>
+                                <button type="button" onclick="location.href='assets/barberos/valesbarber.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Vales</button>
                             </div>
 
                         </div>
@@ -114,7 +155,7 @@ include("../php/functions/tasa.php");
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='https://www.google.com'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Propinas</button>
+                                <button type="button" onclick="location.href='propinasbarberoj.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Propinas</button>
                             </div>
 
                         </div>

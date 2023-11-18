@@ -31,10 +31,10 @@ include("../php/functions/tasa.php");
 
         
             <div class="elements">
-                <a href="Protocolo.php" class="item">
+                <a href="cierre/parcial.php" class="item">
 
                     <img src="../img/icons/tasa.png">
-                    <p class="card-title">Parcial</p>
+                    <p class="card-title">General</p>
                 </a>
 
                 <a href="lista_facturas.php" class="item">
