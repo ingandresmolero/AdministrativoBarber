@@ -231,6 +231,18 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Configuracion</p>
                 </a>
             </div>
+            <div class="elements">
+                <!-- <a href="reportes.php" class="item">
+                    <img src="../img/icons/reportes.png">
+                    <p class="card-title">Reportes</p>
+                </a> -->
+                <a href="mant_servicios.php" class="item">
+                    <img src="../img/icons/usuarios.png">
+                    <p class="card-title">Servicios</p>
+                </a>
+
+               
+            </div>
 
         <?php }; ?>
     </section>

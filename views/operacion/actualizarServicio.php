@@ -1,12 +1,11 @@
 <?php
 include("../../php/dbconn.php");
-$id = $_GET['userid'];
+$id = $_GET['ID'];
 if (isset($_POST['actualizar'])) {
     $nombre = $_POST['nombre'];
-    $contrasena = md5($_POST['passw']);
-    $rol = $_POST['rol'];
+    $costo =$_POST['costo'];
 
-    $sql = "UPDATE tbladmin SET UserName='$nombre',Password='$contrasena',Role='$rol' WHERE id_usuario=$id";
+    $sql = "UPDATE tblservices SET ServiceName='$nombre',Cost='$costo' WHERE ID=$id";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -16,6 +15,6 @@ if (isset($_POST['actualizar'])) {
         error_log($stmt);
     } else {
         echo '<script> alert("Actualizacion completa !")</script>';
-        header('Location: ../usuarios.php');
+        header('Location: ../mant_servicios.php');
     }
 }
