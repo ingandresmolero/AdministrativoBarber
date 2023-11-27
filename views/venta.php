@@ -191,7 +191,7 @@ $resultado = $stmt->fetch();
                                     <th>Precio Libre</th>
                                     <th>Accion</th>
                                 </tr>
-
+                               
                                 <?php
                                 $ret = mysqli_query($conexion, "SELECT * FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice = '$billing'");
                                 $cntservicio = 1;
@@ -206,13 +206,18 @@ $resultado = $stmt->fetch();
                                         <!-- <th><?php echo $row2['idservicioasignado']; ?></th> -->
                                         <td><?php echo $row2['ServiceName'] ?></td>
                                         <td><?php echo $row2['nombre'] ?></td>
-                                        <td><?php echo $subtotal = $row2['Cost'] ?></td>
+
+                                        <?php if ($rol == 'admin'){ ?>
+                                            
+                                           <td><input type="text" name="preciolibremonto" value="" placeholder="<?php echo $subtotal = intval($row2['monto']) ?>" class="form-control" > </td>
+                                        <?php }else{ ?>
+                                            <td><?php echo $subtotal = intval($row2['Cost']) ?></td>
+                                        <?php } ?>
+                                        
 
                                         <td><input type="text" name="propina" value="" placeholder="<?php echo $propina = $row2['propina'] ?>" class="form-control" disabled></td>
                                         <td><a class="btn btn-success" href="propinas.php?idservicio=<?php echo $row2['idservicioasignado'] ?>">+</a></td>
-                                        <td> <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalabono">
-                                                Agregar Pago $
-                                            </button></td>
+                                        <td> <input type="submit" name="preciolibre" value="Libre" class="btn btn-success"></td>
                                         <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
                                     </tr>
                                 <?php
@@ -486,6 +491,8 @@ $resultado = $stmt->fetch();
 
                         </div>
 
+                        
+
                         <div class="row">
                             <div class="col">
 
@@ -530,10 +537,14 @@ $resultado = $stmt->fetch();
 
 
                                 </table>
-
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
-                                    Agregar Pago $
-                                </button>
+<?php  if($saldototal == 0){
+    echo '';
+}else if ($saldototal != 0 ){
+    echo ' <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
+    Agregar Pago $
+</button>';
+}  ?>
+                               
 
                             </div> <!-- Pago ABONOS -->
                         </div>

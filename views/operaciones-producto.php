@@ -166,6 +166,19 @@ if(isset($_POST['restar'])){
 
 }
 
+
+//PRECIO LIBRE
+
+if(isset($_POST['preciolibre'])){
+    $invoice = $_POST['invoice'];
+    $idservicio = $_POST['idservicio2'];
+    $precio = $_POST['preciolibremonto'];
+    $preciolibre = "UPDATE tblassignedservice SET monto='$precio' WHERE idservicioasignado='$idservicio' ";
+    $stmtlibre = mysqli_query($conexion,$preciolibre);
+    header('location:venta.php?billing='.$invoice.'');
+}
+
+
 // if(isset($_POST['totalizar'])){
 //     $metodo = $_POST['metodo'];
 //     $referencia = $_POST['referencia'];

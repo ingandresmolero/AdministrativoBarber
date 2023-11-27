@@ -13,10 +13,11 @@
         
         $monto = $fila['precio'];
         $cantidad_stock = $fila['cantidad'];
+        $monto_productos = $monto * $cantidad;
 
         $monto_final = intval($cantidad_stock) - intval($cantidad);
 
-        $sql = "INSERT INTO tblassignedproducts (invoice, id_products, cantidad,monto) VALUES ('$invoice','$producto','$cantidad','$monto')";
+        $sql = "INSERT INTO tblassignedproducts (invoice, id_products, cantidad,monto) VALUES ('$invoice','$producto','$cantidad','$monto_productos')";
        
         $actsql = "UPDATE tblproducts SET cantidad='$monto_final' WHERE idproducts='$producto'";
         var_dump($actsql);
