@@ -82,6 +82,16 @@ if (isset($_POST['eliminarmetodo'])){
     header('location:venta.php?billing='.$invoice.'');
 };
 
+// OPERACION DE ELIMINAR ABONO  
+
+if (isset($_POST['eliminarabono'])){
+    $idconsumo = $_POST['idconsumo'];
+    $invoice = $_POST['invoice'];
+    $idcuenta = $_POST['idcuenta'];
+    $sql3="DELETE FROM consumo_fondo WHERE invoice= '$invoice' AND id_consumo='$idconsumo'";
+    $stmt = mysqli_query($conexion,$sql3);
+    header('location:venta.php?billing='.$invoice.'');
+};
 
 // ELIMINAR SERVICIO ADICIONAL
 if (isset($_POST['eliminaradicional'])){
@@ -177,6 +187,8 @@ if(isset($_POST['preciolibre'])){
     $stmtlibre = mysqli_query($conexion,$preciolibre);
     header('location:venta.php?billing='.$invoice.'');
 }
+
+
 
 
 // if(isset($_POST['totalizar'])){

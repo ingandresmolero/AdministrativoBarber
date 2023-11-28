@@ -25,25 +25,25 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../css/styles.min.css">
-    <title>vales - Servicios</title>
+    <title>Propinas - Servicios</title>
 </head>
 
 <body>
     <?php include("headersintasabarber.php"); ?>
 
     <section class="container">
-        <h1 class="page-heading">vales</h1>
+        <h1 class="page-heading">Propinas</h1>
         <div class="row b-3">
             <div class="col-md">
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="valesbarber.php" class="table-btn">Mostrar Todos</a>
+                    <a href="propinasbarbero.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
         </div>
         <div class="table-responsive-sm">
-            <table class="table table-style">
+            <table class="table table-style rounded-5">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -51,17 +51,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">Cliente</th>
                         <th scope="col">Cedula</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Procesar</th>
-                        <th scope="col">Eliminar</th>
+                        <th scope="col">Facturar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     if (!$_GET) {
-                        header('Location:valesbarber.php?pagina=1');
+                        header('Location:propinasbarbero.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:valesbarber.php?pagina=1');
+                        header('Location:propinasbarbero.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
@@ -80,8 +79,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>>
                             </tr>
                         <?php $ctn = $ctn + 1;
                         endforeach;
@@ -104,7 +102,6 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['cedula']; ?></td>
                                     <td><?php echo $usuario['estado']; ?></td>
                                     <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
                                 </tr>
                             <?php $ctn2 = $ctn2 + 1;
                             endforeach;
@@ -116,11 +113,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         </div>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?>"><a class="page-link" href="valesbarber.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                <li class="page-item <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?>"><a class="page-link" href="propinasbarbero.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="valesbarber.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="propinasbarbero.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor; ?>
-                <li class="page-item <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?>"><a class="page-link" href="valesbarber.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                <li class="page-item <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?>"><a class="page-link" href="propinasbarbero.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>

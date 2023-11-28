@@ -106,19 +106,19 @@ include("../php/functions/tasa.php");
                 <div class="row d-flex justify-content-between align-content-between shadow-lg p-2 m-3 mb-4 mt-4 rounded-5">
                     <h1 style="color: #a4d61d !important;">Fecha del dia: <?php echo $date=date("d.m.Y"); ?></h1>
                     
-                    <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/clientesatendidos.php'">
-                            <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row1 ?></h3>
-                            <p class="text-center text-light">Clientes Atendidos</p>            
+                    <div class="col-sm-2 p-2">
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row1 ?></h3>
+                        <p class="text-center text-light">Clientes Atendidos</p>
                     </div>
-                    <div class="col-sm-2 p-2 text-ligh" type="button" onclick="location.href='assets/barberos/consumobarbero.php'"> 
+                    <div class="col-sm-2 p-2 text-ligh">
                         <h3 class="text-light text-center" style="color: #a4d61d !important;">$ <?php echo '0' ?></h3>
                         <p class="text-center text-light">Consumo</p>
                     </div>
-                    <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/valesbarber.php'">
+                    <div class="col-sm-2 p-2">
                         <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row3 ?></h3>
-                        <p class="text-center text-light">Vales</p>
+                        <p class="text-center text-light">Vales</h< /p>
                     </div>
-                    <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/propinasbarbero.php'" >
+                    <div class="col-sm-2 p-2">
                         <h3 class="text-light text-center " style="color: #a4d61d !important;">$ <?php echo $row4['SUM(propina)'] ?></h3>
                         <p class="text-center text-light">Propina</p>
                     </div>
