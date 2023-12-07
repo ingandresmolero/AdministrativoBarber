@@ -49,6 +49,8 @@ $nombre = $config["nombre_empresa"] ;
                     <input type="text" class="form-control" value="<?php echo $config['telefono'] ?>" name="telefono" id="">
                     <label for="" class="form-label">No Control:</label>
                     <input type="text" class="form-control" value="<?php echo $config['NControl'] ?>" name="n_control" id="">
+                    <label for="" class="form-label">No Control Interno:</label>
+                    <input type="text" class="form-control" value="<?php echo $config['NControlInterno'] ?>" name="n_control_interno" id="">
 
                     <input type="submit" class="btn btn-primary mb-3" value="Guardar" name="guardar">
                 </form>

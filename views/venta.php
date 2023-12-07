@@ -24,7 +24,7 @@ $resultado = $stmt->fetch();
     <title>Venta</title>
     <link rel="stylesheet" href="../css/styles.min.css">
 </head>
-
+        
 <body>
     <?php include("assets/headersintasa.php");
 
@@ -308,7 +308,7 @@ $resultado = $stmt->fetch();
                                             </tr>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Metodo Pago</th>
+                                                <th>Dirigido</th>
                                                 <th>Monto</th>
                                                 <th>Accion</th>
                                                 <!-- <th>Costo</th> -->
@@ -708,7 +708,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Productos</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarproducto.php" method="post">
@@ -752,7 +752,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpago.php" method="post">
@@ -808,7 +808,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Metodos Pagos Bolivares</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpago.php" method="post">
@@ -863,14 +863,14 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignaradicional.php" method="post">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
 
-                        <label class="form-label" for="">Metodo Pago</label>
-                        <select name="idusuario" class="form-control" id="">
+                        <label class="form-label d-none" for="">Metodo Pago</label>
+                        <select name="idusuario" class="d-none form-control" id="">
 
 
                             <?php
@@ -932,7 +932,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarabono.php" method="post">
@@ -965,7 +965,7 @@ $resultado = $stmt->fetch();
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
-                    <button type="button" class="btn-gray" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarabono.php" method="post">
@@ -974,8 +974,8 @@ $resultado = $stmt->fetch();
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <div class="row">
                             <div class="col-sm-3">
-                                <label class="form-label" style="color:red;" for="">Monto a Aplicar</label>
-                                <input type="number"   name="montocargo" class="form-control" value="<?php echo $saldototal ?>" placeholder="<?php echo $saldototal ?>">
+                                <label class="form-label" style="color:red; font-size:1.2rem" for="">Monto a Aplicar</label>
+                                <input type="number"   name="montocargo" class="form-control"  placeholder="<?php echo $saldototal ?>">
                             </div>
                         </div>
 

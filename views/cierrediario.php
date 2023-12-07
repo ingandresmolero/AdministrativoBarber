@@ -40,7 +40,7 @@ include("../php/functions/tasa.php");
                 <a href="lista_facturas.php" class="item">
 
                     <img src="../img/icons/inventario.png">
-                    <p class="card-title">Total</p>
+                    <p class="card-title">Historicos</p>
                 </a>
                
             

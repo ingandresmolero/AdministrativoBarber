@@ -107,7 +107,7 @@ $cnt3 = 1;
                                     </thead>
                                     <tbody>
                                         <tr class="text-light">
-                                            <td> <?php echo $row1['SUM(monto_total)'] ?></td>
+                                            <td> $<?php echo $row1['SUM(monto_total)'] ?></td>
                                             <td> $<?php echo $row2['SUM(monto_total)'] ?></td>
                                             <td> $<?php echo $row3['SUM(monto_total)'] ?></td>
                                             <td> $<?php echo $row4['SUM(monto_total)'] ?></td>

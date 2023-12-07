@@ -20,37 +20,13 @@ if (isset($_POST['eliminar'])){
 
         $monto_final =  intval($cantidad) + intval($cantidad_stock);
 
-    $sql1="DELETE FROM tblassignedproducts WHERE id_assigned='$idproduct'";
-
-    $actsql = "UPDATE tblproducts SET cantidad='$monto_final' WHERE idproducts='$idproducto'";
-    
-    $stmtact = mysqli_query($conexion,$actsql);
-    $stmt = mysqli_query($conexion,$sql1);
-    header('location:venta.php?billing='.$invoice.'');
-};
-
-//ELIMINAR PROIDUCTO INTERNO
-if (isset($_POST['eliminar_interno'])){
-    
-    $invoice = $_POST['invoice'];
-    $idproduct = $_POST['product'];
-    $idproducto = $_POST['idproducto'];
-    $cantidad = $_POST['cantidad'];
-
-    $sql3="SELECT * FROM tblproducts WHERE idproducts='$idproducto'";
-        $stmtc= mysqli_query($conexion,$sql3);
-        $fila = mysqli_fetch_array($stmtc);
-        $cantidad_stock = $fila['cantidad'];
-
-        $monto_final =  intval($cantidad) + intval($cantidad_stock);
-
     $sql1="DELETE FROM tblassignedproducts_intern WHERE id_assignedintern='$idproduct'";
 
     $actsql = "UPDATE tblproducts SET cantidad='$monto_final' WHERE idproducts='$idproducto'";
     
     $stmtact = mysqli_query($conexion,$actsql);
     $stmt = mysqli_query($conexion,$sql1);
-    header('location:hoja_consumo.php?id='.$invoice.'');
+    header('location:venta.php?billing='.$invoice.'');
 };
 
 // OPERACION DE PROCESAR FACTURA A ESTATUS PENDIENTE
@@ -60,7 +36,7 @@ if(isset($_POST['procesar'])){
     $invoice = $_POST['invoice'];
     $idproduct = $_POST['product'];
     
-    $sql2="select tblcustomers.ID,tblinvoice.ServiceId, tblinvoice.AssignedUserID,tblinvoice.Userid as usuario,tblinvoice.PostingDate,tblassignedproducts.id_products FROM tblinvoice JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID JOIN tblassignedproducts ON tblassignedproducts.invoice = tblinvoice.BillingId where tblinvoice.BillingID = '$invoice' ";
+    $sql2="select tblcustomers.ID,tblinvoice.ServiceId, tblinvoice.AssignedUserID,tblinvoice.Userid as usuario,tblinvoice.PostingDate,tblassignedproducts_intern.id_products FROM tblinvoice JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID JOIN tblassignedproducts_intern ON tblassignedproducts_intern.invoice = tblinvoice.BillingId where tblinvoice.BillingID = '$invoice' ";
     $stmt2=mysqli_query($conexion,$sql2);
     $lista=mysqli_fetch_array($stmt2);
     $date=$lista['PostingDate'];
@@ -95,18 +71,6 @@ if (isset($_POST['eliminarservicio'])){
      header('location:venta.php?billing='.$invoice.'');
 };
 
-if (isset($_POST['eliminarservicio_interno'])){
-    echo "Elimiinar";
-   
-    $invoice = $_POST['invoice'];
-    // $serviceide = $_POST['serviceid'];
-    $idservicio = $_POST['idservicio2'];
-    $sql3="DELETE FROM tblassignedservice_intern WHERE  idserviciointerno='$idservicio'";
-   
-     $stmt = mysqli_query($conexion,$sql3);
-     header('location:hoja_consumo.php?id='.$invoice.'');
-};
-
 // OPERACION DE ELIMINAR METODO DE BILLING
 
 if (isset($_POST['eliminarmetodo'])){
@@ -137,15 +101,6 @@ if (isset($_POST['eliminaradicional'])){
     $sql3="DELETE FROM servicios_adicional WHERE id_billing= '$invoice' AND idservicioadicional='$idadicional'";
     $stmt = mysqli_query($conexion,$sql3);
     header('location:venta.php?billing='.$invoice.'');
-};
-
-if (isset($_POST['eliminaradicional_interno'])){
-   
-    $invoice = $_POST['invoice'];
-    $idadicional = $_POST['idservicioadicional'];
-    $sql3="DELETE FROM servicios_adicional_interno WHERE intern= '$invoice' AND idservicioadicionalintern='$idadicional'";
-    $stmt = mysqli_query($conexion,$sql3);
-    header('location:hoja_consumo.php?id='.$invoice.'');
 };
 
 // TOTALIZAR OPERACION
@@ -183,28 +138,6 @@ if(isset($_POST['sumar'])){
     $idproducto = $_POST['idproducto'];
     $cantidad = $_POST['cantidad'];
 
-    $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
-        $stmtc= mysqli_query($conexion,$sql3);
-        $fila = mysqli_fetch_array($stmtc);
-        $cantidad_stock = $fila['cantidad'];
-
-        $monto_final =  intval($cantidad) + 1;
-
-    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
-
-    
-    
-    $stmt = mysqli_query($conexion,$sql1);
-    header('location:venta.php?billing='.$invoice.'');
-
-}
-
-if(isset($_POST['sumar_interno'])){
-    $invoice = $_POST['invoice'];
-    $idproduct = $_POST['product'];
-    $idproducto = $_POST['idproducto'];
-    $cantidad = $_POST['cantidad'];
-
     $sql3="SELECT * FROM tblassignedproducts_intern WHERE id_products='$idproducto'";
         $stmtc= mysqli_query($conexion,$sql3);
         $fila = mysqli_fetch_array($stmtc);
@@ -217,7 +150,7 @@ if(isset($_POST['sumar_interno'])){
     
     
     $stmt = mysqli_query($conexion,$sql1);
-    header('location:hoja_consumo.php?id='.$invoice.'');
+    header('location:venta.php?billing='.$invoice.'');
 
 }
 
@@ -227,28 +160,6 @@ if(isset($_POST['restar'])){
     $idproducto = $_POST['idproducto'];
     $cantidad = $_POST['cantidad'];
 
-    $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
-        $stmtc= mysqli_query($conexion,$sql3);
-        $fila = mysqli_fetch_array($stmtc);
-        $cantidad_stock = $fila['cantidad'];
-
-        $monto_final =  intval($cantidad) - 1;
-
-    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
-
-    
-    
-    $stmt = mysqli_query($conexion,$sql1);
-    header('location:venta.php?billing='.$invoice.'');
-
-}
-
-if(isset($_POST['restar_interno'])){
-    $invoice = $_POST['invoice'];
-    $idproduct = $_POST['product'];
-    $idproducto = $_POST['idproducto'];
-    $cantidad = $_POST['cantidad'];
-
     $sql3="SELECT * FROM tblassignedproducts_intern WHERE id_products='$idproducto'";
         $stmtc= mysqli_query($conexion,$sql3);
         $fila = mysqli_fetch_array($stmtc);
@@ -261,7 +172,7 @@ if(isset($_POST['restar_interno'])){
     
     
     $stmt = mysqli_query($conexion,$sql1);
-    header('location:hoja_consumo.php?id='.$invoice.'');
+    header('location:venta.php?billing='.$invoice.'');
 
 }
 
@@ -276,18 +187,6 @@ if(isset($_POST['preciolibre'])){
     $stmtlibre = mysqli_query($conexion,$preciolibre);
     header('location:venta.php?billing='.$invoice.'');
 }
-
-if(isset($_POST['preciolibre_interno'])){
-    $invoice = $_POST['invoice'];
-    $idservicio = $_POST['idservicio2'];
-    $precio = $_POST['preciolibremonto'];
-    $preciolibre = "UPDATE tblassignedservice_intern SET monto='$precio' WHERE idserviciointerno='$idservicio' ";
-    $stmtlibre = mysqli_query($conexion,$preciolibre);
-    header('location:hoja_consumo.php?id='.$invoice.'');
-}
-
-
-//PROPINAS INTERNAS
 
 
 

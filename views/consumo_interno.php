@@ -58,7 +58,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">NroConsumo</th>
-                        <th scope="col">Barbero</th>
+                        <th scope="col">Servidor</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Procesar</th>
                         <th scope="col">Eliminar</th>
 
@@ -79,7 +80,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT * FROM tblbarber LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT * FROM consumo_interno join tbladmin on tbladmin.ID = consumo_interno.servidor LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -93,10 +94,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
                                 <th scope="row"><?php echo $ctn;  ?></th>
-                                <td><?php echo $usuario['idbarber']; ?></td>
-                                <td><?php echo $usuario['nombre']; ?></td>
+                                <td><?php echo $usuario['intern']; ?></td>
+                                <td><?php echo $usuario['AdminName']; ?></td>
+                                <td><?php echo $usuario['fecha_creacion']; ?></td>
 
-                                <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['idbarber'] ?>">Ver Hoja</a></td>
+                                <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['intern'] ?>">Ver Hoja</a></td>
                                 <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                             </tr>
@@ -107,7 +109,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT * FROM tblbarber WHERE (nombre LIKE  '%$busqueda%') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM consumo_interno join tbladmin on tbladmin.ID = consumo_interno.servidor WHERE (AdminName LIKE  '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -121,12 +123,13 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
-                                    <th scope="row"><?php echo $ctn2;  ?></th>
-                                    <td><?php echo $usuario['idbarber']; ?></td>
-                                    <td><?php echo $usuario['nombre']; ?></td>
+                                <th scope="row"><?php echo $ctn2;  ?></th>
+                                <td><?php echo $usuario['intern']; ?></td>
+                                <td><?php echo $usuario['AdminName']; ?></td>
+                                <td><?php echo $usuario['fecha_creacion']; ?></td>
 
-                                    <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['idbarber'] ?>">Ver Hoja</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['intern'] ?>">Ver Hoja</a></td>
+                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                                 </tr>
                             <?php endforeach  ?>
@@ -173,19 +176,19 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     ?>
                     <form action="operacion/crearconsumo.php" method="post">
-                        <label class="form-label" for="">Barbero:</label>
+                        <label class="form-label" for="">Servidor:</label>
 
-                        <select name="barbero" class="form-select" id="barbero">
+                        <select name="servidor" class="form-select" id="barbero">
                             <?php
-                            $consulta = "Select * from tblbarber";
+                            $consulta = "Select * from tbladmin";
                             $list_barber = mysqli_query($conexion, $consulta);
                             while ($row = mysqli_fetch_array($list_barber)) {
-                                echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
+                                echo "	<option value=" . $row['ID'] . ">" . $row['AdminName'] . "</option>";
                             };
                             ?>
                         </select>
 
-                        <label class="form-label" for="">Producto:</label>
+                        <!-- <label class="form-label" for="">Producto:</label>
                         <select name="producto" class="form-select" id="producto">
                             <?php
                             $consulta = "Select * from tblproducts";
@@ -197,7 +200,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         </select>
 
                         <label class="form-label" for="">Cantidad</label>
-                        <input type="number" class="form-control mb-3 " name="cantidad">
+                        <input type="number" class="form-control mb-3 " name="cantidad"> -->
 
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">

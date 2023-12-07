@@ -9,9 +9,10 @@ if(isset($_POST['guardar'])){
     $direccion=$_POST['direccion'];
     $telefono=$_POST['telefono'];
     $n_control=$_POST['n_control'];
+    $n_control_interno = $_POST['n_control_interno'];
 
-    $sql="INSERT INTO empresa( nombre, rif, direccion, telefono, n_control) VALUES ('$nombre','$rif','$direccion','$telefono','$n_control')";
-
+    $sql="UPDATE tblconfig SET nombre_empresa='$nombre',razon_social='$rif',direccion='$direccion',telefono='$telefono',NControl='$n_control',NControlInterno='$n_control_interno' ";
+   
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
