@@ -1,5 +1,6 @@
 <?php
 include("../../php/dbconn.php");
+include("../../php/conex.php");
 include("../../php/functions/tasa.php");
 $fecha = date("d-m-Y");
 
@@ -8,10 +9,10 @@ $query2 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'totalizad
 $query3 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'abono'"; //total de facturas con abono
 $query4 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'restante' "; //total de pendiente por pagar cliente
 $Query5 = "SELECT SUM(monto) from vales;";
-$Query6 = "SELECT SUM(propina), tblbarber.nombre FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero ";
+$Query6 = "SELECT SUM(propina) FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero ";
 
-$querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo GROUP by (metodos_pago.idmetodo) ";
-$queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP by nombre";
+$querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo GROUP BY (metodos_pago.idmetodo) ";
+$queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP BY nombre";
 $queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre";
 
 $exequery  = $conn->prepare($query);
@@ -19,7 +20,10 @@ $exequery2 = $conn->prepare($query2);
 $exequery3 = $conn->prepare($query3);
 $exequery4 = $conn->prepare($query4);
 $exequery5 = $conn->prepare($Query5);
-$exequery6 = $conn->prepare($Query6);
+
+$exequery6 = mysqli_query($conexion,$Query6);
+$row6 = mysqli_fetch_array($exequery6);
+
 
 $exequerymetodos  = $conn->prepare($querymetodos);
 $exequeryproductos  = $conn->prepare($queryproductos);
@@ -31,7 +35,6 @@ $exequery2->execute();
 $exequery3->execute();
 $exequery4->execute();
 $exequery5->execute();
-$exequery6->execute();
 
 $exequerymetodos->execute();
 $exequeryproductos->execute();
@@ -43,7 +46,7 @@ $row2 = $exequery2->fetch();
 $row3 = $exequery3->fetch();
 $row4 = $exequery4->fetch();
 $row5 = $exequery5->fetch();
-$row6 = $exequery6->fetch();
+
 
 
 

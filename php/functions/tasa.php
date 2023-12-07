@@ -1,5 +1,5 @@
 <?php
-    include("../php/dbconn.php");
+
     $tasasql = "SELECT * FROM tasabs";
     $stmt = $conn->prepare($tasasql);
     $stmt->execute();

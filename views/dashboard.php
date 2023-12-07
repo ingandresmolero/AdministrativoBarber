@@ -9,14 +9,7 @@ include("../php/functions/tasa.php");
 
 
                     $nombreservidor = $_SESSION["username"];
-                    $contadorsql = "select * from tbladmin inner join tblbarber on tbladmin.AdminName = tblbarber.nombre WHERE tblbarber.nombre = '$nombreservidor'";
-
-                    $stmt = $conn->prepare($contadorsql);
-                    $stmt->execute();
-                    $row = $stmt->fetch();
-
-
-                    $idbarbero = $row['idbarber'];
+                   
                     // var_dump($idbarbero);
                     // var_dump($rol);
 
@@ -54,7 +47,7 @@ include("../php/functions/tasa.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>Pingus Sys</title>
+    <title>Activo Barbershop</title>
     <link rel="icon" type="image/x-icon" href="../img/favicon.png">
 
     <link rel="stylesheet" href="../css/styles.min.css">
@@ -99,7 +92,17 @@ include("../php/functions/tasa.php");
             </div>
 
 
-        <?php } else if ($rol == 'servidor') { ?>
+        <?php } else if ($rol == 'servidor') {
+             $contadorsql = "select * from tbladmin inner join tblbarber on tbladmin.AdminName = tblbarber.nombre WHERE tblbarber.nombre = '$nombreservidor'";
+
+             $stmt = $conn->prepare($contadorsql);
+             $stmt->execute();
+             $row = $stmt->fetch();
+
+
+             $idbarbero = $row['idbarber'];
+            
+            ?>
 
             <section class="container-fluid">
 

@@ -59,8 +59,6 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">#</th>
                         <th scope="col">NroConsumo</th>
                         <th scope="col">Barbero</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Estado</th>
                         <th scope="col">Procesar</th>
                         <th scope="col">Eliminar</th>
 
@@ -81,9 +79,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT consumo_interno.idconsumo, consumo_interno.fecha_creacion,tblbarber.nombre as barbero,consumo_interno.estado FROM consumo_interno 
-                        JOIN tblproducts on consumo_interno.idproducto = tblproducts.idproducts
-                        JOIN tblbarber ON consumo_interno.servidor = tblbarber.idbarber LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT * FROM tblbarber LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -97,11 +93,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
                                 <th scope="row"><?php echo $ctn;  ?></th>
-                                <td><?php echo $usuario['idconsumo']; ?></td>
-                                <td><?php echo $usuario['barbero']; ?></td>
-                                <td><?php echo $usuario['fecha_creacion']; ?></td>
-                                <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['idconsumo'] ?>">Procesar</a></td>
+                                <td><?php echo $usuario['idbarber']; ?></td>
+                                <td><?php echo $usuario['nombre']; ?></td>
+
+                                <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['idbarber'] ?>">Ver Hoja</a></td>
                                 <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                             </tr>
@@ -112,7 +107,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                            $sql_usuarios = "SELECT DISTINCT tblcustomers.Name ,tblcustomers.Gender, tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE (Name LIKE  '%$busqueda%') OR (cedula LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM tblbarber WHERE (nombre LIKE  '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -127,12 +122,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                             <?php foreach ($resultado_usuario as $usuario) :   ?>
                                 <tr>
                                     <th scope="row"><?php echo $ctn2;  ?></th>
-                                    <td><?php echo $usuario['BillingId']; ?></td>
-                                    <td><?php echo $usuario['Name']; ?></td>
-                                    <td><?php echo $usuario['cedula']; ?></td>
-                                    <td><?php echo $usuario['Gender']; ?></td>
-                                    <td><?php echo $usuario['estado']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
+                                    <td><?php echo $usuario['idbarber']; ?></td>
+                                    <td><?php echo $usuario['nombre']; ?></td>
+
+                                    <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['idbarber'] ?>">Ver Hoja</a></td>
                                     <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
 
                                 </tr>
@@ -205,7 +198,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         <label class="form-label" for="">Cantidad</label>
                         <input type="number" class="form-control mb-3 " name="cantidad">
-                        
+
 
                         <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
                     </form>
