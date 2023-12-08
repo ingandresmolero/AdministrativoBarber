@@ -1,8 +1,18 @@
 <?php
 // include("../../php/functions/validar.php");
 include("../../../php/dbconn.php");
+// include("../../../php/functions/tasa.php");
+session_start();
 
-$sql = 'SELECT * FROM tblinvoice';
+$nombreservidor = $_SESSION["username"];
+$sql = "SELECT * FROM transacciones 
+
+INNER JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId
+INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID
+INNER JOIN tblassignedservice on tblassignedservice.invoice = tblinvoice.BillingId
+INNER JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber
+
+WHERE tblbarber.nombre = '$nombreservidor'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -13,6 +23,7 @@ $usuarios_x_pagina = 10;
 $total_usuario = $stmt->rowCount();
 
 $paginas = ceil($total_usuario / $usuarios_x_pagina);
+
 
 ?>
 
@@ -50,9 +61,9 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">NroFactura</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Cedula</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Procesar</th>
-                        <th scope="col">Eliminar</th>
+                        <!-- <th scope="col">Estado</th> -->
+                        <th scope="col">Ver</th>
+                        <!-- <th scope="col">Eliminar</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -66,7 +77,14 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     if (!isset($_POST['busqueda'])) {
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name, tblcustomers.cedula, tblinvoice.BillingId, tblcustomers.assignedbarber as barbero, tblinvoice.PostingDate, tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' ORDER BY tblinvoice.PostingDate and tblcustomers.assignedbarber = '' desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT distinct tblinvoice.BillingId,tblcustomers.Name,tblcustomers.cedula FROM transacciones 
+
+                        INNER JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId
+                        INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID
+                        INNER JOIN tblassignedservice on tblassignedservice.invoice = tblinvoice.BillingId
+                        INNER JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber
+                        
+                        WHERE tblbarber.nombre = '$nombreservidor'  LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -79,17 +97,24 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['BillingId']; ?></td>
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
-                                <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <!-- <td><?php echo $usuario['estado']; ?></td> -->
+                                <td class="action"><a class="table-btn" href="../../../views/detalles.php?billing=<?php echo $usuario['BillingId'] ?>&barber=<?php echo $nombreservidor ?>">Detalle</a></td>
+                                <!-- <td class="action"><a class="table-btn" href="#">Eliminar</a></td> -->
                             </tr>
-                        <?php $ctn = $ctn + 1;
+                            <?php $ctn = $ctn + 1;
                         endforeach;
                     } else {
                         if (isset($_POST['busqueda'])) {
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
-                            $sql_usuarios = "SELECT DISTINCT tblcustomers.cedula, tblcustomers.Name, tblinvoice.BillingId, tblcustomers.assignedbarber as barbero, tblinvoice.PostingDate, tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE (Name LIKE '%$busqueda%') OR (cedula LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
+                            $sql_usuarios = "SELECT * FROM transacciones 
+
+                            INNER JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId
+                            INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID
+                            INNER JOIN tblassignedservice on tblassignedservice.invoice = tblinvoice.BillingId
+                            INNER JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber
+                            
+                            WHERE tblbarber.nombre = '$nombreservidor' AND (Name LIKE '%$busqueda%') OR (cedula LIKE '%$busqueda%') LIMIT :iniciar,:nusuarios";
                             $stm_usuario = $conn->prepare($sql_usuarios);
                             $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -102,11 +127,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['BillingId']; ?></td>
                                     <td><?php echo $usuario['Name']; ?></td>
                                     <td><?php echo $usuario['cedula']; ?></td>
-                                    <td><?php echo $usuario['estado']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                    <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                    <!-- <td><?php echo $usuario['estado']; ?></td> -->
+                                    <td class="action"><a class="table-btn" href="../../../views/detalles.php?billing=<?php echo $usuario['BillingId'] ?>">Detalle</a></td>
+                                    <!-- <td class="action"><a class="table-btn" href="#">Eliminar</a></td> -->
                                 </tr>
-                            <?php $ctn2 = $ctn2 + 1;
+                    <?php $ctn2 = $ctn2 + 1;
                             endforeach;
                         }
                     }

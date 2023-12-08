@@ -2,7 +2,10 @@
 // include("../../php/functions/validar.php");
 include("../../../php/dbconn.php");
 
-$sql = 'SELECT * FROM tblinvoice';
+session_start();
+$nombreservidor = $_SESSION["username"];
+
+$sql = "SELECT * FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -34,25 +37,26 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <section class="container">
         <h1 class="page-heading">consumo</h1>
         <div class="row b-3">
-            <div class="col-md">
+            <!-- <div class="col-md">
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
                     <a href="consumobarbero.php" class="table-btn">Mostrar Todos</a>
                 </form>
-            </div>
+            </div> -->
         </div>
         <div class="table-responsive-sm">
             <table class="table table-style">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">NroFactura</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Cedula</th>
+                        <th scope="col">NroConsumo</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Detalles</th>
+                        <!-- <th scope="col">Cedula</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Procesar</th>
-                        <th scope="col">Eliminar</th>
+                        <th scope="col">Eliminar</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -66,7 +70,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     if (!isset($_POST['busqueda'])) {
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name, tblcustomers.cedula, tblinvoice.BillingId, tblcustomers.assignedbarber as barbero, tblinvoice.PostingDate, tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT * FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor'LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -76,12 +80,12 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
                                 <th scope="row"><?php echo $ctn;  ?></th>
-                                <td><?php echo $usuario['BillingId']; ?></td>
-                                <td><?php echo $usuario['Name']; ?></td>
-                                <td><?php echo $usuario['cedula']; ?></td>
-                                <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <td><?php echo $usuario['intern']; ?></td>
+                                <td><?php echo $usuario['AdminName']; ?></td>
+                                <!-- <td><?php echo $usuario['cedula']; ?></td>
+                                <td><?php echo $usuario['estado']; ?></td> -->
+                                <td class="action"><a class="table-btn" href="../../hoja_consumo.php?id=<?php echo $usuario['intern'] ?>">Ver Hoja</a></td>
+                                <!-- <td class="action"><a class="table-btn" href="#">Eliminar</a></td> -->
                             </tr>
                         <?php $ctn = $ctn + 1;
                         endforeach;

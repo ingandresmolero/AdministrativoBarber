@@ -17,7 +17,7 @@ include("../php/functions/tasa.php");
                     //CONTADORES
 
                     $contador1 = "SELECT DISTINCT usuario FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-                    $contador2 = "SELECT SUM(tblassignedservice_intern.monto + servicios_adicional_interno.monto + tblassignedproducts_intern.monto) FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern INNER JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID GROUP BY tbladmin.AdminName = '$nombreservidor'";
+                    $contador2 = "SELECT SUM(IFNULL(tblassignedservice_intern.monto,0) + IFNULL(tblassignedproducts_intern.monto,0) + IFNULL(servicios_adicional_interno.monto,0)) as total_monto FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern LEFT JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName =  '$nombreservidor';";
                     
                     $contador3 = "SELECT * from vales inner join tblbarber on vales.idbarber = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
                     $contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
@@ -116,7 +116,7 @@ include("../php/functions/tasa.php");
                             <p class="text-center text-light">Clientes Atendidos</p>            
                     </div>
                     <div class="col-sm-2 p-2 text-ligh" type="button" onclick="location.href='assets/barberos/consumobarbero.php'"> 
-                        <h3 class="text-light text-center" style="color: #a4d61d !important;">$ <?php echo $row2['SUM(tblassignedservice_intern.monto + servicios_adicional_interno.monto + tblassignedproducts_intern.monto)'] ?></h3>
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;">$ <?php echo $row2['total_monto'] ?></h3>
                         <p class="text-center text-light">Consumo</p>
                     </div>
                     <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/valesbarber.php'">
@@ -156,14 +156,14 @@ include("../php/functions/tasa.php");
                             </div>
 
                         </div>
-
+<!-- 
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
                                 <button type="button" onclick="location.href='assets/barberos/propinasbarbero.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Propinas</button>
                             </div>
 
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
