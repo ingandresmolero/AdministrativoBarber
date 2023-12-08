@@ -37,7 +37,7 @@ include("../php/functions/tasa.php");
                     <p class="card-title">General</p>
                 </a>
 
-                <a href="lista_facturas.php" class="item">
+                <a href="historico.php" class="item">
 
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Historicos</p>

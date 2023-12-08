@@ -1,9 +1,6 @@
+
 <?php
 include("../php/functions/validar.php");
-
-// include("../php/functions/tasa.php");
-?>
-<?php
 include("../php/dbconn.php");
 $sql = 'SELECT * FROM tblinvoice';
 $stmt = $conn->prepare($sql);
@@ -37,7 +34,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Servicios Abiertos</h1>
+        <h1 class="page-heading">HISTORICOS MOVIMIENTOS</h1>
         <!-- Button trigger modal -->
 
         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -48,7 +45,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Factura,Cliente,Barbero,Estado..." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="lista_facturas.php" class="table-btn">Mostrar Todos</a>
+                    <a href="historico.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
         </div>
@@ -61,15 +58,15 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">Cliente</th>
                         <th scope="col">Cedula</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Procesar</th>
-                        <?php 
+                        <th scope="col">Detalles</th>
+                        <!-- <?php 
                                 if($rol == 'admin'){
                                     echo '<th scope="col">Anular</th>';
                                 }else if ($rol != 'admin'){
                                     echo '';
                                 }
                                 
-                                ?>
+                                ?> -->
 
                     </tr>
                 </thead>
@@ -78,17 +75,17 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:lista_facturas.php?pagina=1');
+                        header('Location:historico.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:lista_facturas.php?pagina=1');
+                        header('Location:historico.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' AND tblinvoice.estado != 'anulado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -106,15 +103,15 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
-                                <?php 
+                                <td class="action"><a class="table-btn" href="../views/ventadetalles.php?billing=<?php echo $usuario['BillingId'] ?>">Ver</a></td>
+                                <!-- <?php 
                                 if($rol == 'admin'){
                                     echo '<td class="action"><a class="table-btn" href="../views/operacion/anularfactura.php?billing='.$usuario['BillingId'].'">Anular</a></td>';
                                 }else if ($rol != 'admin'){
                                     echo '';
                                 }
                                 
-                                ?>
+                                ?> -->
                                 <!-- <td class="action"><a class="table-btn" href="../views/operacion/anularfactura.php?billing=<?php echo $usuario['BillingId'] ?>"">Anular</a></td> -->
 
                             </tr>
@@ -143,7 +140,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
-                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
+                                <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Ver</a></td>
                                 <td class="action"><a class="table-btn" href="#">Anular</a></td>
 
                                 </tr>
@@ -157,16 +154,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="historico.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="lista_facturas.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="historico.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="lista_facturas.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="historico.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>

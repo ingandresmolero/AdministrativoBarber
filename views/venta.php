@@ -93,6 +93,7 @@ $resultado = $stmt->fetch();
                             </div>
 
                             <?php
+
                             $clienteid = $row1['ID'];
                             $consultasaldo = "SELECT SUM(saldo) FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='abono'";
 
@@ -116,22 +117,9 @@ $resultado = $stmt->fetch();
 
                             $saldototal = $rowsaldo2['SUM(saldo)'] + $rowsaldo['SUM(saldo)'] - $rowsaldo3['SUM(aplicado)'];
 
-                            // if ($rowsaldo2['SUM(saldo)'] >= 1) {
-                            //     echo '
-                            //         <div class="col-md-3">
-                            //     <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
-                            //     <input type="text" class="form-control" name="saldocliente" value="' . $rowsaldo['SUM(saldo)'] . '">
-                            // </div>
-                            //         ';
-                            // }
-
+                        if($rol == 'admin'){
                             if ($saldototal < -1) {
-                                //     echo '
-                                //         <div class="col-md-3">
-                                //     <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
-                                //     <input type="text" class="form-control" name="saldocliente" value="' . $rowsaldo['SUM(saldo)'] . '">
-                                // </div>
-                                //         ';
+                                
                                 echo '
                                     <div class="col-md-3">
                                 <label for="" style=" color:red; " class="form-label">Saldo Cliente:</label>
@@ -154,6 +142,34 @@ $resultado = $stmt->fetch();
                                     echo '';
                                 }
                             }
+                        }else if ($rol != 'admin'){
+                            echo '';
+                        }
+
+                            // if ($saldototal < -1) {
+                                
+                            //     echo '
+                            //         <div class="col-md-3">
+                            //     <label for="" style=" color:red; " class="form-label">Saldo Cliente:</label>
+                            //     <input type="text" disabled class="form-control" name="saldocliente" value="' . $saldototal . '" >
+                            //     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalcargo">
+                            //         Aplicar a Cuenta
+                            //     </button>
+                            // </div>
+                            //         ';
+                            // } else if ($saldototal >= 1) {
+                            //     echo '
+                            //             <div class="col-md-3">
+                            //          <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
+                            //          <input type="text" class="form-control" name="saldocliente" value="+ ' . $saldototal . '">
+                                     
+                            //      </div>
+                            //              ';
+                            // } else {
+                            //     if ($saldototal = 0) {
+                            //         echo '';
+                            //     }
+                            // }
 
                             ?>
 

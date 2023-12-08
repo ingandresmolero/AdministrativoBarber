@@ -13,7 +13,7 @@ $Query6 = "SELECT SUM(propina) FROM tblassignedservice inner join tblservices on
 
 $querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo GROUP BY (metodos_pago.idmetodo) ";
 $queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP BY nombre";
-$queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre";
+$queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre,porcentaje";
 
 $exequery  = $conn->prepare($query);
 $exequery2 = $conn->prepare($query2);
@@ -73,7 +73,7 @@ $cnt3 = 1;
                     <input type="text" class="d-none" name="idservicioasignado" value="<?php echo $idservicio ?>">
                     <input type="text" class="d-none" name="billing" value="<?php echo $row['invoice'] ?>">
                     
-                    <h3 class="text-light mb-4">TASA: <?php echo "$tasadia Fecha: $tasafecha "; ?></h3>
+                    <h3 class="text-light mb-4"><?php echo" Fecha: $fecha "; ?></h3>
 
                     <!-- Totales Generales -->
                     <div class="row m-3 bg-white border-2 shadow mb-5 rounded-5">
@@ -90,7 +90,7 @@ $cnt3 = 1;
                                     <thead class="fw-bold">
                                         <tr>
                                             <td>Total transacciones:</td>
-                                            <td>Cuentas totalizadas:</td>
+                                            <td>Cuentas de Contado:</td>
                                             <td>Cuentas x cobrar:</td>
                                             <td>Cuentas x pagar:</td>
                                             <td>Vales: </td>
@@ -178,9 +178,10 @@ $cnt3 = 1;
                                 <tr class="=fw-bold">
                                     <th>Nombre</th>
                                     <th>Cantidad Servicios</th>
-                                    <th>Cantidad</th>
+                                    <!-- <th>Cantidad</th> -->
                                     <th>Monto</th>
-                                    <th>Propinas x Servicios</th>
+                                    <th>Monto con %</th>
+                                    <th>Total Propinas</th>
                                 </tr>
                             </thead>
 
@@ -191,8 +192,9 @@ $cnt3 = 1;
                                     <tr class="">
                                         <td><?php echo $rowservicios['nombre']; ?></td>
                                         <td> <?php echo $rowservicios['count(invoice)']; ?></td>
-                                        <td> <?php echo $rowservicios['SUM(cantidad)']; ?></td>
-                                        <td> $<?php echo $rowservicios['sum(cost)']; ?></td>
+                                        <!-- <td> <?php echo $rowservicios['SUM(cantidad)']; ?></td> -->
+                                        <td> $<?php echo $rowservicios['sum(cost)']?></td>
+                                        <td> $<?php echo $rowservicios['sum(cost)'] * ($rowservicios['porcentaje']/100); ?></td>
                                         <td> $<?php echo $rowservicios['sum(propina)']; ?></td>
 
                                     </tr>
@@ -222,8 +224,8 @@ $cnt3 = 1;
                             <thead>
                                 <tr class="=fw-bold">
                                     <th>Nombre</th>
-                                    <th>Monto</th>
                                     <th>Cantidad</th>
+                                    <th>Monto</th>
                                 </tr>
                             </thead>
 
@@ -234,7 +236,7 @@ $cnt3 = 1;
                                     <tr class="">
                                         <td><?php echo $rowproductos['nombre']; ?></td>
                                         <td> <?php echo $rowproductos['cantidad']; ?></td>
-                                        <td>Monto: <?php echo $rowproductos['sum(monto)']; ?></td>
+                                        <td>$ <?php echo $rowproductos['sum(monto)']; ?></td>
                                     </tr>
                                 </div>
 

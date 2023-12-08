@@ -26,7 +26,7 @@ include("../php/functions/validar.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Parametros</h5>
+                        <h5 class="card-title">Parametros Generales</h5>
                         
                         <a href="parametros.php" class="btn btn-primary">Entrar</a>
                     </div>
@@ -44,6 +44,22 @@ include("../php/functions/validar.php");
                     </div>
                     
                 </div>
+
+                
+            </div>
+
+            <div class="col-3">
+                <div class="card" style="width: 18rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        
+                        <a href="mant_usuarios.php" class="btn btn-primary">Entrar</a>
+                    </div>
+                    
+                </div>
+
+                
             </div>
         </div>
 

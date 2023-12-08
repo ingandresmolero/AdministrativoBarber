@@ -69,7 +69,7 @@ include("../php/functions/tasa.php");
                 <a href="Protocolo.php" class="item">
 
                     <img src="../img/icons/tasa.png">
-                    <p class="card-title">Protocolo</p>
+                    <p class="card-title">Clientes</p>
                 </a>
                 <a href="./lista_facturas.php" class="item">
 
@@ -175,13 +175,19 @@ include("../php/functions/tasa.php");
                 <a href="Protocolo.php" class="item">
 
                     <img src="../img/icons/tasa.png">
-                    <p class="card-title">Protocolo</p>
+                    <p class="card-title">Clientes</p>
                 </a>
 
                 <a href="lista_facturas.php" class="item">
 
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Caja</p>
+                </a>
+
+                <a href="facturas.php" class="item">
+                    <img src="../img/icons/operaciones.png">
+                    <p class="card-title">Facturas</p>
+
                 </a>
                 <a href="stock.php" class="item">
 
@@ -193,17 +199,13 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/tasa.png">
                     <p class="card-title">Tasa</p>
                 </a>
-
+<!-- 
                 <a href="operaciones.php" class="item">
                     <img src="../img/icons/operaciones.png">
                     <p class="card-title">Operaciones</p>
 
-                </a>
-                <a href="facturas.php" class="item">
-                    <img src="../img/icons/operaciones.png">
-                    <p class="card-title">Facturas</p>
-
-                </a>
+                </a> -->
+                
             </div>
             <div class="elements">
                 <!-- <a href="reportes.php" class="item">
@@ -214,11 +216,9 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Cierre</p>
                 </a>
+                
 
-                <a href="mant_usuarios.php" class="item">
-                    <img src="../img/icons/usuarios.png">
-                    <p class="card-title">Mantenimiento Usuarios</p>
-                </a>
+                
                 <a href="consumo_interno.php" class="item">
 
                     <img src="../img/icons/inventario.png">
@@ -231,22 +231,15 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Vales</p>
                 </a>
 
-                <a href="configuracion.php" class="item">
-                    <img src="../img/icons/configuracion.png">
-                    <p class="card-title">Configuracion</p>
-                </a>
-            </div>
-            <div class="elements">
-                <!-- <a href="reportes.php" class="item">
-                    <img src="../img/icons/reportes.png">
-                    <p class="card-title">Reportes</p>
-                </a> -->
                 <a href="mant_servicios.php" class="item">
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Servicios</p>
                 </a>
 
-               
+                <a href="configuracion.php" class="item">
+                    <img src="../img/icons/configuracion.png">
+                    <p class="card-title">Configuracion</p>
+                </a>
             </div>
 
         <?php }; ?>

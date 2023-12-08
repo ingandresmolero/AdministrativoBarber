@@ -17,7 +17,7 @@
             Opciones
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="../views/operaciones.php">Operaciones</a></li>
+            <li><a class="dropdown-item" href="http://localhost/AdministrativoBarber/views/dashboard.php">Operaciones</a></li>
             <li><a class="dropdown-item" href="../views/reportes.php">Reportes</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="../views/configuracion.php">Configuracion</a></li>

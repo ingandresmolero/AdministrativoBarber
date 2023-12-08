@@ -26,6 +26,6 @@ $actualizarcontador = "UPDATE tblconfig SET NControl='$sumadorFactura'";
         $stmt->execute();
     $stmt2 = $conn->prepare($actualizarcontador);
         $stmt2->execute();
-        header('location:../lista_facturas_prot.php');
+        header('location:../lista_facturas.php');
    
 ?>

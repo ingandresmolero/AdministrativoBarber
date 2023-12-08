@@ -81,7 +81,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <th scope="col">Cantidad</th>
                                 <th scope="col">PVP</th>
                                 <th scope="col">Deposito</th>
-                                <!-- <th scope="col">Informacion</th> -->
+                                <th scope="col">Editar</th>
                                 <th scope="col">Eliminar</th>
 
                             </tr>
@@ -124,7 +124,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['precio']; ?></td>
 
                                     <td><?php echo $usuario['deposito']; ?></td>
-                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td> -->
+                                    <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
                                     <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
 
                                 </tr>
@@ -217,7 +217,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear producto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
