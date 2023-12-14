@@ -83,7 +83,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT vales.idvale,tblbarber.nombre as barbero, vales.monto,vales.estado, metodos_pago.nombre as metodo, vales.fecha FROM vales inner join tblbarber on vales.idbarber = tblbarber.idbarber inner join metodos_pago on vales.metodo_pago = metodos_pago.idmetodo LIMIT :iniciar,:nusuarios";
+                        $sql_usuarios = "SELECT * FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber;
+                        LIMIT :iniciar,:nusuarios";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -96,8 +97,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <tr>
                                 <th scope="row"><?php echo $usuario['idvale'];  ?></th>
-                                <td><?php echo $usuario['barbero']; ?></td>
-                                <td><?php echo $usuario['metodo']; ?></td>
+                                <td><?php echo $usuario['AdminName']; ?></td>
+                                <td><?php echo $usuario['metodo_pago']; ?></td>
                                 <td><?php echo $usuario['monto']; ?></td>
                                 <td><?php echo $usuario['fecha']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
@@ -188,10 +189,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
                             <?php
-                            $consultabarber = "Select * from tblbarber";
+                            $consultabarber = "Select * from tbladmin";
                             $list_barber = mysqli_query($conexion, $consultabarber);
                             while ($row = mysqli_fetch_array($list_barber)) {
-                                echo "	<option value=" . $row['idbarber'] . ">" . $row['nombre'] . "</option>";
+                                echo "	<option value=" . $row['ID'] . ">" . $row['AdminName'] . "</option>";
                             };
                             ?>
 

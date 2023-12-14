@@ -184,13 +184,20 @@ if(isset($_POST['sumar'])){
     $cantidad = $_POST['cantidad'];
 
     $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
+    $sql31="SELECT * FROM tblproducts inner join tblassignedproducts on tblproducts.idproducts = tblassignedproducts.id_products WHERE id_products='$idproducto'";
+
         $stmtc= mysqli_query($conexion,$sql3);
         $fila = mysqli_fetch_array($stmtc);
+
+        $stmtc1= mysqli_query($conexion,$sql31);
+        $fila1 = mysqli_fetch_array($stmtc1);
         $cantidad_stock = $fila['cantidad'];
 
         $monto_final =  intval($cantidad) + 1;
+        $monto_actual = intval($fila1['precio'] * $monto_final);
 
-    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
+
+    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final', monto='$monto_actual' WHERE id_assigned='$idproduct'";
 
     
     
@@ -227,14 +234,22 @@ if(isset($_POST['restar'])){
     $idproducto = $_POST['idproducto'];
     $cantidad = $_POST['cantidad'];
 
+    
     $sql3="SELECT * FROM tblassignedproducts WHERE id_products='$idproducto'";
-        $stmtc= mysqli_query($conexion,$sql3);
-        $fila = mysqli_fetch_array($stmtc);
-        $cantidad_stock = $fila['cantidad'];
+    $sql31="SELECT * FROM tblproducts inner join tblassignedproducts on tblproducts.idproducts = tblassignedproducts.id_products WHERE id_products='$idproducto'";
 
-        $monto_final =  intval($cantidad) - 1;
+    $stmtc= mysqli_query($conexion,$sql3);
+    $fila = mysqli_fetch_array($stmtc);
 
-    $sql1="UPDATE tblassignedproducts SET cantidad='$monto_final' WHERE id_assigned='$idproduct'";
+    $stmtc1= mysqli_query($conexion,$sql31);
+    $fila1 = mysqli_fetch_array($stmtc1);
+    $cantidad_stock = $fila['cantidad'];
+
+    $monto_final =  intval($cantidad) - 1;
+    $monto_actual = intval($fila1['precio'] * $monto_final);
+
+
+$sql1="UPDATE tblassignedproducts SET cantidad='$monto_final', monto='$monto_actual' WHERE id_assigned='$idproduct'";
 
     
     
@@ -286,41 +301,13 @@ if(isset($_POST['preciolibre_interno'])){
     header('location:hoja_consumo.php?id='.$invoice.'');
 }
 
-
-//PROPINAS INTERNAS
-
-
-
-
-// if(isset($_POST['totalizar'])){
-//     $metodo = $_POST['metodo'];
-//     $referencia = $_POST['referencia'];
-//     $abono = $_POST['abono'];
-//     $fecha = date("d/m/Y");
-//     $tasa=$_POST['tasa'];
-//     $monto_cancelado = $_POST['monto_cancelado'];
-
-//     $billing = $_POST['invoice'];
-//     $customer = $_POST['customer'];
-//     $estado = $_POST['estado'];
-//     $detalle = $_POST['detalle'];
-//     $monto = $_POST['montototal'];
-//     $usuario = $_POST['usuario'];
-//     $barbero = $_POST['barbero'];
-
-
-// //Insertar datos en tabla facturas
-//     $totalizar="INSERT INTO facturas( usuario, id_customer, billing, barbero, monto, detalle, estado, metodo, abono, tasa, fecha) VALUES ('$usuario','$customer','$billing','$barbero','$monto','$detalle','$estado','$metodo','$abono','$tasa','$fecha')";
-// //Insertar en tabla Transacciones ya con metodos de pagos varios
-//     $totalizado_factura = "INSERT INTO transacciones( invoice, monto_total, tasa_dia, estatus, monto_cancelado, fecha_creacion) VALUES ('$billing','$monto','$tasa','$estatus','$monto_cancelado','$fecha')";
-
-//     $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
-
-
-//     $stmt5=mysqli_query($conexion,$actu);
-
-//     $stmt4= mysqli_query($conexion,$$totalizado_factura);
-//     header('location:lista_facturas.php');
-
-
-// }
+if(isset($_POST['guardar'])){
+    $intern = $_POST['inter'];
+    $totalpago = $_POST['saldofinal'];
+    $montocancelado = $_POST['monto_cancelado'];
+    $fecha = date("d/m/Y");
+    $queryactualizacion = "UPDATE consumo_interno SET saldo='$montocancelado',fecha_act='$fecha' WHERE intern='$intern'";
+    echo 'Guardar de Hoja';
+    $stmtactusaldo = mysqli_query($conexion,$queryactualizacion);
+    header('location:hoja_consumo.php?id='.$intern.'');
+}

@@ -334,13 +334,6 @@ $billing = $_GET['id'];
 
                         </div>
 
-
-
-
-
-
-
-
                         <h1 style="color:red">SALDO FINAL: <?php
 
                                                             $totalpago = round(($monto - ($gtotal4 + $gtotal5)) - $montototalabono, 2, PHP_ROUND_HALF_ODD);
@@ -388,14 +381,9 @@ $billing = $_GET['id'];
             </h1>
             <div class="row mt-3">
                 <div class="col-md-auto">
-                    <!-- <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar"> -->
+                    <input type="text" class="d-none" name="inter" value="<?php echo $billing ?>" id="">
+                    <input type="submit" class="btn btn-success" name="guardar" value="Guardar">
                 </div>
-                <!-- <div class="col-md-auto">
-                    <input type="submit" class="btn btn-warning" value="Guardar">
-                </div> -->
-                <!-- <div class="col-auto">
-                    <input type="submit" class="btn btn-primary" value="Recuperar">
-                </div> -->
                 </form>
             </div>
         <?php }; ?>

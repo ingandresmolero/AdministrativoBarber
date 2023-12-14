@@ -41,24 +41,22 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" onclick="window.location.href='stock2.php'">Actualizar Producto</button>
+        <button type="button" onclick="window.location.href='stock.php'" class="m-2 btn btn-primary">Guardar Cambios</button>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Producto</button>
-        
         <div class="row justify-content-center">
             <div class="col-7">
                 <form action="" method="post">
-                    <input type="text" class="form-control" name="campo" placeholder="Productos,Deposito...." id="">
+                    <input type="text" class="form-control" name="campo" placeholder="Productos, Deposito...." id="">
                 </form>
             </div>
-
+            
             <div class="col">
-
+                
                 <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-
+                
             </div>
             <div class="col ">
-
+                
                 <a href="stock.php" class="table-btn">Mostrar Todos</a>
 
             </div>
@@ -92,7 +90,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <th scope="col">PVP</th>
                                 <th scope="col">Deposito</th>
                                 <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
+                                <th scope="col">Añadir</th>
 
                             </tr>
                         </thead>
@@ -105,10 +103,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:stock.php?pagina=1');
+                        header('Location:stock2.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:stock.php?pagina=1');
+                        header('Location:stock2.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
@@ -134,8 +132,9 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['precio']; ?></td>
 
                                     <td><?php echo $usuario['deposito']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                    <td class="action"><input class="table-btn bg-light" type="text" placeholder="..."/></td>
+                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Editar</a></td> -->
+                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td>
 
                                 </tr>
                                 <?php } else {
@@ -208,16 +207,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="stock.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="stock2.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="stock.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="stock2.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="stock.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="stock2.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
 

@@ -21,7 +21,7 @@ $billing = $_GET['billing'];
 </head>
 
 <body>
-    <?php include("../assets/headersintasa.php");
+    <?php include("../cierre/headerscierre.php");
 
 
     ?>

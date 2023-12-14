@@ -1,8 +1,9 @@
-<?php 
+<?php
 // include("../../php/functions/validar.php");
 include("../../php/dbconn.php");
 $id = $_GET['userid'];
-$sql = "SELECT vales.monto,vales.idvale,tblbarber.nombre as barbero, metodos_pago.nombre as metodos_pago,vales.detalle ,metodos_pago.unidad, vales.fecha FROM vales INNER JOIN tblbarber ON vales.idbarber = tblbarber.idbarber INNER JOIN metodos_pago ON vales.metodo_pago = metodos_pago.idmetodo where idvale='$id' ";
+$sql = "SELECT * FROM `vales` inner join tbladmin on tbladmin.ID = vales.idbarber inner join metodos_pago on metodos_pago.idmetodo = vales.metodo_pago 
+where idvale='$id' ";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -38,60 +39,60 @@ include("actualizarUser.php");
 
         <section>
             <div class="container-sm text-light">
-            <?php foreach ($resultado as $user) : ?> 
-                <form action="actualizarvale.php" method="post">
-                    <div class="row">
-                        <div class="col-lg-3  ">
-                            <label for="" class="form-label">Usuario:</label>
-                            <input type="text" class="form-control" name="user" id="" placeholder="<?php echo $user['barbero']?>" disabled>
+                <?php foreach ($resultado as $user) : ?>
+                    <form action="actualizarvale.php" method="post">
+                        <div class="row">
+                            <div class="col-lg-3  ">
+                                <label for="" class="form-label">Usuario:</label>
+                                <input type="text" class="form-control" name="user" id="" placeholder="<?php echo $user['AdminName'] ?>" disabled>
+
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <label for="" class="form-label">metodos:</label>
+                                <input type="text" class="form-control" name="nombre" value="<?php echo $user['metodo_pago'] ?>" id="nombre" disabled>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <label for="" class="form-label">Unidad:</label>
+                                <input type="text" class="form-control" name="unidad" value="<?php echo $user['unidad'] ?>" id="nombre" disabled>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <label for="" class="form-label">fecha:</label>
+                                <input type="text" class="form-control" name="fecha" value="<?php echo $user['fecha'] ?>" id="nombre" disabled>
+                            </div>
+
+
+
+
+
+
 
                         </div>
-
-                       
-                        <div class="col-lg-3">
-                            <label for="" class="form-label">metodos:</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['metodos_pago'] ?>" id="nombre" disabled>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="" class="form-label">Detalles:</label>
+                                <input type="text" class="form-control" name="nombre" value="<?php echo $user['detalle'] ?>" id="nombre" disabled>
+                            </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <label for="" class="form-label">Unidad:</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['unidad'] ?>" id="nombre" disabled>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="" class="form-label">Estatus:</label>
+                                <input type="text" name="idvale" value="<?php echo $user['idvale'] ?>" class="d-none">
+                                <select class="form-select" name="estado" id="">
+                                    <option value="Pagado">Pagado</option>
+                                    <option value="SinEfecto">Sin Efecto</option>
+                                </select>
+                            </div>
                         </div>
-                        
-                        <div class="col-lg-3">
-                            <label for="" class="form-label">fecha:</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['fecha'] ?>" id="nombre" disabled>
-                        </div>
 
 
-
-                       
-
-
-
-                    </div>
-<div class="row">
-<div class="col-lg-6">
-                            <label for="" class="form-label">Detalles:</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo $user['detalle'] ?>" id="nombre" disabled>
-                        </div>
-</div>
-
-<div class="row">
-<div class="col-lg-6">
-                            <label for="" class="form-label">Estatus:</label>
-                            <input type="text" name="idvale" value="<?php echo $user['idvale'] ?>" class="d-none">
-                            <select class="form-select" name="estado" id="">
-                                <option value="Pagado">Pagado</option>
-                                <option value="SinEfecto">Sin Efecto</option>
-                            </select>
-                        </div>
-</div>
-                 
-
-                    <input type="submit" class="btn btn-success mb-3" value="actualizar" name="actualizar">
-                </form>
-<?php endforeach ?>
+                        <input type="submit" class="btn btn-success mb-3" value="actualizar" name="actualizar">
+                    </form>
+                <?php endforeach ?>
             </div>
         </section>
 
