@@ -249,7 +249,7 @@ include("../php/functions/tasa.php");
                 </a> -->
                 <a href="pagosservidores.php" class="item">
                     <img src="../img/icons/usuarios.png">
-                    <p class="card-title">Pago Servidor</p>
+                    <p class="card-title">Pago Servidor - EN CONSTRUCCION</p>
                 </a>
             </div>
                 

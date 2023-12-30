@@ -23,6 +23,7 @@ $tasa = $fila2['monto_bcv'];
 
 $rol = $listadousuario['Role'];
 $nombre = $listadousuario['AdminName'];
+$montototal = 0;
 ?>
 
 
@@ -104,8 +105,11 @@ $nombre = $listadousuario['AdminName'];
 
 
             <section>
-                <div class="container-sm text-light">
-                    <form action="" method="post">
+
+            
+
+      <div class="container-sm text-light">
+                    <form action="operacionespagos.php" method="post">
                         <div class="row">
                             <div class="col-lg-3">
                                 <label for="" class="form-label">Servidor:</label>
@@ -115,7 +119,7 @@ $nombre = $listadousuario['AdminName'];
                             <table class="table fw-semibold  table-borded border-dark text-light">
                                 <thead class="fw-bold">
                                     <tr>
-                                        <td scope="col">Cantidad Servicios</td>
+                                        <!-- <td scope="col">Cantidad Servicios</td> -->
                                         <td scope="col">Monto Total</td>
                                         <td scope="col">Propinas</td>
                                         <td scope="col">Consumo</td>
@@ -124,20 +128,18 @@ $nombre = $listadousuario['AdminName'];
                                 </thead>
                                 <tbody class="text-light">
                                     <tr>
-                                        <td><?php echo  $cantidad ?></td>
-                                        <td><?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
-                                        <td><?php echo  $propinas ?></td>
-                                        <td><?php echo  $saldo_consumo ?></td>
-                                        <td><?php echo  $monto_vale  ?></td>
+                                        <!-- <td><?php echo  $cantidad ?></td> -->
+                                        <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
+                                        <td>$ <?php echo  $propinas ?></td>
+                                        <td>$ <?php echo  $saldo_consumo ?></td>
+                                        <td>$ <?php echo  $monto_vale  ?></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div class="row">
-                            
-                        </div>
-                        <div class=""> <!--Tabla Pago USD -->
+
+                        <div class="row"> <!--Tabla Pago USD -->
                             <div class="col">
 
                                 <!-- TABLA DE METODOS PAGO DOLARES -->
@@ -160,13 +162,14 @@ $nombre = $listadousuario['AdminName'];
                                     $gtotal4 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
                                     ?>
-                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idcuenta" class="d-none">
+                                        <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
+                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
                                         <tr>
 
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
                                             <td><?php echo $montototal = floatval($row['monto']) ?></td>
-                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
 
                                         </tr>
                                     <?php
@@ -185,9 +188,9 @@ $nombre = $listadousuario['AdminName'];
                                 </button>
 
                             </div> <!-- Pago USD -->
-                        </div>
 
-                        <div class=""> <!--Tabla Pago Bs -->
+
+                            <!--Tabla Pago Bs -->
                             <div class="col ">
 
                                 <!-- TABLA DE METODOS PAGO BOLIVARES-->
@@ -210,14 +213,15 @@ $nombre = $listadousuario['AdminName'];
                                     $gtotal5 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
                                     ?>
-                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idcuenta" class="d-none">
+                                        <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
+                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
                                         <tr class="text-light">
 
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
                                             <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
-                                            
-                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarmetodo"></td>
+
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
 
                                         </tr>
                                     <?php
@@ -225,6 +229,7 @@ $nombre = $listadousuario['AdminName'];
                                         $gtotal5 += $subtotal5;
                                         $cnt = $cnt + 1;
                                     } ?>
+
 
 
 
@@ -238,8 +243,32 @@ $nombre = $listadousuario['AdminName'];
                             </div> <!-- Pago BS -->
                         </div>
                     <?php }; ?>
+                    <hr>
+                    <div class="">
+                        <div class="row">
+                            <div class="col">
+                                <ul>
+                                    <li>Total de Servicios: <?php echo $total ?></li>
+                                    <li>Total de Consumo: <?php echo $saldo_consumo ?></li>
+                                    <li>Total de Vales: <?php echo $monto_vale ?></li>
+                                    <li>Total de Propinas: <?php echo $propinas ?></li>
+                                </ul>
+                            </div>
+
+                            <div class="col align-end">
+                                
+                                <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
+                                <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
+                                <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
+                            </div>
+                        </div>
+
+
+                    </div>
 
                     <input type="submit" class="btn btn-success mb-3" value="actualizar" name="actualizar">
+
+
                     </form>
                 </div>
             </section>
