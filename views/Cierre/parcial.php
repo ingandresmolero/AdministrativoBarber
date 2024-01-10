@@ -4,14 +4,14 @@ include("../../php/conex.php");
 include("../../php/functions/tasa.php");
 $fecha = date("d-m-Y");
 
-$query  = "SELECT SUM(monto_total) FROM transacciones; "; //total de operaciones
-$query2 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'totalizado'"; //total totalizado
-$query3 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'abono'"; //total de facturas con abono
-$query4 = "SELECT SUM(monto_total) FROM transacciones WHERE estatus = 'restante' "; //total de pendiente por pagar cliente
-$Query5 = "SELECT SUM(monto) from vales;";
-$Query6 = "SELECT SUM(propina) FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero ";
 
-$querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo GROUP BY (metodos_pago.idmetodo) ";
+$query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
+$query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
+$query3 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'abono' and fecha_creacion = '$fecha'"; //total de facturas con abono
+$query4 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'restante' and fecha_creacion = '$fecha' "; //total de pendiente por pagar cliente
+$Query5 = "SELECT IFNULL(SUM(monto),0) as total from vales where fecha = '$fecha' ;";
+$Query6 = "SELECT IFNULL(SUM(propina),0) as total FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.idtransac = tblassignedservice.invoice where transacciones.fecha_creacion = '$fecha'";
+
 $querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo   where cuentas_cobrar.fecha_creacion = '$fecha' GROUP BY (metodos_pago.idmetodo);";
 $queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP BY nombre";
 $queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre,porcentaje";
