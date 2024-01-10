@@ -23,6 +23,7 @@ $resultado = $stmt->fetch();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Venta</title>
     <link rel="stylesheet" href="../css/styles.min.css">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
 </head>
         
 <body>
@@ -885,8 +886,8 @@ $resultado = $stmt->fetch();
                     <form action="operacion/asignaradicional.php" method="post">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
 
-                        <label class="form-label d-none" for="">Metodo Pago</label>
-                        <select name="idusuario" class="d-none form-control" id="">
+                        <label class="form-label " for="">Servidor</label>
+                        <select name="idusuario" class=" form-control" id="">
 
 
                             <?php

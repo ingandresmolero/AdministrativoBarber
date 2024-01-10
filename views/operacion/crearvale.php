@@ -8,7 +8,7 @@ include("../../php/conex.php");
         $metodo = $_POST['metodo'];
         $monto = $_POST['monto'];
         $detalles = $_POST['detalles'];
-        $fecha = date("d-m-Y");
+        $fecha = date("d/m/Y");
 
         $sql="INSERT INTO  vales (idbarber ,  monto ,  detalle ,  fecha , metodo_pago ) VALUES ('$idbarber','$monto','$detalles','$fecha','$metodo') ";
         

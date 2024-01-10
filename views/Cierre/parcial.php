@@ -12,6 +12,7 @@ $Query5 = "SELECT SUM(monto) from vales;";
 $Query6 = "SELECT SUM(propina) FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero ";
 
 $querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo GROUP BY (metodos_pago.idmetodo) ";
+$querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo   where cuentas_cobrar.fecha_creacion = '$fecha' GROUP BY (metodos_pago.idmetodo);";
 $queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP BY nombre";
 $queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre,porcentaje";
 
@@ -140,12 +141,12 @@ $cnt3 = 1;
 
                                 <tbody>
                                     <tr>
-                                        <td> $<?php echo $row1['SUM(monto_total)'] ?></td>
-                                        <td> $<?php echo $row2['SUM(monto_total)'] ?></td>
-                                        <td> $<?php echo $row3['SUM(monto_total)'] ?></td>
-                                        <td> $<?php echo $row4['SUM(monto_total)'] ?></td>
-                                        <td> $<?php echo $row5['SUM(monto)'] ?></td>
-                                        <td> $<?php echo $row6['SUM(propina)'] ?></td>
+                                        <td> $<?php echo $row1['total'] ?></td>
+                                        <td> $<?php echo $row2['total'] ?></td>
+                                        <td> $<?php echo $row3['total'] ?></td>
+                                        <td> $<?php echo $row4['total'] ?></td>
+                                        <td> $<?php echo $row5['total'] ?></td>
+                                        <td> $<?php echo $row6['total'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>

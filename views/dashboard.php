@@ -50,7 +50,7 @@ include("../php/functions/tasa.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Activo Barbershop</title>
-    <link rel="icon" type="image/x-icon" href="../img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
 
     <link rel="stylesheet" href="../css/styles.min.css">
 
@@ -175,13 +175,13 @@ include("../php/functions/tasa.php");
                 <a href="Protocolo.php" class="item">
 
                     <img src="../img/icons/tasa.png">
-                    <p class="card-title">Clientes</p>
+                    <p class="card-title">Ingreso / Clientes</p>
                 </a>
 
                 <a href="lista_facturas.php" class="item">
 
                     <img src="../img/icons/inventario.png">
-                    <p class="card-title">Caja</p>
+                    <p class="card-title">Citas</p>
                 </a>
 
                 <a href="facturas.php" class="item">
@@ -192,12 +192,12 @@ include("../php/functions/tasa.php");
                 <a href="stock.php" class="item">
 
                     <img src="../img/icons/inventario.png">
-                    <p class="card-title">Inventario</p>
+                    <p class="card-title">Stock</p>
                 </a>
                 <a href="tasa.php" class="item">
 
                     <img src="../img/icons/tasa.png">
-                    <p class="card-title">Tasa</p>
+                    <p class="card-title">Tasa del dia</p>
                 </a>
 <!-- 
                 <a href="operaciones.php" class="item">
@@ -217,7 +217,7 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Cierre</p>
                 </a>
                 
-
+              
                 
                 <a href="consumo_interno.php" class="item">
 

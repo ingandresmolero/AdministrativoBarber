@@ -157,7 +157,9 @@ if(isset($_POST['totalizar'])){
     $billing = $_POST['invoice'];
     $monto = $_POST['montototal'];
     $estatus = $_POST['estatus'];
-    $saldo = $_POST['saldofinal'];
+    $saldo = round($_POST['saldofinal'], 2);
+
+
 
 
 
@@ -166,6 +168,7 @@ if(isset($_POST['totalizar'])){
 
     $actu="UPDATE tblinvoice SET estado='pagado' WHERE BillingId='$billing'";
 
+    var_dump($totalizado_factura);
 
     $stmt5=mysqli_query($conexion,$actu);
 

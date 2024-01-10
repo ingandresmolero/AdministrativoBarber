@@ -29,6 +29,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.min.css">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
     <title>Caja - Servicios</title>
 </head>
 
@@ -61,6 +62,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">Cliente</th>
                         <th scope="col">Cedula</th>
                         <th scope="col">Estado</th>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Procesar</th>
                         <?php 
                                 if($rol == 'admin'){
@@ -88,7 +90,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' AND tblinvoice.estado != 'anulado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate as fecha,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' AND tblinvoice.estado != 'anulado' ORDER BY tblinvoice.PostingDate desc LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -106,6 +108,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
                                 <td><?php echo $usuario['estado']; ?></td>
+                                <td><?php echo $usuario['fecha']; ?></td>
                                 <td class="action"><a class="table-btn" href="../views/venta.php?billing=<?php echo $usuario['BillingId'] ?>">Facturar</a></td>
                                 <?php 
                                 if($rol == 'admin'){
