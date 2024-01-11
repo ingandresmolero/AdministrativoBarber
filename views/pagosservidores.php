@@ -40,7 +40,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <h1 class="page-heading">Pago Servidores</h1>
         <!-- Button trigger modal -->
 
-        <!-- <a href="procesarpago.php" class="table-btn">Nuevo Pago</a> -->
+        <!-- <a href="fechaspago.php" class="table-btn">Nuevo Pago</a> -->
         <div class="row b-3">
             <div class="col-md">
                 <form action="" method="post">
@@ -60,7 +60,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <!-- <th scope="col">Saldo</th>
                         <th scope="col">Fecha</th> -->
                         <th scope="col">Procesar Pago</th>
-                        <th scope="col">Ver</th>
+                        <!-- <th scope="col">Ver</th> -->
 
                     </tr>
                 </thead>
@@ -95,8 +95,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['AdminName']; ?></td>
                                 <!-- <td><?php echo $usuario['saldo']; ?></td>
                                 <td><?php echo $usuario['fecha_Creacion']; ?></td> -->
-                                <td class="action"><a class="table-btn" href="../views/procesarpago.php?userid=<?php echo $usuario['ID'] ?>">Pago</a></td>
-                                <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Detalles</a></td>
+                                <td class="action"><a class="table-btn" href="../views/fechaspago.php?userid=<?php echo $usuario['ID'] ?>">Pago</a></td>
+                                <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Detalles</a></td> -->
 
                             </tr>
                         <?php endforeach  ?>
@@ -122,8 +122,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     <td><?php echo $usuario['AdminName']; ?></td>
                                     <!-- <td><?php echo $usuario['UserName']; ?></td>
                                     <td><?php echo $usuario['Role']; ?></td> -->
-                                    <td class="action"><a class="table-btn" href="../views/procesarpago.php?userid=<?php echo $usuario['ID'] ?>">Pago</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Detalles</a></td>
+                                    <td class="action"><a class="table-btn" href="../views/fechaspago.php?userid=<?php echo $usuario['ID'] ?>">Pago</a></td>
+                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/eliminarusuario.php?userid=<?php echo $usuario['ID'] ?>">Detalles</a></td> -->
 
                                 </tr>
                             <?php endforeach  ?>

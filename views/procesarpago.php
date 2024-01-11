@@ -1,8 +1,14 @@
 <?php
+error_reporting(0);
 include("../php/functions/validar.php");
 include("../php/dbconn.php");
 include("../php/conex.php");
 $id = $_GET['userid'];
+$fecha_desde = $_GET['fecha_desde'];
+$fecha_desde = date('d/m/Y', strtotime($fecha_desde));
+$fecha_hasta = $_GET['fecha_hasta'];
+$fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
+
 $sql = "SELECT * FROM tbladmin where ID='$id'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -24,6 +30,9 @@ $tasa = $fila2['monto_bcv'];
 $rol = $listadousuario['Role'];
 $nombre = $listadousuario['AdminName'];
 $montototal = 0;
+
+
+
 ?>
 
 
@@ -49,13 +58,22 @@ $montototal = 0;
     <?php include("./assets/headersintasa.php"); ?>
 
     <main>
+        
+        
         <?php
+
 
 
         if ($rol == 'servidor') {
 
             //SERVICIOS CLIENTES
-            $queryServicios = "SELECT IFNULL(count(transacciones.invoice),0) as contador, IFNULL(SUM(cantidad),0) as cantidad , IFNULL(sum(cost),0) as monto, IFNULL(sum(propina),0) as propina, tblbarber.nombre, tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on tblassignedservice.invoice = transacciones.invoice WHERE tblbarber.nombre='$nombre' AND transacciones.estatus != 'pendiente' group by nombre,porcentaje";
+            $queryServicios = "SELECT IFNULL(count(transacciones.invoice),0) as contador, IFNULL(SUM(cantidad),0) as cantidad , IFNULL(sum(cost),0) as monto, IFNULL(sum(propina),0) as propina, tblbarber.nombre, tblbarber.porcentaje FROM `tblassignedservice` 
+            inner join tblservices on tblassignedservice.servicio = tblservices.ID 
+            inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero 
+            inner join transacciones on tblassignedservice.invoice = transacciones.invoice 
+            WHERE tblbarber.nombre='barbero1' AND transacciones.estatus != 'pendiente'   AND (transacciones.fecha_creacion >'$fecha_desde' AND transacciones.fecha_creacion <'$fecha_hasta')
+            
+            group by nombre,porcentaje;";
             $sqlservicio = $conn->prepare($queryServicios);
             $sqlservicio->execute();
             $listadoservicio = $sqlservicio->fetch();
@@ -64,7 +82,7 @@ $montototal = 0;
             $queryConsumo = "SELECT IFNULL(consumo_interno.saldo,0) as saldoconsumo 
             FROM consumo_interno 
             INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
-            WHERE tbladmin.AdminName = '$nombre'
+            WHERE tbladmin.AdminName = '$nombre' AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion < '$fecha_hasta')
             UNION ALL
             SELECT 0 AS saldoconsumo
             WHERE NOT EXISTS (
@@ -72,6 +90,7 @@ $montototal = 0;
                 FROM consumo_interno 
                 INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
                 WHERE tbladmin.AdminName = '$nombre'
+                AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion < '$fecha_hasta')
             );";
 
             $sqlconsumo = $conn->prepare($queryConsumo);
@@ -79,13 +98,13 @@ $montototal = 0;
             $listadoconsumo = $sqlconsumo->fetch();
 
             //VALES
-            $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre'";
+            $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre' and vales.fecha > '$fecha_desde' and vales.fecha < '$fecha_hasta'";
             $sqlvale = $conn->prepare($queryVales);
             $sqlvale->execute();
             $listadovale = $sqlvale->fetch();
 
             //SERVICIOS ADICIONALES (SUMA A TOTAL)
-            $sumarservicio = "SELECT IFNULL(SUM(tblassignedservice_intern.monto),0) as monto_interno , IFNULL(SUM(tblassignedservice_intern.propina),0) as propina_interna FROM tblassignedservice_intern inner join consumo_interno on tblassignedservice_intern.intern = consumo_interno.intern inner join tblbarber on tblbarber.idbarber = tblassignedservice_intern.idbarbero where tblbarber.nombre = '$nombre'";
+            $sumarservicio = "SELECT IFNULL(SUM(tblassignedservice_intern.monto),0) as monto_interno , IFNULL(SUM(tblassignedservice_intern.propina),0) as propina_interna FROM tblassignedservice_intern inner join consumo_interno on tblassignedservice_intern.intern = consumo_interno.intern inner join tblbarber on tblbarber.idbarber = tblassignedservice_intern.idbarbero where tblbarber.nombre = '$nombre' AND consumo_interno.fecha_creacion> '$fecha_desde' AND consumo_interno.fecha_creacion <'$fecha_hasta';";
             $sqlserviciosadicional = $conn->prepare($sumarservicio);
             $sqlserviciosadicional->execute();
             $listadoservicioadicional = $sqlserviciosadicional->fetch();
@@ -106,9 +125,9 @@ $montototal = 0;
 
             <section>
 
-            
 
-      <div class="container-sm text-light">
+
+                <div class="container-sm text-light">
                     <form action="operacionespagos.php" method="post">
                         <div class="row">
                             <div class="col-lg-3">
@@ -256,7 +275,7 @@ $montototal = 0;
                             </div>
 
                             <div class="col align-end">
-                                
+
                                 <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
                                 <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
                                 <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
