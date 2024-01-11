@@ -119,7 +119,7 @@ $montototal = 0;
             $monto_vale = $listadovale['monto'];
             $monto_interno = $listadoservicioadicional['monto_interno'];
             $propina_interna = $listadoservicioadicional['propina_interna'];
-
+        
         ?>
 
 
@@ -261,7 +261,41 @@ $montototal = 0;
                                 </button>
                             </div> <!-- Pago BS -->
                         </div>
-                    <?php }; ?>
+                    <?php }
+
+                    else if($rol == 'admin') { ?>
+                        <div class="container-sm text-light">
+                        <form action="operacionespagos.php" method="post">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label for="" class="form-label">Servidor:</label>
+                                    <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
+                                    <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
+                                </div>
+                                <table class="table fw-semibold  table-borded border-dark text-light">
+                                    <thead class="fw-bold">
+                                        <tr>
+                                            <!-- <td scope="col">Cantidad Servicios</td> -->
+                                            <td scope="col">Monto Total</td>
+                                            <td scope="col">Propinas</td>
+                                            <td scope="col">Consumo</td>
+                                            <td scope="col">Vales</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-light">
+                                        <tr>
+                                            <!-- <td><?php echo  $cantidad ?></td> -->
+                                            <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
+                                            <td>$ <?php echo  $propinas ?></td>
+                                            <td>$ <?php echo  $saldo_consumo ?></td>
+                                            <td>$ <?php echo  $monto_vale  ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+      <?php  }; ?>
+
                     <hr>
                     <div class="">
                         <div class="row">
@@ -292,9 +326,8 @@ $montototal = 0;
                 </div>
             </section>
 
-
-
-
+<?php
+?>
 
 
 
