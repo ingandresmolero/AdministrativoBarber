@@ -505,8 +505,8 @@ $billing = $_GET['id'];
                     <form action="operacion/asignaradicional.php" method="post">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
 
-                        <label class="form-label d-none" for="">Metodo Pago</label>
-                        <select name="idusuario" class="d-none form-control" id="">
+                        <label class="form-label " for="">Servidor</label>
+                        <select name="idusuario" class=" form-control" id="">
 
 
                             <?php

@@ -5,9 +5,9 @@ include("../php/dbconn.php");
 include("../php/conex.php");
 $id = $_GET['userid'];
 $fecha_desde = $_GET['fecha_desde'];
-$fecha_desde = date('d/m/Y', strtotime($fecha_desde));
 $fecha_hasta = $_GET['fecha_hasta'];
-$fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
+// $fecha_desde = date('d/m/Y', strtotime($fecha_desde));
+// $fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
 
 $sql = "SELECT * FROM tbladmin where ID='$id'";
 $stmt = $conn->prepare($sql);
@@ -82,7 +82,7 @@ $montototal = 0;
             $queryConsumo = "SELECT IFNULL(consumo_interno.saldo,0) as saldoconsumo 
             FROM consumo_interno 
             INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
-            WHERE tbladmin.AdminName = '$nombre' AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion < '$fecha_hasta')
+            WHERE tbladmin.AdminName = '$nombre' AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion <= '$fecha_hasta')
             UNION ALL
             SELECT 0 AS saldoconsumo
             WHERE NOT EXISTS (
@@ -90,7 +90,7 @@ $montototal = 0;
                 FROM consumo_interno 
                 INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
                 WHERE tbladmin.AdminName = '$nombre'
-                AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion < '$fecha_hasta')
+                AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion <= '$fecha_hasta')
             );";
 
             $sqlconsumo = $conn->prepare($queryConsumo);
@@ -98,13 +98,13 @@ $montototal = 0;
             $listadoconsumo = $sqlconsumo->fetch();
 
             //VALES
-            $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre' and vales.fecha > '$fecha_desde' and vales.fecha < '$fecha_hasta'";
+            $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre' and vales.fecha > '$fecha_desde' and vales.fecha <= '$fecha_hasta'";
             $sqlvale = $conn->prepare($queryVales);
             $sqlvale->execute();
             $listadovale = $sqlvale->fetch();
 
             //SERVICIOS ADICIONALES (SUMA A TOTAL)
-            $sumarservicio = "SELECT IFNULL(SUM(tblassignedservice_intern.monto),0) as monto_interno , IFNULL(SUM(tblassignedservice_intern.propina),0) as propina_interna FROM tblassignedservice_intern inner join consumo_interno on tblassignedservice_intern.intern = consumo_interno.intern inner join tblbarber on tblbarber.idbarber = tblassignedservice_intern.idbarbero where tblbarber.nombre = '$nombre' AND consumo_interno.fecha_creacion> '$fecha_desde' AND consumo_interno.fecha_creacion <'$fecha_hasta';";
+            $sumarservicio = "SELECT IFNULL(SUM(tblassignedservice_intern.monto),0) as monto_interno , IFNULL(SUM(tblassignedservice_intern.propina),0) as propina_interna FROM tblassignedservice_intern inner join consumo_interno on tblassignedservice_intern.intern = consumo_interno.intern inner join tblbarber on tblbarber.idbarber = tblassignedservice_intern.idbarbero where tblbarber.nombre = '$nombre' AND consumo_interno.fecha_creacion> '$fecha_desde' AND consumo_interno.fecha_creacion <='$fecha_hasta';";
             $sqlserviciosadicional = $conn->prepare($sumarservicio);
             $sqlserviciosadicional->execute();
             $listadoservicioadicional = $sqlserviciosadicional->fetch();
@@ -313,6 +313,8 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
+                    <input type="text" class="d-none" name="fecha_desde2" value="<?php echo $fecha_desde ?>">
+                    <input type="text" class="d-none" name="fecha_hasta2" value="<?php echo $fecha_hasta ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
@@ -369,6 +371,8 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
+                    <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
+                    <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
