@@ -34,6 +34,8 @@ if (isset($_POST['guardar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Tasa</title>
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+
     <link rel="stylesheet" href="../css/styles.min.css">
 </head>
 
@@ -49,13 +51,13 @@ if (isset($_POST['guardar'])) {
                 <form action="" method="post">
 
                     <div class="row">
-                        <div class="col-md-3">
-                            <label class="form-label text-light" for="">Tasa 1 del Dia</label>
+                        <div class="col-md-3 text-light">
+                            <h2>Tasa del dia: </h2>
                             <input class="form-control col-sm-3" type="text" name="tasa" id="tasa" placeholder="Tasa BS del dia...">
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-md-3">
                             <label class="form-label text-light" for="">Tasa 2 del Dia</label>
                             <input class="form-control col-sm-3 mb-3" type="text" name="tasa2" id="tasa2" placeholder="Tasa paralela del dia...">

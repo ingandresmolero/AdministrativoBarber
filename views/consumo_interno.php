@@ -28,6 +28,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+
     <link rel="stylesheet" href="../css/styles.min.css">
     <title>Consumo interno</title>
 </head>
@@ -61,7 +63,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">Servidor</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Procesar</th>
-                        <th scope="col">Eliminar</th>
+                        <!-- <th scope="col">Eliminar</th> -->
 
                     </tr>
                 </thead>
@@ -80,7 +82,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
 
-                        $sql_usuarios = "SELECT * FROM consumo_interno join tbladmin on tbladmin.ID = consumo_interno.servidor LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT * FROM consumo_interno join tbladmin on tbladmin.ID = consumo_interno.servidor ORDER BY idconsumo desc  LIMIT :iniciar, :nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);
@@ -99,7 +101,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['fecha_creacion']; ?></td>
 
                                 <td class="action"><a class="table-btn" href="../views/hoja_consumo.php?id=<?php echo $usuario['intern'] ?>">Ver Hoja</a></td>
-                                <td class="action"><a class="table-btn" href="#">Eliminar</a></td>
+                                <!-- <td class="action"><a class="table-btn" href="#">Eliminar</a></td> -->
 
                             </tr>
                         <?php $ctn = $ctn + 1;

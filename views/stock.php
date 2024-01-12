@@ -28,6 +28,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+
     <link rel="stylesheet" href="../css/styles.min.css">
     <title>Inventario</title>
 </head>
@@ -44,24 +46,26 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <button type="button" class="btn btn-primary" onclick="window.location.href='stock2.php'">Actualizar Producto</button>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Producto</button>
-        
+
         <div class="row justify-content-center">
-            <div class="col-7">
-                <form action="" method="post">
+            <form action="" method="post">
+                <div class="col-7">
+
                     <input type="text" class="form-control" name="campo" placeholder="Productos,Deposito...." id="">
-                </form>
-            </div>
 
-            <div class="col">
+                </div>
 
-                <input type="submit" class="table-btn" value="busqueda" name="busqueda">
+                <div class="col">
 
-            </div>
-            <div class="col ">
+                    <input type="submit" class="table-btn" value="busqueda" name="busqueda">
 
-                <a href="stock.php" class="table-btn">Mostrar Todos</a>
+                </div>
+                <div class="col ">
 
-            </div>
+                    <a href="stock.php" class="table-btn">Mostrar Todos</a>
+
+                </div>
+            </form>
         </div>
 
         <div class="table-responsive-sm">
@@ -190,7 +194,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                             <td><?php echo $usuario['precio']; ?></td>
 
                                             <td><?php echo $usuario['deposito']; ?></td>
-                                            <!-- <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td> -->
+                                            <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
                                             <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
 
                                         </tr>

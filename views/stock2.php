@@ -28,6 +28,8 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+
     <link rel="stylesheet" href="../css/styles.min.css">
     <title>Inventario</title>
 </head>
@@ -37,29 +39,31 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Inventario</h1>
+        <h1 class="page-heading">Actualizacion de Inventario</h1>
 
 
         <!-- Button trigger modal -->
-        <button type="button" onclick="window.location.href='stock.php'" class="m-2 btn btn-primary">Guardar Cambios</button>
+        <!-- <button type="button" onclick="window.location.href='stock.php'" class="m-2 btn btn-primary">Guardar Cambios</button> -->
 
         <div class="row justify-content-center">
-            <div class="col-7">
-                <form action="" method="post">
-                    <input type="text" class="form-control" name="campo" placeholder="Productos, Deposito...." id="">
-                </form>
-            </div>
-            
-            <div class="col">
-                
-                <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                
-            </div>
-            <div class="col ">
-                
-                <a href="stock.php" class="table-btn">Mostrar Todos</a>
+            <form action="" method="post">
+                <div class="col-7">
 
-            </div>
+                    <input type="text" class="form-control" name="campo" placeholder="Productos, Deposito...." id="">
+
+                </div>
+
+                <div class="col">
+
+                    <input type="submit" class="table-btn" value="busqueda" name="busqueda">
+
+                </div>
+                <div class="col ">
+
+                    <a href="stock2.php" class="table-btn">Mostrar Todos</a>
+
+                </div>
+            </form>
         </div>
 
         <div class="table-responsive-sm">
@@ -126,16 +130,19 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <?php if ($rol == 'admin') { ?>
                                 <tr>
-                                    <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
-                                    <td><?php echo $usuario['nombre']; ?></td>
-                                    <td><?php echo $usuario['cantidad']; ?></td>
-                                    <td><?php echo $usuario['precio']; ?></td>
+                                    <form action="./operacion/actualizarstock2.php" method="post">
+                                        <input type="text" class="d-none" name="idproducto" value="<?php echo $usuario['idproducts'] ?>" id="">
+                                        <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
+                                        <td><?php echo $usuario['nombre']; ?></td>
+                                        <td><?php echo $usuario['cantidad']; ?></td>
+                                        <td><?php echo $usuario['precio']; ?></td>
 
-                                    <td><?php echo $usuario['deposito']; ?></td>
-                                    <td class="action"><input class="table-btn bg-light" type="text" placeholder="..."/></td>
-                                    <!-- <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Editar</a></td> -->
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td>
+                                        <td><?php echo $usuario['deposito']; ?></td>
+                                        <td class="action"><input class="table-btn bg-light text-dark" type="text" name="cantidad" placeholder="..." /></td>
 
+                                        <!-- <td class="action"><a class="table-btn text-dark" href="../views/operacion/actualizarstock2.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td> -->
+                                        <td class="action"> <input type="submit" class="table-btn" value="+" name="actualizacion"> </td>
+                                    </form>
                                 </tr>
                                 <?php } else {
                                 if ($rol == 'manager') { ?>
@@ -182,17 +189,19 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     </tr>
                                     <?php  } else {
                                     if ($rol == 'admin') { ?>
-                                        <tr>
+                                        <form action="./operacion/actualizarstock2.php" method="post">
+                                            <input type="text" class="d-none" name="idproducto" value="<?php echo $usuario['idproducts'] ?>" id="">
                                             <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
                                             <td><?php echo $usuario['nombre']; ?></td>
                                             <td><?php echo $usuario['cantidad']; ?></td>
                                             <td><?php echo $usuario['precio']; ?></td>
 
                                             <td><?php echo $usuario['deposito']; ?></td>
-                                            <!-- <td class="action"><a class="table-btn" href="../views/operacion/editarUser.php?userid=<?php echo $usuario['idproducts'] ?>">Ver</a></td> -->
-                                            <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                            <td class="action"><input class="table-btn bg-light text-dark" type="text" name="cantidad" placeholder="..." /></td>
 
-                                        </tr>
+                                            <!-- <td class="action"><a class="table-btn text-dark" href="../views/operacion/actualizarstock2.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td> -->
+                                            <td class="action"> <input type="submit" class="table-btn" value="+" name="actualizacion"> </td>
+                                        </form>
                                 <?php }
                                 } ?>
 
