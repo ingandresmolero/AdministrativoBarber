@@ -40,7 +40,7 @@ include("../php/functions/tasa.php");
                 <a href="historico.php" class="item">
 
                     <img src="../img/icons/inventario.png">
-                    <p class="card-title">Historicos</p>
+                    <p class="card-title">Historicos Movimientos</p>
                 </a>
                
             

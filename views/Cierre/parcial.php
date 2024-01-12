@@ -2,76 +2,153 @@
 include("../../php/dbconn.php");
 include("../../php/conex.php");
 include("../../php/functions/tasa.php");
-$fecha = date("d-m-Y");
+
+$fecha = date('d/m/Y'); {
+    if (isset($_POST['actfecha'])) {
+        $fecha2 = $_POST['fecha_nueva'];
+        $fecha = date('d/m/Y', strtotime($fecha2));
+
+        $query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
+        $query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
+        $query3 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'abono' and fecha_creacion = '$fecha'"; //total de facturas con abono
+        $query4 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'restante' and fecha_creacion = '$fecha' "; //total de pendiente por pagar cliente
+        $Query5 = "SELECT IFNULL(SUM(monto),0) as total from vales where fecha = '$fecha' ;";
+        $Query6 = "SELECT IFNULL(SUM(propina),0) as total FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.idtransac = tblassignedservice.invoice where transacciones.fecha_creacion = '$fecha'";
+
+        $querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo   where cuentas_cobrar.fecha_creacion = '$fecha' GROUP BY (metodos_pago.idmetodo);";
+        $queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts inner join transacciones on tblassignedproducts.invoice = transacciones.invoice WHERE transacciones.fecha_creacion = '$fecha' GROUP BY nombre;";
+        $queryServicios = "SELECT ifnull(count(transacciones.invoice),0) as invoice, IFNULL(SUM(cantidad),0) as cantidad, IFNULL(sum(cost),0) as costo,IFNULL(sum(propina),0) as propina, tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.invoice = tblassignedservice.invoice WHERE transacciones.fecha_creacion = '$fecha' group by nombre,porcentaje;";
+
+        $queryClienteEventual = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'eventual'AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteVIP = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'vip' AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteCortesia = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'cortesia' AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteInterno = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'interno' AND transacciones.fecha_creacion = '$fecha';";
 
 
-$query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
-$query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
-$query3 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'abono' and fecha_creacion = '$fecha'"; //total de facturas con abono
-$query4 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'restante' and fecha_creacion = '$fecha' "; //total de pendiente por pagar cliente
-$Query5 = "SELECT IFNULL(SUM(monto),0) as total from vales where fecha = '$fecha' ;";
-$Query6 = "SELECT IFNULL(SUM(propina),0) as total FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.idtransac = tblassignedservice.invoice where transacciones.fecha_creacion = '$fecha'";
+        $exequery  = $conn->prepare($query);
+        $exequery2 = $conn->prepare($query2);
+        $exequery3 = $conn->prepare($query3);
+        $exequery4 = $conn->prepare($query4);
+        $exequery5 = $conn->prepare($Query5);
 
-$querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo   where cuentas_cobrar.fecha_creacion = '$fecha' GROUP BY (metodos_pago.idmetodo);";
-$queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts GROUP BY nombre";
-$queryServicios = "SELECT count(invoice), SUM(cantidad),sum(cost),sum(propina), tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero group by nombre,porcentaje";
+        $exequery6 = mysqli_query($conexion, $Query6);
+        $row6 = mysqli_fetch_array($exequery6);
 
-$queryClienteEventual = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'eventual';";
-$queryClienteVIP = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'vip';";
-$queryClienteCortesia = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'cortesia';";
-$queryClienteInterno = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'interno';";
+        $exequerymetodos  = $conn->prepare($querymetodos);
+        $exequeryproductos  = $conn->prepare($queryproductos);
+        $exequeryServicios  = $conn->prepare($queryServicios);
 
-
-$exequery  = $conn->prepare($query);
-$exequery2 = $conn->prepare($query2);
-$exequery3 = $conn->prepare($query3);
-$exequery4 = $conn->prepare($query4);
-$exequery5 = $conn->prepare($Query5);
-
-$exequery6 = mysqli_query($conexion, $Query6);
-$row6 = mysqli_fetch_array($exequery6);
-
-$exequerymetodos  = $conn->prepare($querymetodos);
-$exequeryproductos  = $conn->prepare($queryproductos);
-$exequeryServicios  = $conn->prepare($queryServicios);
-
-$exequeryeventual  = $conn->prepare($queryClienteEventual);
-$exequeryvip  = $conn->prepare($queryClienteVIP);
-$exequerycortesia  = $conn->prepare($queryClienteCortesia);
-$exequeryinterno  = $conn->prepare($queryClienteInterno);
+        $exequeryeventual  = $conn->prepare($queryClienteEventual);
+        $exequeryvip  = $conn->prepare($queryClienteVIP);
+        $exequerycortesia  = $conn->prepare($queryClienteCortesia);
+        $exequeryinterno  = $conn->prepare($queryClienteInterno);
 
 
 
-$exequery->execute();
-$exequery2->execute();
-$exequery3->execute();
-$exequery4->execute();
-$exequery5->execute();
+        $exequery->execute();
+        $exequery2->execute();
+        $exequery3->execute();
+        $exequery4->execute();
+        $exequery5->execute();
 
-$exequerymetodos->execute();
-$exequeryproductos->execute();
-$exequeryServicios->execute();
+        $exequerymetodos->execute();
+        $exequeryproductos->execute();
+        $exequeryServicios->execute();
 
 
-$exequeryeventual->execute();
-$exequeryvip->execute();
-$exequerycortesia->execute();
-$exequeryinterno->execute();
+        $exequeryeventual->execute();
+        $exequeryvip->execute();
+        $exequerycortesia->execute();
+        $exequeryinterno->execute();
 
-$row1 = $exequery->fetch();
-$row2 = $exequery2->fetch();
-$row3 = $exequery3->fetch();
-$row4 = $exequery4->fetch();
-$row5 = $exequery5->fetch();
+        $row1 = $exequery->fetch();
+        $row2 = $exequery2->fetch();
+        $row3 = $exequery3->fetch();
+        $row4 = $exequery4->fetch();
+        $row5 = $exequery5->fetch();
 
-$roweventual = $exequeryeventual->fetch();
-$rowvip = $exequeryvip->fetch();
-$rowcortesia = $exequerycortesia->fetch();
-$rowinterno = $exequeryinterno->fetch();
+        $roweventual = $exequeryeventual->fetch();
+        $rowvip = $exequeryvip->fetch();
+        $rowcortesia = $exequerycortesia->fetch();
+        $rowinterno = $exequeryinterno->fetch();
 
-$cnt = 1;
-$cnt2 = 1;
-$cnt3 = 1;
+        $cnt = 1;
+        $cnt2 = 1;
+        $cnt3 = 1;
+    } else {
+        $fecha = date('d/m/Y');
+        $query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
+        $query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
+        $query3 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'abono' and fecha_creacion = '$fecha'"; //total de facturas con abono
+        $query4 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'restante' and fecha_creacion = '$fecha' "; //total de pendiente por pagar cliente
+        $Query5 = "SELECT IFNULL(SUM(monto),0) as total from vales where fecha = '$fecha' ;";
+        $Query6 = "SELECT IFNULL(SUM(propina),0) as total FROM tblassignedservice inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.idtransac = tblassignedservice.invoice where transacciones.fecha_creacion = '$fecha'";
+
+        $querymetodos  = "SELECT DISTINCT metodos_pago.idmetodo, sum(monto),metodos_pago.nombre , unidad FROM `cuentas_cobrar` inner join metodos_pago on cuentas_cobrar.idmetodo = metodos_pago.idmetodo   where cuentas_cobrar.fecha_creacion = '$fecha' GROUP BY (metodos_pago.idmetodo);";
+        $queryproductos = "SELECT nombre, sum(tblassignedproducts.cantidad) as cantidad, sum(monto) FROM `tblassignedproducts` inner join tblproducts on tblassignedproducts.id_products = tblproducts.idproducts inner join transacciones on tblassignedproducts.invoice = transacciones.invoice WHERE transacciones.fecha_creacion = '$fecha' GROUP BY nombre;";
+        $queryServicios = "SELECT ifnull(count(transacciones.invoice),0) as invoice, IFNULL(SUM(cantidad),0) as cantidad, IFNULL(sum(cost),0) as costo,IFNULL(sum(propina),0) as propina, tblbarber.nombre,tblbarber.porcentaje FROM `tblassignedservice` inner join tblservices on tblassignedservice.servicio = tblservices.ID inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero inner join transacciones on transacciones.invoice = tblassignedservice.invoice WHERE transacciones.fecha_creacion = '$fecha' group by nombre,porcentaje;";
+
+        $queryClienteEventual = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'eventual'AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteVIP = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'vip' AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteCortesia = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'cortesia' AND transacciones.fecha_creacion = '$fecha';";
+        $queryClienteInterno = "SELECT IFNULL(SUM(transacciones.monto_total),0) as total FROM `tblcustomers` inner join tblinvoice on tblcustomers.ID = tblinvoice.Userid inner join transacciones on transacciones.invoice = tblinvoice.BillingId WHERE Gender = 'interno' AND transacciones.fecha_creacion = '$fecha';";
+
+
+        $exequery  = $conn->prepare($query);
+        $exequery2 = $conn->prepare($query2);
+        $exequery3 = $conn->prepare($query3);
+        $exequery4 = $conn->prepare($query4);
+        $exequery5 = $conn->prepare($Query5);
+
+        $exequery6 = mysqli_query($conexion, $Query6);
+        $row6 = mysqli_fetch_array($exequery6);
+
+        $exequerymetodos  = $conn->prepare($querymetodos);
+        $exequeryproductos  = $conn->prepare($queryproductos);
+        $exequeryServicios  = $conn->prepare($queryServicios);
+
+        $exequeryeventual  = $conn->prepare($queryClienteEventual);
+        $exequeryvip  = $conn->prepare($queryClienteVIP);
+        $exequerycortesia  = $conn->prepare($queryClienteCortesia);
+        $exequeryinterno  = $conn->prepare($queryClienteInterno);
+
+
+
+        $exequery->execute();
+        $exequery2->execute();
+        $exequery3->execute();
+        $exequery4->execute();
+        $exequery5->execute();
+
+        $exequerymetodos->execute();
+        $exequeryproductos->execute();
+        $exequeryServicios->execute();
+
+
+        $exequeryeventual->execute();
+        $exequeryvip->execute();
+        $exequerycortesia->execute();
+        $exequeryinterno->execute();
+
+        $row1 = $exequery->fetch();
+        $row2 = $exequery2->fetch();
+        $row3 = $exequery3->fetch();
+        $row4 = $exequery4->fetch();
+        $row5 = $exequery5->fetch();
+
+        $roweventual = $exequeryeventual->fetch();
+        $rowvip = $exequeryvip->fetch();
+        $rowcortesia = $exequerycortesia->fetch();
+        $rowinterno = $exequeryinterno->fetch();
+
+        $cnt = 1;
+        $cnt2 = 1;
+        $cnt3 = 1;
+    }
+}
+
+
+
 
 ?>
 
@@ -114,6 +191,12 @@ $cnt3 = 1;
                     <input type="text" class="d-none" name="idservicioasignado" value="<?php echo $idservicio ?>">
                     <input type="text" class="d-none" name="billing" value="<?php echo $row['invoice'] ?>">
 
+                    <div class="fecha">
+                        <form action="" method="POST">
+                            <input type="date" name="fecha_nueva" id="">
+                            <input type="submit" value="Actualizar" name="actfecha">
+                        </form>
+                    </div>
                     <h3 class="text-light mb-4"><?php echo " Fecha: $fecha "; ?></h3>
 
                     <!-- Totales Generales -->
@@ -278,11 +361,11 @@ $cnt3 = 1;
 
                                             <tr class="">
                                                 <td><?php echo $rowservicios['nombre']; ?></td>
-                                                <td> <?php echo $rowservicios['count(invoice)']; ?></td>
-                                                <!-- <td> <?php echo $rowservicios['SUM(cantidad)']; ?></td> -->
-                                                <td> $<?php echo $rowservicios['sum(cost)'] ?></td>
-                                                <td> $<?php echo $rowservicios['sum(cost)'] * ($rowservicios['porcentaje'] / 100); ?></td>
-                                                <td> $<?php echo $rowservicios['sum(propina)']; ?></td>
+                                                <td> <?php echo $rowservicios['cantidad']; ?></td>
+                                                <!-- <td> <?php echo $rowservicios['total2']; ?></td> -->
+                                                <td> $<?php echo $rowservicios['costo'] ?></td>
+                                                <td> $<?php echo $rowservicios['porcentaje'] * ($rowservicios['porcentaje'] / 100); ?></td>
+                                                <td> $<?php echo $rowservicios['propina']; ?></td>
 
                                             </tr>
                                         </tbody>
