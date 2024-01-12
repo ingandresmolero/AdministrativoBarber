@@ -61,6 +61,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">NroFactura</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Cedula</th>
+                        <th scope="col">Fecha</th>
                         <!-- <th scope="col">Estado</th> -->
                         <th scope="col">Ver</th>
                         <!-- <th scope="col">Eliminar</th> -->
@@ -77,7 +78,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     if (!isset($_POST['busqueda'])) {
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
-                        $sql_usuarios = "SELECT distinct tblinvoice.BillingId,tblcustomers.Name,tblcustomers.cedula FROM transacciones 
+                        $sql_usuarios = "SELECT distinct tblinvoice.BillingId,tblcustomers.Name,tblcustomers.cedula,tblinvoice.PostingDate FROM transacciones 
 
                         INNER JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId
                         INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID
@@ -97,6 +98,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <td><?php echo $usuario['BillingId']; ?></td>
                                 <td><?php echo $usuario['Name']; ?></td>
                                 <td><?php echo $usuario['cedula']; ?></td>
+                                <td><?php echo $usuario['PostingDate']; ?></td>
                                 <!-- <td><?php echo $usuario['estado']; ?></td> -->
                                 <td class="action"><a class="table-btn" href="../../../views/detalles.php?billing=<?php echo $usuario['BillingId'] ?>&barber=<?php echo $nombreservidor ?>">Detalle</a></td>
                                 <!-- <td class="action"><a class="table-btn" href="#">Eliminar</a></td> -->

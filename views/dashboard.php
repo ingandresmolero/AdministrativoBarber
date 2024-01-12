@@ -76,7 +76,7 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Caja</p>
                 </a>
-                <a href="stock.php" class="item">
+                <a href="stock.php?pagina=1" class="item">
 
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Inventario</p>
@@ -189,7 +189,7 @@ include("../php/functions/tasa.php");
                     <p class="card-title">Facturas</p>
 
                 </a>
-                <a href="stock.php" class="item">
+                <a href="stock.php?pagina=1" class="item">
 
                     <img src="../img/icons/inventario.png">
                     <p class="card-title">Stock</p>
