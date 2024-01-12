@@ -184,7 +184,7 @@ $fecha = date('d/m/Y'); {
 
                     <div class="row align-content-center p-5 text-light p-3">
 
-                        <button type="button" id="exportButton" class="text-light p-2 button header__input--button font rounded-5 border border-light" style="background-color: #89b11d">Exportar Excel</button>
+                        <!-- <button type="button" id="exportButton" class="text-light p-2 button header__input--button font rounded-5 border border-light" style="background-color: #89b11d">Exportar Excel</button> -->
 
                     </div>
 
