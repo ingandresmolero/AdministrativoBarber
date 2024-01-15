@@ -1,5 +1,5 @@
 <?php
-$conexion=mysqli_connect("localhost", "root", "", "barberia");
+$conexion=mysqli_connect("localhost", "root", "", "activodb");
 if(mysqli_connect_errno()){
 echo "Connection Fail".mysqli_connect_error();
 }
