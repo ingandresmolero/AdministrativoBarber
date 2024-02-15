@@ -121,10 +121,12 @@ if (isset($_POST['eliminarmetodo'])){
 // OPERACION DE ELIMINAR ABONO  
 
 if (isset($_POST['eliminarabono'])){
-    $idconsumo = $_POST['idconsumo'];
+
     $invoice = $_POST['invoice'];
-    $idcuenta = $_POST['idcuenta'];
-    $sql3="DELETE FROM consumo_fondo WHERE invoice= '$invoice' AND id_consumo='$idconsumo'";
+    $idconsumo = $_POST['idconsumo'];
+    $sql3 = "DELETE FROM `operaciones_clientes` WHERE IDoperaciones='$idconsumo' AND invoice='$invoice'";
+    var_dump($queryeliminar);
+    // $sql3="DELETE FROM consumo_fondo WHERE invoice= '$invoice' AND id_consumo='$idconsumo'";
     $stmt = mysqli_query($conexion,$sql3);
     header('location:venta.php?billing='.$invoice.'');
 };
@@ -314,3 +316,20 @@ if(isset($_POST['guardar'])){
     $stmtactusaldo = mysqli_query($conexion,$queryactualizacion);
     header('location:hoja_consumo.php?id='.$intern.'');
 }
+
+//ASIGNAR CARGO A LA FACTURA DE CUENTA DE CLIENTES
+if(isset($_POST['aplicarcargo'])){
+    $invoice = $_POST['invoice'];
+    $querycliente = "SELECT tblcustomers.Name, tblcustomers.cedula,tblcustomers.ID from tblinvoice join tblcustomers on tblinvoice.Userid = tblcustomers.ID WHERE tblinvoice.BillingId = '$invoice' ";
+    $stmt = mysqli_query($conexion,$querycliente);
+    $row = mysqli_fetch_array($stmt);
+    $cliente = $row['ID'];
+    $fecha = date("d-m-Y");
+    $cargo = $_POST['montocargo'];
+    $querycargo = "INSERT INTO operaciones_clientes( `idcliente`, `fecha`, `invoice`, `aplicado`, `status`) VALUES ('$cliente','$fecha','$invoice','$cargo','restante')";
+  
+    // $stmt2= mysqli_query($conexion,$queryabono);
+    $stmtcargo= mysqli_query($conexion,$querycargo);
+    header('location:../venta.php?billing='.$invoice.'');
+  
+  }

@@ -24,9 +24,9 @@ $resultado = $stmt->fetch();
     <title>Venta</title>
     <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
 
-<link rel="stylesheet" href="../css/styles.min.css">
+    <link rel="stylesheet" href="../css/styles.min.css">
 </head>
-        
+
 <body>
     <?php include("assets/headersintasa.php");
 
@@ -97,59 +97,95 @@ $resultado = $stmt->fetch();
                             <?php
 
                             $clienteid = $row1['ID'];
-                            $consultasaldo = "SELECT SUM(saldo) FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='abono'";
 
-                            $consultasaldo2 = "SELECT SUM(saldo) FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='Restante'";
 
-                            $consultasaldo3 ="SELECT SUM(aplicado) FROM consumo_fondo where cliente ='$clienteid' ";
+                            // $consultasaldo2 = "SELECT sum(aplicado) as monto FROM operaciones_clientes inner join tblinvoice on operaciones_clientes.invoice = tblinvoice.BillingId  WHERE invoice='$billing' AND status='restante'";
+
+
+
+
+                            $consultasaldo = "SELECT SUM(saldo) as monto FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='abono'";
+
+                            $consultasaldoaplicado = "SELECT sum(aplicado) as monto FROM operaciones_clientes inner join tblinvoice on operaciones_clientes.invoice = tblinvoice.BillingId  WHERE idcliente='$clienteid' AND status='abono'";
+
+                            $consultasaldo2 = "SELECT SUM(saldo) as monto FROM transacciones inner join tblinvoice on tblinvoice.BillingId = transacciones.invoice inner join tblcustomers ON tblinvoice.Userid = tblcustomers.ID where tblcustomers.ID ='$clienteid' and transacciones.estatus='Restante'";
+
+                            $consultacargoaplicado = "SELECT sum(aplicado) as monto FROM operaciones_clientes inner join tblinvoice on operaciones_clientes.invoice = tblinvoice.BillingId  WHERE idcliente='$clienteid' AND status='restante'";
+
+                            // $consultasaldo3 = "SELECT SUM(aplicado) FROM consumo_fondo where cliente ='$clienteid' ";
 
                             $stmtsaldo = $conn->prepare($consultasaldo);
                             $stmtsaldo->execute();
                             $rowsaldo = $stmtsaldo->fetch();
 
+                            $stmtsaldo = $conn->prepare($consultasaldoaplicado);
+                            $stmtsaldo->execute();
+                            $rowsaldoaplicado = $stmtsaldo->fetch();
+
                             $stmtsaldo2 = $conn->prepare($consultasaldo2);
                             $stmtsaldo2->execute();
                             $rowsaldo2 = $stmtsaldo2->fetch();
 
+                            $stmtcargo = $conn->prepare($consultacargoaplicado);
+                            $stmtcargo->execute();
+                            $rowcargoaplicado = $stmtcargo->fetch();
 
-                            $stmtsaldo3 = $conn->prepare($consultasaldo3);
-                            $stmtsaldo3->execute();
-                            $rowsaldo3 = $stmtsaldo3->fetch();
+
+                            // $stmtsaldo3 = $conn->prepare($consultasaldo3);
+                            // $stmtsaldo3->execute();
+                            // $rowsaldo3 = $stmtsaldo3->fetch();
 
 
-                            $saldototal = $rowsaldo2['SUM(saldo)'] + $rowsaldo['SUM(saldo)'] - $rowsaldo3['SUM(aplicado)'];
+                            $saldototalabono = $rowsaldo['monto'] - $rowsaldoaplicado['monto'];
+                            $saldocargo = $rowsaldo2['monto'] - $rowcargoaplicado['monto'];
 
-                        if($rol == 'admin'){
-                            if ($saldototal < -1) {
-                                
+                            if ($rol == 'admin') {
                                 echo '
-                                    <div class="col-md-3">
-                                <label for="" style=" color:red; " class="form-label">Saldo Cliente:</label>
-                                <input type="text" disabled class="form-control" name="saldocliente" value="' . $saldototal . '" >
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalcargo">
-                                    Aplicar a Cuenta
-                                </button>
-                            </div>
-                                    ';
-                            } else if ($saldototal >= 1) {
+                            <div class="col-md-3">
+                        <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
+                        <input type="text" disabled class="form-control" name="saldocliente" value="' .  $saldototalabono . '" >
+                        
+                    </div>
+                            ';
                                 echo '
-                                        <div class="col-md-3">
-                                     <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
-                                     <input type="text" class="form-control" name="saldocliente" value="+ ' . $saldototal . '">
-                                     
-                                 </div>
-                                         ';
-                            } else {
-                                if ($saldototal = 0) {
-                                    echo '';
-                                }
+                            <div class="col-md-3">
+                        <label for="" style=" color:red; " class="form-label">Pendiente Cliente:</label>
+                        <input type="text" disabled class="form-control" name="saldocliente" value="' . $saldocargo . '" >
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalcargo">
+                            Aplicar a Cuenta
+                        </button>
+                    </div>
+                            ';
+                                //     if ($saldototal < -1) {
+
+                                //         echo '
+                                //         <div class="col-md-3">
+                                //     <label for="" style=" color:red; " class="form-label">Saldo Cliente:</label>
+                                //     <input type="text" disabled class="form-control" name="saldocliente" value="' . $saldototal . '" >
+                                //     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalcargo">
+                                //         Aplicar a Cuenta
+                                //     </button>
+                                // </div>
+                                //         ';
+                                //     } else if ($saldototal >= 1) {
+                                //         echo '
+                                //             <div class="col-md-3">
+                                //          <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
+                                //          <input type="text" class="form-control" name="saldocliente" value="+ ' . $saldototal . '">
+
+                                //      </div>
+                                //              ';
+                                //     } else {
+                                //         if ($saldototal = 0) {
+                                //             echo '';
+                                //         }
+                                //     }
+                            } else if ($rol != 'admin') {
+                                echo '';
                             }
-                        }else if ($rol != 'admin'){
-                            echo '';
-                        }
 
                             // if ($saldototal < -1) {
-                                
+
                             //     echo '
                             //         <div class="col-md-3">
                             //     <label for="" style=" color:red; " class="form-label">Saldo Cliente:</label>
@@ -164,7 +200,7 @@ $resultado = $stmt->fetch();
                             //             <div class="col-md-3">
                             //          <label for="" style=" color:green; " class="form-label">Saldo Cliente:</label>
                             //          <input type="text" class="form-control" name="saldocliente" value="+ ' . $saldototal . '">
-                                     
+
                             //      </div>
                             //              ';
                             // } else {
@@ -219,7 +255,7 @@ $resultado = $stmt->fetch();
                                     <th>Precio Libre</th>
                                     <th>Accion</th>
                                 </tr>
-                               
+
                                 <?php
                                 $ret = mysqli_query($conexion, "SELECT * FROM tblassignedservice INNER JOIN tblservices ON tblassignedservice.servicio = tblservices.ID INNER JOIN tblbarber ON tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblassignedservice.invoice = '$billing'");
                                 $cntservicio = 1;
@@ -235,13 +271,13 @@ $resultado = $stmt->fetch();
                                         <td><?php echo $row2['ServiceName'] ?></td>
                                         <td><?php echo $row2['nombre'] ?></td>
 
-                                        <?php if ($rol == 'admin'){ ?>
-                                            
-                                           <td><input type="text" name="preciolibremonto" value="" placeholder="<?php echo $subtotal = intval($row2['monto']) ?>" class="form-control" > </td>
-                                        <?php }else{ ?>
+                                        <?php if ($rol == 'admin') { ?>
+
+                                            <td><input type="text" name="preciolibremonto" value="" placeholder="<?php echo $subtotal = intval($row2['monto']) ?>" class="form-control"> </td>
+                                        <?php } else { ?>
                                             <td><?php echo $subtotal = intval($row2['Cost']) ?></td>
                                         <?php } ?>
-                                        
+
 
                                         <td><input type="text" name="propina" value="" placeholder="<?php echo $propina = $row2['propina'] ?>" class="form-control" disabled></td>
                                         <td><a class="btn btn-success" href="propinas.php?idservicio=<?php echo $row2['idservicioasignado'] ?>">+</a></td>
@@ -519,7 +555,7 @@ $resultado = $stmt->fetch();
 
                         </div>
 
-                        
+
 
                         <div class="row">
                             <div class="col">
@@ -542,38 +578,42 @@ $resultado = $stmt->fetch();
 
                                     <?php
                                     $montototalabono = 0;
-                                            $ret = mysqli_query($conexion, "SELECT * FROM consumo_fondo  where invoice='$billing' ");
-                                            $cntabono = 1;
-                                            $gtotalabono = 0;
-                                            while ($row = mysqli_fetch_array($ret)) {
-                                            ?>
-                                        <input type="text" value="<?php echo $row['id_consumo']; ?>" name="idconsumo" class="d-none">
+                                    $ret = mysqli_query($conexion, "SELECT * FROM operaciones_clientes  where invoice='$billing' ");
+                                    $cntabono = 1;
+                                    $gtotalabono = 0;
+                                    while ($row = mysqli_fetch_array($ret)) {
+                                    ?>
+                                        <input type="text" value="<?php echo $row['IDoperaciones']; ?>" name="idconsumo" class="d-none">
                                         <tr>
 
                                             <th><?php echo $cntabono; ?></th>
-                                            
+
                                             <td><?php echo $montototalabono = floatval($row['aplicado']) ?></td>
-                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarabono"></td>
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar22" name="eliminarabono"></td>
 
                                         </tr>
                                     <?php
-                                                $subtotalabono = floatval($montototalabono);
-                                                $gtotalabono += $subtotalabono;
-                                                $cntabono = $cntabono + 1;
-                                            } ?> 
+                                        $subtotalabono = floatval($montototalabono);
+                                        $gtotalabono += $subtotalabono;
+                                        $cntabono = $cntabono + 1;
+                                    } ?>
 
 
 
 
                                 </table>
-<?php  if($saldototal == 0){
-    echo '';
-}else if ($saldototal != 0 ){
-    echo ' <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalabono">
+                                <?php
+                                $saldototal = 0;
+                                if ($saldototal == 0) {
+                                    echo ' <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalabono">
     Agregar Pago $
 </button>';
-}  ?>
-                               
+                                } else if ($saldototal != 0) {
+                                    echo ' <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalabono">
+    Agregar Pago $
+</button>';
+                                }  ?>
+
 
                             </div> <!-- Pago ABONOS -->
                         </div>
@@ -583,7 +623,7 @@ $resultado = $stmt->fetch();
 
                     <div class="row text-end card shadow ">
                         <div class="col mt-3">
-                            <h1>Monto a Cancelar: <?php echo $valor= floatval($monto) + ($montototalabono *-1); ?> $</h1>
+                            <h1>Monto a Cancelar: <?php echo $valor = floatval($monto) + ($montototalabono * -1); ?> $</h1>
                             <h3>Monto: <?php echo $montobs = floatval($valor * $tasa); ?> Bs.S</h3>
                             <hr>
                             <h3>IVA: <?php echo $montoiva = (($valor * $tasa) * 0.16); ?> Bs.S</h3>
@@ -949,18 +989,18 @@ $resultado = $stmt->fetch();
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pago de Abonos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarabono.php" method="post">
-                        <label for=""> Saldo: <?php echo $saldototal ?></label>
+                        <label for="" style="color:green"> Saldo: <?php echo $saldototalabono ?></label>
                         <input type="text" name="saldo" value="<?php echo $saldototal ?>" class="d-none">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <div class="row">
                             <div class="col-sm-3">
                                 <label class="form-label" for="">Monto</label>
-                                <input type="number"  max="<?php echo $saldototal ?>" name="montoabono" class="form-control" value="<?php echo $saldototal ?>" placeholder="<?php echo $saldototal ?>">
+                                <input type="number"  name="montoabono" class="form-control" value="<?php echo $saldototal ?>" placeholder="<?php echo $saldototal ?>">
                             </div>
                         </div>
 
@@ -977,28 +1017,28 @@ $resultado = $stmt->fetch();
     </div>
     <!--FIN PAGO ABONO-->
 
-        <!-- Modal PAGO CARGO -->
-        <div class="modal fade" id="modalcargo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal PAGO CARGO -->
+    <div class="modal fade" id="modalcargo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Servicio Adicional</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cargo Adicional</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/asignarabono.php" method="post">
-                        <label for=""> Saldo: <?php echo $saldototal ?></label>
+                <form action="operacion/asignarabono.php" method="post">
+                        <label for="" style="color:red"> Saldo: <?php echo $saldocargo  ?></label>
                         <input type="text" name="saldo" value="<?php echo $saldototal ?>" class="d-none">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <div class="row">
                             <div class="col-sm-3">
                                 <label class="form-label" style="color:red; font-size:1.2rem" for="">Monto a Aplicar</label>
-                                <input type="number"   name="montocargo" class="form-control"  placeholder="<?php echo $saldototal ?>">
+                                <input type="number" name="montocargo" class="form-control" placeholder="<?php echo $saldototal ?>">
                             </div>
                         </div>
 
 
-                        <input type="submit" class="btn btn-primary" name="quitarabono" value="Guardar">
+                        <input type="submit" class="btn btn-primary" name="aplicarcargo" value="Guardar">
                     </form>
                 </div>
                 <div class="modal-footer">
