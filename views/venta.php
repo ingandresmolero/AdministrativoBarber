@@ -589,7 +589,7 @@ $resultado = $stmt->fetch();
                                             <th><?php echo $cntabono; ?></th>
 
                                             <td><?php echo $montototalabono = floatval($row['aplicado']) ?></td>
-                                            <td><input type="submit" class="btn btn-danger" value="Eliminar22" name="eliminarabono"></td>
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarabono"></td>
 
                                         </tr>
                                     <?php
