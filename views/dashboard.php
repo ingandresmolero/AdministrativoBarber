@@ -243,10 +243,10 @@ $row4 = $stmt4->fetch();
             </div>
 
             <div class="elements">
-                <!-- <a href="reportes.php" class="item">
+                <a href="cuentas.php" class="item">
                     <img src="../img/icons/reportes.png">
-                    <p class="card-title">Reportes</p>
-                </a> -->
+                    <p class="card-title">Cuentas</p>
+                </a>
                 <!-- <a href="pagosservidores.php" class="item">
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Pago Servidor - EN CONSTRUCCION</p>
