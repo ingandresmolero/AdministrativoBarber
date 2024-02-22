@@ -1,0 +1,10 @@
+PARA HACER LAS CUENTAS POR COBRAR Y POR PAGAR USAR ESTE QUERY
+
+SELECT tblcustomers.ID,transacciones.estatus, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID GROUP BY tblcustomers.ID,transacciones.estatus;
+
+AJUSTADOQUERY:
+SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name;
+
+SE DEBE AJUSTAR LAS CONDICIONES PARA MOSTRAR SOLO LO QUE ES :ABONO: Y LO QUE ES :RESTANTE:
+
+se debe hacer ademas el pago de trabajadores mediante la cuenta de los servicios, y si no es barbero se hace mediante un campo de sueldo y consumo interno,doble verificacion y se crea un registro de pagos y se muestra en la parte superior

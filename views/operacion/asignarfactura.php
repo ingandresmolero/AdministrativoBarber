@@ -8,7 +8,6 @@ $stmt ->execute();
 $resultado = $stmt->fetch();
 
     $clienteid = $_POST['idcliente'];
-
     $usuarioid = $_POST['usuarioid'];
     $contadorfactura = intval($resultado['NControl']);
     $sumadorFactura = $contadorfactura + 1;

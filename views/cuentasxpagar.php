@@ -3,7 +3,7 @@ include("../php/functions/validar.php");
 
 // include("../php/functions/tasa.php");
 include_once("../php/dbconn.php");
-$sql = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula";
+$sql = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -44,7 +44,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                 <form action="" method="post">
                     <input type="text" class="form-control" name="campo" placeholder="Usuario, nombre, rol...." id="">
                     <input type="submit" class="table-btn" value="busqueda" name="busqueda">
-                    <a href="cuentasxcobrar.php" class="table-btn">Mostrar Todos</a>
+                    <a href="cuentasxpagar.php" class="table-btn">Mostrar Todos</a>
                 </form>
             </div>
         </div>
@@ -68,17 +68,17 @@ $paginas = ceil($total_report / $report_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:cuentasxcobrar.php?pagina=1');
+                        header('Location:cuentasxpagar.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:cuentasxcobrar.php?pagina=1');
+                        header('Location:cuentasxpagar.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
 
                         $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-                        $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
+                        $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
                         $stm_report = $conn->prepare($sql_report);
                         $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);
@@ -107,7 +107,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-                            $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' and (tblcustomers.Name LIKE '%$busqueda%' OR tblcustomers.cedula LIKE '%$busqueda') GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
+                            $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' and (tblcustomers.Name LIKE '%$busqueda%' OR tblcustomers.cedula LIKE '%$busqueda') GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
                             $stm_report = $conn->prepare($sql_report);
                             $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);
@@ -140,16 +140,16 @@ $paginas = ceil($total_report / $report_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="cuentasxcobrar.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="cuentasxpagar.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="cuentasxcobrar.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="cuentasxpagar.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="cuentasxcobrar.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="cuentasxpagar.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
     </section>
