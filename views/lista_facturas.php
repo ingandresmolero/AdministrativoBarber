@@ -180,24 +180,26 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Cliente</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="operacion/crearusuario.php" method="post">
+                    <form action="operacion/crearclienteprotocolo.php" method="post">
+                        <input type="text" name="username" value="<?php echo $_SESSION['username'] ?>" class="d-none">
                         <label class="form-label" for="">Nombre</label>
                         <input class="form-control" type="text" name="nombre" id="">
-                        <label class="form-label" for="">Usuario</label>
-                        <input class="form-control" type="text" name="usuario" id="">
-                        <label class="form-label" for="">Contrasena</label>
-                        <input class="form-control" type="password" name="clave" id="">
-                        <label class="form-label" for="">Rol</label>
-                        <select class="form-control" name="rol" id="">
-                            <option value="master">Master</option>
-                            <option value="usuario">Usuario</option>
+                        <label class="form-label" for="">Cedula</label>
+                        <input class="form-control" type="text" name="cedula" value="" id="">
+                        <label class="form-label" for="">Tipo Cliente</label>
+                        <select name="tipo_cliente" class="form-control" id="">
+                            <option value="eventual">Eventual</option>
+                            <option value="cortesia">Cortesia</option>
+                            <option value="interno">Interno</option>
+                            <option value="vip">VIP</option>
                         </select>
 
-                        <input type="submit" class="btn btn-primary" name="crear" value="Guardar">
+
+                        <input type="submit" class="btn btn-primary" name="crearcita" value="Guardar">
                     </form>
                 </div>
                 <div class="modal-footer">

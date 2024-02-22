@@ -8,37 +8,37 @@ include("../php/functions/tasa.php");
 
 
 
-                    $nombreservidor = $_SESSION["username"];
-               
-                   
-                    // var_dump($idbarbero);
-                    // var_dump($rol);
-
-                    //CONTADORES
-
-                    $contador1 = "SELECT DISTINCT usuario FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-                    $contador2 = "SELECT SUM(IFNULL(tblassignedservice_intern.monto,0) + IFNULL(tblassignedproducts_intern.monto,0) + IFNULL(servicios_adicional_interno.monto,0)) as total_monto FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern LEFT JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName =  '$nombreservidor';";
-                    
-                    $contador3 = "SELECT * from vales inner join tblbarber on vales.idbarber = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-                    $contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-
-                    $stmt1 = $conn->prepare($contador1);
-                    $stmt2 = $conn->prepare($contador2);
-                    $stmt3 = $conn->prepare($contador3);
-                    $stmt4 = $conn->prepare($contador4);
-
-                    $stmt1->execute();
-                    $stmt2->execute();
-                    $stmt3->execute();
-                    $stmt4->execute();
-
-                    $row1 = $stmt1->rowCount();
-                    $row2 = $stmt2->fetch();
-                    $row3 = $stmt3->rowCount();
-                    $row4 = $stmt4->fetch();
+$nombreservidor = $_SESSION["username"];
 
 
-                    
+// var_dump($idbarbero);
+// var_dump($rol);
+
+//CONTADORES
+
+$contador1 = "SELECT DISTINCT usuario FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+$contador2 = "SELECT SUM(IFNULL(tblassignedservice_intern.monto,0) + IFNULL(tblassignedproducts_intern.monto,0) + IFNULL(servicios_adicional_interno.monto,0)) as total_monto FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern LEFT JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName =  '$nombreservidor';";
+
+$contador3 = "SELECT * from vales inner join tblbarber on vales.idbarber = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+$contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+
+$stmt1 = $conn->prepare($contador1);
+$stmt2 = $conn->prepare($contador2);
+$stmt3 = $conn->prepare($contador3);
+$stmt4 = $conn->prepare($contador4);
+
+$stmt1->execute();
+$stmt2->execute();
+$stmt3->execute();
+$stmt4->execute();
+
+$row1 = $stmt1->rowCount();
+$row2 = $stmt2->fetch();
+$row3 = $stmt3->rowCount();
+$row4 = $stmt4->fetch();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -95,27 +95,27 @@ include("../php/functions/tasa.php");
 
 
         <?php } else if ($rol == 'servidor') {
-             $contadorsql = "select * from tbladmin inner join tblbarber on tbladmin.AdminName = tblbarber.nombre WHERE tblbarber.nombre = '$nombreservidor'";
+            $contadorsql = "select * from tbladmin inner join tblbarber on tbladmin.AdminName = tblbarber.nombre WHERE tblbarber.nombre = '$nombreservidor'";
 
-             $stmt = $conn->prepare($contadorsql);
-             $stmt->execute();
-             $row = $stmt->fetch();
+            $stmt = $conn->prepare($contadorsql);
+            $stmt->execute();
+            $row = $stmt->fetch();
 
 
-             $idbarbero = $row['idbarber'];
-            
-            ?>
+            $idbarbero = $row['idbarber'];
+
+        ?>
 
             <section class="container-fluid">
 
                 <div class="row d-flex justify-content-between align-content-between shadow-lg p-2 m-3 mb-4 mt-4 rounded-5">
-                    <h1 style="color: #a4d61d !important;">Fecha del dia: <?php echo $date=date("d.m.Y"); ?></h1>
-                    
+                    <h1 style="color: #a4d61d !important;">Fecha del dia: <?php echo $date = date("d.m.Y"); ?></h1>
+
                     <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/clientesatendidos.php'">
-                            <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row1 ?></h3>
-                            <p class="text-center text-light">Clientes Atendidos</p>            
+                        <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row1 ?></h3>
+                        <p class="text-center text-light">Clientes Atendidos</p>
                     </div>
-                    <div class="col-sm-2 p-2 text-ligh" type="button" onclick="location.href='assets/barberos/consumobarbero.php'"> 
+                    <div class="col-sm-2 p-2 text-ligh" type="button" onclick="location.href='assets/barberos/consumobarbero.php'">
                         <h3 class="text-light text-center" style="color: #a4d61d !important;">$ <?php echo $row2['total_monto'] ?></h3>
                         <p class="text-center text-light">Consumo</p>
                     </div>
@@ -123,7 +123,7 @@ include("../php/functions/tasa.php");
                         <h3 class="text-light text-center" style="color: #a4d61d !important;"><?php echo $row3 ?></h3>
                         <p class="text-center text-light">Vales</p>
                     </div>
-                    <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/propinasbarbero.php'" >
+                    <div class="col-sm-2 p-2" type="button" onclick="location.href='assets/barberos/propinasbarbero.php'">
                         <h3 class="text-light text-center " style="color: #a4d61d !important;">$ <?php echo $row4['SUM(propina)'] ?></h3>
                         <p class="text-center text-light">Propina</p>
                     </div>
@@ -156,7 +156,7 @@ include("../php/functions/tasa.php");
                             </div>
 
                         </div>
-<!-- 
+                        <!-- 
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
@@ -199,13 +199,13 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/tasa.png">
                     <p class="card-title">Tasa del dia</p>
                 </a>
-<!-- 
+                <!-- 
                 <a href="operaciones.php" class="item">
                     <img src="../img/icons/operaciones.png">
                     <p class="card-title">Operaciones</p>
 
                 </a> -->
-                
+
             </div>
             <div class="elements">
                 <!-- <a href="reportes.php" class="item">
@@ -216,9 +216,9 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Cierre</p>
                 </a>
-                
-              
-                
+
+
+
                 <a href="consumo_interno.php" class="item">
 
                     <img src="../img/icons/inventario.png">
@@ -247,12 +247,12 @@ include("../php/functions/tasa.php");
                     <img src="../img/icons/reportes.png">
                     <p class="card-title">Reportes</p>
                 </a> -->
-                <a href="pagosservidores.php" class="item">
+                <!-- <a href="pagosservidores.php" class="item">
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Pago Servidor - EN CONSTRUCCION</p>
-                </a>
+                </a> -->
             </div>
-                
+
 
         <?php }; ?>
     </section>

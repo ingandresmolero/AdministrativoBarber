@@ -171,7 +171,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <input class="form-control" type="password" name="clave" id="">
                         <label class="form-label" for="">Rol</label>
                         <select class="form-control" name="rol" id="">
-                            <option value="master">Master</option>
+                            <option value="admin">admin</option>
                             <option value="usuario">Usuario</option>
                         </select>
 
