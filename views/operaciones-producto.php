@@ -325,7 +325,7 @@ if(isset($_POST['aplicarcargo'])){
     $row = mysqli_fetch_array($stmt);
     $cliente = $row['ID'];
     $fecha = date("d-m-Y");
-    $cargo = $_POST['montocargo'] ;
+    $cargo = ($_POST['montocargo']* -1) ;
     $querycargo = "INSERT INTO operaciones_clientes( `idcliente`, `fecha`, `invoice`, `aplicado`, `status`) VALUES ('$cliente','$fecha','$invoice','$cargo','restante')";
   
     // $stmt2= mysqli_query($conexion,$queryabono);
