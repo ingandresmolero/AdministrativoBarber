@@ -247,10 +247,10 @@ $row4 = $stmt4->fetch();
                     <img src="../img/icons/reportes.png">
                     <p class="card-title">Cuentas</p>
                 </a>
-                <!-- <a href="pagosservidores.php" class="item">
+                <a href="pagosservidores.php" class="item">
                     <img src="../img/icons/usuarios.png">
                     <p class="card-title">Pago Servidor - EN CONSTRUCCION</p>
-                </a> -->
+                </a>
             </div>
 
 
