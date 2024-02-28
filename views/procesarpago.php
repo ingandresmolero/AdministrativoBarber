@@ -54,12 +54,12 @@ $montototal = 0;
     <title>Editar Servicio</title>
 </head>
 
-<body>
+<body style="background-color:#8b7070">
     <?php include("./assets/headersintasa.php"); ?>
 
     <main>
-        
-        
+
+
         <?php
 
 
@@ -71,7 +71,7 @@ $montototal = 0;
             inner join tblservices on tblassignedservice.servicio = tblservices.ID 
             inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero 
             inner join transacciones on tblassignedservice.invoice = transacciones.invoice 
-            WHERE tblbarber.nombre='barbero1' AND transacciones.estatus != 'pendiente'   AND (transacciones.fecha_creacion >'$fecha_desde' AND transacciones.fecha_creacion <'$fecha_hasta')
+            WHERE tblbarber.nombre='$nombre' AND transacciones.estatus != 'pendiente'   AND (transacciones.fecha_creacion >'$fecha_desde' AND transacciones.fecha_creacion <'$fecha_hasta')
             
             group by nombre,porcentaje;";
             $sqlservicio = $conn->prepare($queryServicios);
@@ -119,7 +119,7 @@ $montototal = 0;
             $monto_vale = $listadovale['monto'];
             $monto_interno = $listadoservicioadicional['monto_interno'];
             $propina_interna = $listadoservicioadicional['propina_interna'];
-        
+
         ?>
 
 
@@ -127,34 +127,40 @@ $montototal = 0;
 
 
 
-                <div class="container-sm text-light">
+                <div class="container-sm text-dark bg-light mt-2 p-3">
                     <form action="operacionespagos.php" method="post">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-sm-3">
                                 <label for="" class="form-label">Servidor:</label>
                                 <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
                                 <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                             </div>
-                            <table class="table fw-semibold  table-borded border-dark text-light">
-                                <thead class="fw-bold">
-                                    <tr>
-                                        <!-- <td scope="col">Cantidad Servicios</td> -->
-                                        <td scope="col">Monto Total</td>
-                                        <td scope="col">Propinas</td>
-                                        <td scope="col">Consumo</td>
-                                        <td scope="col">Vales</td>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-light">
-                                    <tr>
-                                        <!-- <td><?php echo  $cantidad ?></td> -->
-                                        <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
-                                        <td>$ <?php echo  $propinas ?></td>
-                                        <td>$ <?php echo  $saldo_consumo ?></td>
-                                        <td>$ <?php echo  $monto_vale  ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="">
+                                <table class="fw-semibold  table table-striped table-hover text-dark ">
+                                    <thead class="fw-bold">
+                                        <tr>
+                                            <!-- <td scope="col">Cantidad Servicios</td> -->
+                                            <td scope="col">Total Facturado</td>
+                                            <td scope="col">Monto Total(%)</td>
+                                            <td scope="col">Porcentaje</td>
+                                            <td scope="col">Propinas</td>
+                                            <td scope="col">Consumo</td>
+                                            <td scope="col">Vales</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-dark">
+                                        <tr>
+                                            <!-- <td><?php echo  $cantidad ?></td> -->
+                                            <td>$ <?php echo  $total_facturado=$monto + $monto_interno ?></td>
+                                            <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
+                                            <td>% <?php echo  $porcentaje ?></td>
+                                            <td>$ <?php echo  $propinas ?></td>
+                                            <td>$ <?php echo  $saldo_consumo ?></td>
+                                            <td>$ <?php echo  $monto_vale  ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
 
@@ -162,7 +168,7 @@ $montototal = 0;
                             <div class="col">
 
                                 <!-- TABLA DE METODOS PAGO DOLARES -->
-                                <table class="table table-bordered text-light" width="100%" border="1">
+                                <table class="fw-semibold  table table-striped table-hover text-dark p-2 " style="background-color: #dfff89a1;" width="100%" border="1">
 
                                     <tr>
                                         <th colspan="4">pagos USD</th>
@@ -213,7 +219,7 @@ $montototal = 0;
                             <div class="col ">
 
                                 <!-- TABLA DE METODOS PAGO BOLIVARES-->
-                                <table class="table table-bordered text-light" width="100%" border="1">
+                                <table class="fw-semibold  table table-striped table-hover text-dark "style="background-color: #d7e7ff;" width="100%" border="1">
 
                                     <tr>
                                         <th colspan="4">Pagos BS.S</th>
@@ -234,7 +240,7 @@ $montototal = 0;
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
-                                        <tr class="text-light">
+                                        <tr class="text-dark">
 
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
@@ -261,73 +267,188 @@ $montototal = 0;
                                 </button>
                             </div> <!-- Pago BS -->
                         </div>
-                    <?php }
 
-                    else if($rol == 'admin') { ?>
-                        <div class="container-sm text-light">
-                        <form action="operacionespagos.php" method="post">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label for="" class="form-label">Servidor:</label>
-                                    <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
-                                    <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
+
+                    <?php } 
+                    else if ($rol === 'admin' ) { ?>
+
+                        <div class="container-sm text-dark  mt-2 p-3 bg-light" >
+                            <form action="operacionespagos.php" method="post">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="" class="form-label">Servidor:</label>
+                                        <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
+                                        <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
+                                    </div>
+                                    
+                                    <!-- <table class="table fw-semibold  table-borded border-dark text-dark">
+                                        <thead class="fw-bold">
+                                            <tr>
+                                                 <td scope="col">Cantidad Servicios</td> 
+                                                <td scope="col">Monto Total</td>
+                                                <td scope="col">Propinas</td>
+                                                <td scope="col">Consumo</td>
+                                                <td scope="col">Vales</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-dark">
+                                            <tr>
+                                                 <td><?php echo  $cantidad ?></td> 
+                                                <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
+                                                <td>$ <?php echo  $propinas ?></td>
+                                                <td>$ <?php echo  $saldo_consumo ?></td>
+                                                <td>$ <?php echo  $monto_vale  ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
                                 </div>
-                                <table class="table fw-semibold  table-borded border-dark text-light">
-                                    <thead class="fw-bold">
-                                        <tr>
-                                            <!-- <td scope="col">Cantidad Servicios</td> -->
-                                            <td scope="col">Monto Total</td>
-                                            <td scope="col">Propinas</td>
-                                            <td scope="col">Consumo</td>
-                                            <td scope="col">Vales</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-light">
-                                        <tr>
-                                            <!-- <td><?php echo  $cantidad ?></td> -->
-                                            <td>$ <?php echo  $total = ($monto + $monto_interno) * ($porcentaje / 100) ?></td>
-                                            <td>$ <?php echo  $propinas ?></td>
-                                            <td>$ <?php echo  $saldo_consumo ?></td>
-                                            <td>$ <?php echo  $monto_vale  ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                            <?php  }; ?>
+
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <label for="">SUELDO:</label>
+                                    <input type="text" name="" id="" class="form-control">
+                                </div>
                             </div>
-
-      <?php  }; ?>
-
-                    <hr>
-                    <div class="">
-                        <div class="row">
+                            <div class="row">
+                            <div class="row"> <!--Tabla Pago USD -->
                             <div class="col">
-                                <ul>
-                                    <li>Total de Servicios: <?php echo $total ?></li>
-                                    <li>Total de Consumo: <?php echo $saldo_consumo ?></li>
-                                    <li>Total de Vales: <?php echo $monto_vale ?></li>
-                                    <li>Total de Propinas: <?php echo $propinas ?></li>
-                                </ul>
+
+                                <!-- TABLA DE METODOS PAGO DOLARES -->
+                                <table class="fw-semibold  table table-striped table-hover text-dark p-2 " style="background-color: #dfff89a1;" width="100%" border="1">
+
+                                    <tr>
+                                        <th colspan="4">pagos USD</th>
+                                    </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Metodo Pago</th>
+                                        <th>Monto</th>
+                                        <th>Accion</th>
+                                        <!-- <th>Costo</th> -->
+                                    </tr>
+
+                                    <?php
+                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id'");
+                                    $cnt = 1;
+                                    $gtotal4 = 0;
+                                    while ($row = mysqli_fetch_array($ret)) {
+                                    ?>
+                                        <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
+                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                        <tr>
+
+                                            <th><?php echo $cnt; ?></th>
+                                            <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $montototal = floatval($row['monto']) ?></td>
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
+
+                                        </tr>
+                                    <?php
+                                        $subtotal4 = floatval($montototal);
+                                        $gtotal4 += $subtotal4;
+                                        $cnt = $cnt + 1;
+                                    } ?>
+
+
+
+
+                                </table>
+
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalmetodo">
+                                    Agregar Pago $
+                                </button>
+
+                            </div> <!-- Pago USD -->
+
+
+                            <!--Tabla Pago Bs -->
+                            <div class="col ">
+
+                                <!-- TABLA DE METODOS PAGO BOLIVARES-->
+                                <table class="fw-semibold  table table-striped table-hover text-dark "style="background-color: #d7e7ff;" width="100%" border="1">
+
+                                    <tr>
+                                        <th colspan="4">Pagos BS.S</th>
+                                    </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Metodo Pago</th>
+                                        <th>Monto</th>
+                                        <th>Accion</th>
+                                        <!-- <th>Costo</th> -->
+                                    </tr>
+
+                                    <?php
+                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id'");
+                                    $cnt = 1;
+                                    $gtotal5 = 0;
+                                    while ($row = mysqli_fetch_array($ret)) {
+                                    ?>
+                                        <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
+                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                        <tr class="text-dark">
+
+                                            <th><?php echo $cnt; ?></th>
+                                            <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
+
+                                            <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
+
+                                        </tr>
+                                    <?php
+                                        $subtotal5 = floatval($montototal);
+                                        $gtotal5 += $subtotal5;
+                                        $cnt = $cnt + 1;
+                                    } ?>
+
+
+
+
+
+
+                                </table>
+
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalmetodobs">
+                                    Agregar Pago BS
+                                </button>
+                            </div> <!-- Pago BS -->
+                            </div>
+                            <div class="">
+                                <div class="row">
+                                    
+                                    <div class="col">
+                                        
+                                        <ul>
+                                            <!-- <li>Total de Servicios: <?php echo $total ?></li> -->
+                                            <li>Total de Consumo: <?php echo $saldo_consumo ?></li>
+                                            <li>Total de Vales: <?php echo $monto_vale ?></li>
+                                            <!-- <li>Total de Propinas: <?php echo $propinas ?></li> -->
+                                        </ul>
+                                    </div>
+
+                                    <div class="col align-end">
+
+                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
+                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
+                                        <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
+                                    </div>
+                                </div>
+
+
                             </div>
 
-                            <div class="col align-end">
+                            <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="actualizar">
 
-                                <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
-                                <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
-                                <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
-                            </div>
+
+                            </form>
                         </div>
-
-
-                    </div>
-
-                    <input type="submit" class="btn btn-success mb-3" value="actualizar" name="actualizar">
-
-
-                    </form>
-                </div>
             </section>
 
-<?php
-?>
+            <?php
+            ?>
 
 
 
@@ -346,8 +467,8 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
-                    <input type="text" class="d-none" name="fecha_desde2" value="<?php echo $fecha_desde ?>">
-                    <input type="text" class="d-none" name="fecha_hasta2" value="<?php echo $fecha_hasta ?>">
+                        <input type="text" class="d-none" name="fecha_desde2" value="<?php echo $fecha_desde ?>">
+                        <input type="text" class="d-none" name="fecha_hasta2" value="<?php echo $fecha_hasta ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
@@ -404,8 +525,8 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
-                    <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
-                    <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
+                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
+                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
