@@ -66,11 +66,12 @@ $montototal = 0;
                 include("operacionespagosservidores.php");
             ?>
                 <div class="container-sm text-dark bg-light mt-2 p-3">
-                    <form action="operacionespagos.php" method="post">
+                    <form action="totalizarpagoservidor.php" method="post">
+                        <input type="text" class="d-none" name="rol" value="<?php $rol ?>">
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Servidor:</label>
-                                <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
+                                <input type="text" name="userid" value="<?php echo $userid ?>" id="" class="d-none" >
                                 <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                             </div>
                             <div class="">
@@ -219,16 +220,18 @@ $montototal = 0;
 
                                     <div class="col align-end">
 
-                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
-                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
-                                        <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
+                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas + 0) ?></h1>
+                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale + 0) ?></h2>
+                                        <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
+                                        <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5 + 0) ?></h1>
+                                        <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                     </div>
                                 </div>
 
 
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="actualizar">
+                        <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="totalizar">
                     </form>
                 </div>
 
@@ -239,11 +242,13 @@ $montototal = 0;
                     include("operacionespagosservidores.php");
                 ?>
                     <div class="container-sm text-dark  mt-2 p-3 bg-light">
-                        <form action="operacionespagos.php" method="post">
+                        <form action="totalizarpagoservidor.php" method="post">
+                            <input type="text" class="d-none" name="rol" value="<?php $rol ?>">
+                            <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none" >
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="" class="form-label">Servidor:</label>
-                                    <input type="tex" name="userid" value="<?php echo $id ?>" id="" class="d-none" disabled>
+                                    <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none" >
                                     <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                                 </div>
 
@@ -398,19 +403,21 @@ $montototal = 0;
 
                                 <div class="col align-end">
 
-                                    <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
-                                    <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
-                                    <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
+                                    <h1>Monto Total: <?php echo $montopago = ($total + $propinas + 0) ?></h1>
+                                    <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale+ 0) ?></h2>
+                                    <input type="text" class="d-none" value="<?php $saldorestante ?>" name="saldo_pendiente">
+                                    <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5+ 0) ?></h1>
+                                    <input type="text" class="d-none" value="<?php $montopago ?>" name="totalcancelado">
                                 </div>
                             </div>
 
 
                         </div>
+                    </div>
+                    <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="totalizar">
 
-                        <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="actualizar">
 
-
-                        </form>
+                    </form>
                     </div>
                 <?php } ?>
                 <!-- CIERRE DE VALIDACIONES POR USUARIO -->

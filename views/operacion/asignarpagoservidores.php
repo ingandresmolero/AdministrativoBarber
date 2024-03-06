@@ -1,6 +1,9 @@
 <?php
 include("../../php/conex.php");
 
+
+
+//PAGO EN BOLIVARES
 if (isset($_POST['asignarmetodobs'])) {
   $idservidor = $_POST['idservidor'];
   $invoice = $_POST['invoice'];
@@ -27,7 +30,7 @@ if (isset($_POST['asignarmetodobs'])) {
 }
 
 
-
+//PAGO EN DOLARES
 if (isset($_POST['asignarmetodousd'])) {
 
   $idservidor = $_POST['idservidor'];
@@ -51,3 +54,9 @@ if (isset($_POST['asignarmetodousd'])) {
   $stmt2 = mysqli_query($conexion, $sqlinsertpago);
   header('location:../procesarpago.php?userid=' . $idservidor . '&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'');
 }
+
+//TOTALIZAR PAGO DE USUARIOS
+if(isset($_POST['totalizarpago'])){
+  
+}
+
