@@ -17,5 +17,8 @@ if(isset($_POST['totalizar'])){
     echo 'saldo'.$saldopendiente;
     echo 'fecha'.$fecha;
 
+    $stmt = "INSERT INTO recibos_pago ( idservidor , monto , saldo , id_metodo , fecha_Creacion ) VALUES ('$idusuario','$total_cancelado','$saldopendiente','0','$fecha')";
+
+    var_dump($stmt);
 }
 ?> 

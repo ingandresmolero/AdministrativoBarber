@@ -66,12 +66,12 @@ $montototal = 0;
                 include("operacionespagosservidores.php");
             ?>
                 <div class="container-sm text-dark bg-light mt-2 p-3">
-                    <form action="totalizarpagoservidor.php" method="post">
+                    <form action="operacionespagos.php" method="post">
                         <input type="text" class="d-none" name="rol" value="<?php $rol ?>">
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Servidor:</label>
-                                <input type="text" name="userid" value="<?php echo $userid ?>" id="" class="d-none" >
+                                <input type="text" name="userid" value="<?php echo $userid ?>" id="" class="d-none">
                                 <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                             </div>
                             <div class="">
@@ -173,7 +173,7 @@ $montototal = 0;
 
                                     <?php
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id'");
-                                    $cnt = 1;
+
                                     $gtotal5 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
                                     ?>
@@ -220,10 +220,10 @@ $montototal = 0;
 
                                     <div class="col align-end">
 
-                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas + 0) ?></h1>
-                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale + 0) ?></h2>
+                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
+                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
                                         <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
-                                        <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5 + 0) ?></h1>
+                                        <h1>Monto Pagado: <?php echo $montopago = floatval($gtotal4 + $gtotal5) ?></h1>
                                         <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                     </div>
                                 </div>
@@ -242,13 +242,13 @@ $montototal = 0;
                     include("operacionespagosservidores.php");
                 ?>
                     <div class="container-sm text-dark  mt-2 p-3 bg-light">
-                        <form action="totalizarpagoservidor.php" method="post">
+                        <form action="operacionespagos.php" method="post">
                             <input type="text" class="d-none" name="rol" value="<?php $rol ?>">
-                            <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none" >
+                            <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none">
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="" class="form-label">Servidor:</label>
-                                    <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none" >
+                                    <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none">
                                     <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                                 </div>
 
@@ -280,7 +280,7 @@ $montototal = 0;
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <label for="">SUELDO:</label>
-                                <input type="text" name="" id="" class="form-control">
+                                <input type="text" name="sueldo" id="sueldo" class="form-control">
                             </div>
                         </div>
                         <div class="row">
@@ -354,7 +354,7 @@ $montototal = 0;
 
                                         <?php
                                         $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id'");
-                                        $cnt = 1;
+                                        $cnt2 = 1;
                                         $gtotal5 = 0;
                                         while ($row = mysqli_fetch_array($ret)) {
                                         ?>
@@ -372,7 +372,7 @@ $montototal = 0;
                                         <?php
                                             $subtotal5 = floatval($montototal);
                                             $gtotal5 += $subtotal5;
-                                            $cnt = $cnt + 1;
+                                            $cnt2 = $cnt2 + 1;
                                         } ?>
 
 
@@ -403,14 +403,20 @@ $montototal = 0;
 
                                 <div class="col align-end">
 
-                                    <h1>Monto Total: <?php echo $montopago = ($total + $propinas + 0) ?></h1>
-                                    <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale+ 0) ?></h2>
-                                    <input type="text" class="d-none" value="<?php $saldorestante ?>" name="saldo_pendiente">
-                                    <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5+ 0) ?></h1>
-                                    <input type="text" class="d-none" value="<?php $montopago ?>" name="totalcancelado">
+                                    <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
+                                    <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
+                                    <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
+                                    <h1>Monto Pagado: <?php echo $montopago = ($gtotal4 + $gtotal5) ?></h1>
+                                    <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                 </div>
                             </div>
 
+                            <?php
+                            $fecha_pago1 = $_GET['fecha_desde'];
+                            $fecha_pago2 = $_GET['fecha_hasta'];
+                            ?>
+                            <input type="text" name="fecha_pago1" value="<?php echo $fecha_pago1; ?>" class="d-none">
+                            <input type="text" name="fecha_pago2" value="<?php echo $fecha_pago2; ?>" class="d-none">
 
                         </div>
                     </div>

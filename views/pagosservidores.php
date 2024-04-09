@@ -58,6 +58,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <th scope="col">#</th>
 
                         <th scope="col">Servidor</th>
+                        <!-- <th scope="col">Fecha Ultimo Pago</th> -->
                         <!-- <th scope="col">Saldo</th>
                         <th scope="col">Fecha</th> -->
                         <th scope="col">Procesar Pago</th>

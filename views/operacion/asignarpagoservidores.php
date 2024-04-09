@@ -21,7 +21,7 @@ if (isset($_POST['asignarmetodobs'])) {
   echo 'monto';
   var_dump($montobs);
 
-  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$monto','$fecha_pago','$idservidor')";
+  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$montobs','$fecha_pago','$idservidor')";
   // var_dump($fecha_hasta);
   // var_dump($fecha_desde);
 
