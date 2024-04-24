@@ -37,23 +37,27 @@ $resultado = $stmt->fetch();
     <?php include("./assets/headersintasa.php"); ?>
 
     <main>
-        <div class="text-light">
-            <h1>Pago de Servidor: <?php echo $resultado['AdminName'] ?></h1>
+        <div class="text-light ">
+            <h1 class="fw-bold">Servidor Seleccionado: <?php echo $resultado['AdminName'] ?></h1>
         </div>
         <form action="" method="post">
-            <div class="row container-sm">
-                <div class="col-sm text-light mt-3">
-                    <h2>Fecha Desde</h2>
-                    <input type="date" name="fecha_desde" class="form-control" id="">
+            <div class="container">
+                <div class="row container-sm text-light">
+                   
+                        <h2>Fecha Desde:</h2>
+                        <div class="col-sm-3  mt-3">
+                        <input type="date" name="fecha_desde" class="form-control" id="" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-5 container-sm text-light">
-                <div class="col-sm">
-                    <h2>Fecha Hasta</h2>
-                    <input type="date" name="fecha_hasta" class="form-control" id="">
+                <div class="row mt-5 container-sm text-light">
+                    
+                        <h2>Fecha Hasta:</h2>
+                        <div class="col-sm-3">
+                        <input type="date" name="fecha_hasta" class="form-control" required>
+                    </div>
                 </div>
+                <input class="table-btn mt-3" type="submit" value="Enviar" name="procesarfecha">
             </div>
-            <input type="submit" value="Enviar" name="procesarfecha">
         </form>
     </main>
     <?php
@@ -62,14 +66,14 @@ $resultado = $stmt->fetch();
         $fecha_hasta = $_POST['fecha_hasta'];
         $fecha_desde = date('d/m/Y', strtotime($fecha_desde));
         $fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
-        echo ' <div class="text-light fs-2 mt-5"> 
+        echo ' <div class="text-light fs-2 mt-5 container-sm bg-dark rounded p-5"> 
         <h2>Fechas a Procesar pago:</h2>
                 <ul>
                     <li>Desde:' . $fecha_desde . ' </li>
                     <li>Hasta:' . $fecha_hasta . ' </li>
                 </ul> 
-                </div>
-                <h2>De ser Correctas las fechas, Presiones el siguiente boton: <a class="table-btn" href="../views/procesarpago.php?userid='. $resultado['ID'] .'&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'">Pago</a></h2>';
+                
+                <h2>De ser Correctas las fechas, Presiones el siguiente boton: <a class="table-btn" href="../views/procesarpago.php?userid=' . $resultado['ID'] . '&fecha_desde=' . $fecha_desde . '&fecha_hasta=' . $fecha_hasta . '">Pago</a></h2></div>';
     };
     ?>
 

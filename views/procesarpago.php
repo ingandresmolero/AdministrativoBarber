@@ -110,18 +110,19 @@ $montototal = 0;
                                 <table class="fw-semibold  table table-striped table-hover text-dark p-2 " style="background-color: #dfff89a1;" width="100%" border="1">
 
                                     <tr>
-                                        <th colspan="4">pagos USD</th>
+                                        <th colspan="5">pagos USD</th>
                                     </tr>
                                     <tr>
                                         <th>#</th>
                                         <th>Metodo Pago</th>
+                                        <th>Fecha</th>
                                         <th>Monto</th>
                                         <th>Accion</th>
                                         <!-- <th>Costo</th> -->
                                     </tr>
 
                                     <?php
-                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id'");
+                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     $cnt = 1;
                                     $gtotal4 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
@@ -132,6 +133,7 @@ $montototal = 0;
 
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $row['fecha'] ?></td>
                                             <td><?php echo $montototal = floatval($row['monto']) ?></td>
                                             <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
 
@@ -161,18 +163,19 @@ $montototal = 0;
                                 <table class="fw-semibold  table table-striped table-hover text-dark " style="background-color: #d7e7ff;" width="100%" border="1">
 
                                     <tr>
-                                        <th colspan="4">Pagos BS.S</th>
+                                        <th colspan="5">Pagos BS.S</th>
                                     </tr>
                                     <tr>
                                         <th>#</th>
                                         <th>Metodo Pago</th>
+                                        <th>Fecha</th>
                                         <th>Monto</th>
                                         <th>Accion</th>
                                         <!-- <th>Costo</th> -->
                                     </tr>
 
                                     <?php
-                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id'");
+                                    $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
 
                                     $gtotal5 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
@@ -180,9 +183,10 @@ $montototal = 0;
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
                                         <tr class="text-dark">
-
+                                            
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
+                                            <td><?php echo $row['fecha'] ?></td>
                                             <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
 
                                             <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
