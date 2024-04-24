@@ -11,10 +11,12 @@ $idhistorico = $_POST['idhistorico'];
 if (isset($_POST['eliminarhistorico'])) {
     $idhistorico = $_POST['idhistorico'];
     $idservidor = $_POST['idservidor'];
+    $fecha_desde = $_POST['fecha_desde1'];
+    $fecha_hasta = $_POST['fecha_hasta2'];
 
     $sql1 = "DELETE FROM historicos_pago WHERE idhistorico='$idhistorico' and idservidor='$idservidor'";
     $stmtc = mysqli_query($conexion, $sql1);
-    header('location:procesarpago.php?userid=' . $idservidor . '');
+    header('location:procesarpago.php?userid=' . $idservidor . '&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'');
 };
 
 //ELIMINAR PROIDUCTO INTERNO
@@ -320,7 +322,7 @@ if (isset($_POST['totalizar'])) {
     // echo 'fecha' . $fecha;
 
   $stmtpago = "INSERT INTO recibos_pago ( idservidor, monto, saldo, sueldo, id_metodo, fecha_desde, fecha_hasta, fecha_Creacion) VALUES ('$idusuario','$montopagado','$saldopendiente','$sueldo',0,'$fecha_inicio','$fecha_final','$fecha')";
-  
+  var_dump($idusuario);
   $ejecucion =  mysqli_query($conexion, $stmtpago);
 // var_dump($stmt);
   header('location:../views/pagosservidores.php?pagina=1');

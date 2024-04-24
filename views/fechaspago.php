@@ -40,25 +40,40 @@ $resultado = $stmt->fetch();
         <div class="text-light ">
             <h1 class="fw-bold">Servidor Seleccionado: <?php echo $resultado['AdminName'] ?></h1>
         </div>
-        <form action="" method="post">
-            <div class="container">
-                <div class="row container-sm text-light">
-                   
-                        <h2>Fecha Desde:</h2>
-                        <div class="col-sm-3  mt-3">
-                        <input type="date" name="fecha_desde" class="form-control" id="" required>
+        <div class="d-flex">
+            <form action="" method="post">
+                <div class="container">
+                    <div class="col">
+                        <div class="row container text-light">
+
+                            <h2>Fecha Desde:</h2>
+                            <div class="col mt-3">
+                                <input type="date" name="fecha_desde" class="form-control" id="" required>
+                            </div>
+                        </div>
+                        <div class="row mt-5 container text-light">
+
+                            <h2>Fecha Hasta:</h2>
+                            <div class="col">
+                                <input type="date" name="fecha_hasta" class="form-control" required>
+                            </div>
+                        </div>
+                        <input class="table-btn mt-3" type="submit" value="Enviar" name="procesarfecha">
+                    </div>
+
+                </div>
+
+            </form>
+            <div class="col">
+                <div class="row container text-light">
+
+                    <h2>Ultima Fecha de Pago:</h2>
+                    <div class="col mt-3">
+                        <h2><?php echo'ultima fecha pago' ?></h2>
                     </div>
                 </div>
-                <div class="row mt-5 container-sm text-light">
-                    
-                        <h2>Fecha Hasta:</h2>
-                        <div class="col-sm-3">
-                        <input type="date" name="fecha_hasta" class="form-control" required>
-                    </div>
-                </div>
-                <input class="table-btn mt-3" type="submit" value="Enviar" name="procesarfecha">
             </div>
-        </form>
+
     </main>
     <?php
     if (isset($_POST['procesarfecha'])) {

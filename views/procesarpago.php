@@ -71,7 +71,7 @@ $montototal = 0;
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Servidor:</label>
-                                <input type="text" name="userid" value="<?php echo $userid ?>" id="" class="d-none">
+                                <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none">
                                 <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                             </div>
                             <div class="">
@@ -122,6 +122,8 @@ $montototal = 0;
                                     </tr>
 
                                     <?php
+                                    $fecha_desde3 = $_GET['fecha_desde'];
+                                    $fecha_hasta3 = $_GET['fecha_hasta'];
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     $cnt = 1;
                                     $gtotal4 = 0;
@@ -129,6 +131,8 @@ $montototal = 0;
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                        <input type="text" name="fecha_desde3" value="<?php echo $fecha_desde3; ?>" class="d-none">
+                                        <input type="text" name="fecha_hasta3" value="<?php echo $fecha_hasta3; ?>" class="d-none">
                                         <tr>
 
                                             <th><?php echo $cnt; ?></th>
@@ -175,6 +179,8 @@ $montototal = 0;
                                     </tr>
 
                                     <?php
+                                    $fecha_desde3 = $_GET['fecha_desde'];
+                                    $fecha_hasta3 = $_GET['fecha_hasta'];
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
 
                                     $gtotal5 = 0;
@@ -182,8 +188,10 @@ $montototal = 0;
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                        <input type="text" name="fecha_desde3" value="<?php echo $fecha_desde3; ?>" class="d-none">
+                                        <input type="text" name="fecha_hasta3" value="<?php echo $fecha_hasta3; ?>" class="d-none">
                                         <tr class="text-dark">
-                                            
+
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
                                             <td><?php echo $row['fecha'] ?></td>
@@ -252,7 +260,7 @@ $montototal = 0;
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="" class="form-label">Servidor:</label>
-                                    <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none">
+                                    <!-- <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none"> -->
                                     <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                                 </div>
 
@@ -305,14 +313,22 @@ $montototal = 0;
                                             <!-- <th>Costo</th> -->
                                         </tr>
 
+
+
                                         <?php
-                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id'");
+                                        $fecha_desde3 = $_GET['fecha_desde'];
+                                        $fecha_hasta3 = $_GET['fecha_hasta'];
+                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                         $cnt = 1;
                                         $gtotal4 = 0;
+
                                         while ($row = mysqli_fetch_array($ret)) {
                                         ?>
                                             <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                             <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                            <input type="text" name="fecha_desde3" value="<?php echo $fecha_desde3; ?>" class="d-none">
+                                            <input type="text" name="fecha_hasta3" value="<?php echo $fecha_hasta3; ?>" class="d-none">
+
                                             <tr>
 
                                                 <th><?php echo $cnt; ?></th>
@@ -357,13 +373,15 @@ $montototal = 0;
                                         </tr>
 
                                         <?php
-                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id'");
+
+                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                         $cnt2 = 1;
                                         $gtotal5 = 0;
                                         while ($row = mysqli_fetch_array($ret)) {
                                         ?>
                                             <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                             <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+
                                             <tr class="text-dark">
 
                                                 <th><?php echo $cnt; ?></th>
@@ -454,8 +472,8 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
-                        <input type="text" class="d-none" name="fecha_desde2" value="<?php echo $fecha_desde ?>">
-                        <input type="text" class="d-none" name="fecha_hasta2" value="<?php echo $fecha_hasta ?>">
+                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
+                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
