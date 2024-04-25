@@ -133,12 +133,12 @@ $montototal = 0;
                                     </tr>
 
                                     <?php
-                                    $fecha_desde3 = $_GET['fecha_desde'];
-                                    $fecha_hasta3 = $_GET['fecha_hasta'];
+                                    
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     $cnt = 1;
                                     $gtotal4 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
+                                        var_dump("SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
@@ -149,7 +149,7 @@ $montototal = 0;
                                             <th><?php echo $cnt; ?></th>
                                             <td><?php echo $row['nombre'] ?></td>
                                             <td><?php echo $row['fecha'] ?></td>
-                                            <td><?php echo $montototal = floatval($row['monto']) ?></td>
+                                            <td><?php echo $montototal = ($row['monto']) ?></td>
                                             <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
 
                                         </tr>
@@ -193,28 +193,29 @@ $montototal = 0;
                                     $fecha_desde3 = $_GET['fecha_desde'];
                                     $fecha_hasta3 = $_GET['fecha_hasta'];
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'bs' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
-
+                                    $ctn2 = 1;
                                     $gtotal5 = 0;
-                                    while ($row = mysqli_fetch_array($ret)) {
+                                    while ($row2 = mysqli_fetch_array($ret)) {
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
-                                        <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
+                                        <input type="text" value="<?php echo $row2['idhistorico']; ?>" name="idhistorico" class="d-none">
                                         <input type="text" name="fecha_desde3" value="<?php echo $fecha_desde3; ?>" class="d-none">
                                         <input type="text" name="fecha_hasta3" value="<?php echo $fecha_hasta3; ?>" class="d-none">
                                         <tr class="text-dark">
 
-                                            <th><?php echo $cnt; ?></th>
-                                            <td><?php echo $row['nombre'] ?></td>
-                                            <td><?php echo $row['fecha'] ?></td>
-                                            <td><?php echo $montototalmostrar = floatval($row['monto'])  ?></td>
+                                            <th><?php echo $ctn2; ?></th>
+                                            <td><?php echo $row2['nombre'] ?></td>
+                                            <td><?php echo $row2['fecha'] ?></td>
+                                            <td><?php echo $montototalmostrar = ($row2['monto'])  ?></td>
 
                                             <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarhistorico"></td>
 
                                         </tr>
                                     <?php
-                                        $subtotal5 = floatval($montototal);
+                                        $subtotal5 = floatval($montototalmostrar);
                                         $gtotal5 += $subtotal5;
-                                        $cnt = $cnt + 1;
+                                        $ctn2 = $ctn2 + 1;
+                                        
                                     } ?>
 
 
@@ -243,10 +244,11 @@ $montototal = 0;
 
                                     <div class="col align-end">
 
-                                        <h1>Monto Total: <?php echo $montopago = ($total + $propinas) ?></h1>
-                                        <h2 class="text-danger">Saldo Restante: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
+                                        <h1>Monto Total Producido: <?php echo $montopago = ($total + $propinas) ?></h1>
+                                        <h2 class="text-danger">Saldo Pendiente: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
                                         <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
                                         <h1>Monto Pagado: <?php echo $montopago = floatval($gtotal4 + $gtotal5) ?></h1>
+                                        <h3>Monto Restante a pagar: <?php echo $restante=($montopago - $saldorestante) ?></h3>
                                         <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                     </div>
                                 </div>
@@ -329,7 +331,7 @@ $montototal = 0;
                                         <?php
                                         $fecha_desde3 = $_GET['fecha_desde'];
                                         $fecha_hasta3 = $_GET['fecha_hasta'];
-                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
+                                        $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde3' AND '$fecha_hasta3')");
                                         $cnt = 1;
                                         $gtotal4 = 0;
 
