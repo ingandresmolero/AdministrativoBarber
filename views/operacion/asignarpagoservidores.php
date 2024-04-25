@@ -21,7 +21,7 @@ if (isset($_POST['asignarmetodobs'])) {
   echo 'monto';
   
 
-  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$montobs','$fecha_desde','$idservidor')";
+  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$montobs','$fecha_hasta','$idservidor')";
   var_dump($sqlinsertpago);
   // var_dump($fecha_hasta);
   // var_dump($fecha_desde);
@@ -39,19 +39,20 @@ if (isset($_POST['asignarmetodousd'])) {
   $idmetodo = $_POST['idmetodo'];
   $monto = $_POST['monto_pago'];
   $detalle = $_POST['detalles'];
-  $fecha_pago = $_POST['fecha_desde'];
-  $fecha_desde = $_POST['fecha_desde2'];
-  $fecha_hasta = $_POST['fecha_hasta2'];
+ 
+  $fecha_desde = $_POST['fecha_desde'];
+  $fecha_hasta = $_POST['fecha_hasta'];
 
  
 
 
-  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$monto','$fecha_desde2','$idservidor')";
+  $sqlinsertpago = "INSERT INTO historicos_pago(idmetodo, monto,fecha, idservidor) VALUES ('$idmetodo','$monto','$fecha_hasta','$idservidor')";
   
 
   var_dump($fecha_hasta);
   var_dump($fecha_desde);
   // var_dump($_POST['idservidor']);
+  var_dump($sqlinsertpago);
   $stmt2 = mysqli_query($conexion, $sqlinsertpago);
   header('location:../procesarpago.php?userid=' . $idservidor . '&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'');
 }

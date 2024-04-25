@@ -11,13 +11,15 @@ $idhistorico = $_POST['idhistorico'];
 if (isset($_POST['eliminarhistorico'])) {
     $idhistorico = $_POST['idhistorico'];
     $idservidor = $_POST['idservidor'];
-    $fecha_desde = $_POST['fecha_desde1'];
-    $fecha_hasta = $_POST['fecha_hasta2'];
+    $fecha_desde = $_POST['fecha_desde3'];
+    $fecha_hasta = $_POST['fecha_hasta3'];
 
     $sql1 = "DELETE FROM historicos_pago WHERE idhistorico='$idhistorico' and idservidor='$idservidor'";
     $stmtc = mysqli_query($conexion, $sql1);
     header('location:procesarpago.php?userid=' . $idservidor . '&fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta.'');
+
 };
+
 
 //ELIMINAR PROIDUCTO INTERNO
 if (isset($_POST['eliminar_interno'])) {

@@ -68,12 +68,23 @@ $montototal = 0;
                 <div class="container-sm text-dark bg-light mt-2 p-3">
                     <form action="operacionespagos.php" method="post">
                         <input type="text" class="d-none" name="rol" value="<?php $rol ?>">
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Servidor:</label>
                                 <input type="text" name="userid" value="<?php echo $id ?>" id="" class="d-none">
                                 <input type="tex" name="nombreid" value="<?php echo $nombre ?>" id="" class="form-control" disabled>
                             </div>
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Desde:</label>
+                                <input type="tex" value="<?php echo $fecha_desde ?>" id="" class="form-control" disabled>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="" class="form-label">Hasta:</label>
+                                <input type="tex" value="<?php echo $fecha_hasta ?>" id="" class="form-control" disabled>
+                            </div>
+
+
+
                             <div class="">
                                 <table class="fw-semibold  table table-striped table-hover text-dark ">
                                     <thead class="fw-bold">
@@ -472,8 +483,12 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
-                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
-                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
+                        <?php
+                        $fecha_inicio = $_GET['fecha_desde'];
+                        $fecha_final = $_GET['fecha_hasta'];
+                        ?>
+                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_inicio ?>">
+                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_final ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
@@ -530,8 +545,12 @@ $montototal = 0;
                 </div>
                 <div class="modal-body">
                     <form action="operacion/asignarpagoservidores.php" method="post">
-                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_desde ?>">
-                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_hasta ?>">
+                        <?php
+                        $fecha_inicio = $_GET['fecha_desde'];
+                        $fecha_final = $_GET['fecha_hasta'];
+                        ?>
+                        <input type="text" class="d-none" name="fecha_desde" value="<?php echo $fecha_inicio ?>">
+                        <input type="text" class="d-none" name="fecha_hasta" value="<?php echo $fecha_final ?>">
                         <input type="text" name="invoice" value="<?php echo $billing; ?>" class="d-none">
                         <input type="text" value="<?php echo $id ?>" name="idservidor" class="d-none">
                         <label class="form-label" for="">Metodo Pago</label>
