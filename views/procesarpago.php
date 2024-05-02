@@ -6,6 +6,14 @@ include("../php/conex.php");
 $id = $_GET['userid'];
 $fecha_desde = $_GET['fecha_desde'];
 $fecha_hasta = $_GET['fecha_hasta'];
+
+// $fechaInicial = new DateTime($fecha_desde);
+// $fechaFinal = new DateTime($fecha_hasta); // Fecha desde
+
+// $diferenciadesde = $fecha_desde->diff($fecha_hasta);
+// $diasTranscurridosDesde = $diferenciadesde->format('%a');
+
+// var_dump($diasTranscurridosDesde) ;
 // $fecha_desde = date('d/m/Y', strtotime($fecha_desde));
 // $fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
 
@@ -133,7 +141,7 @@ $montototal = 0;
                                     </tr>
 
                                     <?php
-                                    
+
                                     $ret = mysqli_query($conexion, "SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     $cnt = 1;
                                     $gtotal4 = 0;
@@ -215,7 +223,6 @@ $montototal = 0;
                                         $subtotal5 = floatval($montototalmostrar);
                                         $gtotal5 += $subtotal5;
                                         $ctn2 = $ctn2 + 1;
-                                        
                                     } ?>
 
 
@@ -248,7 +255,7 @@ $montototal = 0;
                                         <h2 class="text-danger">Saldo Pendiente: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
                                         <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
                                         <h1>Monto Pagado: <?php echo $montopago = floatval($gtotal4 + $gtotal5) ?></h1>
-                                        <h3>Monto Restante a pagar: <?php echo $restante=($montopago - $saldorestante) ?></h3>
+                                        <h3>Monto Restante a pagar: <?php echo $restante = ($montopago - $saldorestante) ?></h3>
                                         <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                     </div>
                                 </div>
