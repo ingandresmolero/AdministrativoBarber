@@ -146,7 +146,7 @@ $montototal = 0;
                                     $cnt = 1;
                                     $gtotal4 = 0;
                                     while ($row = mysqli_fetch_array($ret)) {
-                                        var_dump("SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
+                                        // var_dump("SELECT * FROM `historicos_pago` join metodos_pago on metodos_pago.idmetodo = historicos_pago.idmetodo where metodos_pago.unidad = 'usd' and historicos_pago.idservidor='$id' and (historicos_pago.fecha BETWEEN '$fecha_desde' AND '$fecha_hasta')");
                                     ?>
                                         <input type="text" value="<?php echo $id; ?>" name="idservidor" class="d-none">
                                         <input type="text" value="<?php echo $row['idhistorico']; ?>" name="idhistorico" class="d-none">
@@ -255,7 +255,7 @@ $montototal = 0;
                                         <h2 class="text-danger">Saldo Pendiente: <?php echo $saldorestante = ($saldo_consumo + $monto_vale) ?></h2>
                                         <input type="text" class="d-none" value="<?php echo $saldorestante ?>" name="saldo_pendiente">
                                         <h1>Monto Pagado: <?php echo $montopago = floatval($gtotal4 + $gtotal5) ?></h1>
-                                        <h3>Monto Restante a pagar: <?php echo $restante = ($montopago - $saldorestante) ?></h3>
+                                        <!-- <h3>Monto Restante a pagar: <?php echo $restante = ( $saldorestante - $montopago) ?></h3> -->
                                         <input type="text" class="d-none" value="<?php echo $montopago ?>" name="totalcancelado">
                                     </div>
                                 </div>

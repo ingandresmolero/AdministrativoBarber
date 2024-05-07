@@ -156,6 +156,14 @@ $row4 = $stmt4->fetch();
                             </div>
 
                         </div>
+                        <div class="row justify-content-center">
+
+                            <div class="row text-dark p-2 justify-content-center">
+                                <button type="button" onclick="location.href='assets/barberos/historicopagosbarbero.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Historico Pagos</button>
+                            </div>
+
+                        </div>
+
                         <!-- 
                         <div class="row justify-content-center">
 
