@@ -8,7 +8,7 @@ if (isset($_POST['asignarabono'])){
   $row = mysqli_fetch_array($stmt);
 
   $cliente = $row['ID'];
-  $fecha = date("d-m-Y");
+  $fecha = date("Y-m-d");
   $abonmonto = $_POST['montoabono'];
   // $saldo=$_POST['saldo'];
   // $restante = $saldo - $abonmonto;
@@ -26,7 +26,7 @@ if(isset($_POST['aplicarcargo'])){
   $stmt = mysqli_query($conexion,$querycliente);
   $row = mysqli_fetch_array($stmt);
   $cliente = $row['ID'];
-  $fecha = date("d-m-Y");
+  $fecha = date("Y-m-d");
   $cargo = ($_POST['montocargo']*-1);
   $querycargo = "INSERT INTO operaciones_clientes( `idcliente`, `fecha`, `invoice`, `aplicado`, `status`) VALUES ('$cliente','$fecha','$invoice','$cargo','restante')";
 

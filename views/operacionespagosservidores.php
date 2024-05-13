@@ -12,19 +12,7 @@
                  $listadoservicio = $sqlservicio->fetch();
  
                  //CONSUMO PROPIO
-                 $queryConsumo = "SELECT IFNULL(consumo_interno.saldo,0) as saldoconsumo 
- FROM consumo_interno 
- INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
- WHERE tbladmin.AdminName = '$nombre' AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion <= '$fecha_hasta')
- UNION ALL
- SELECT 0 AS saldoconsumo
- WHERE NOT EXISTS (
-     SELECT IFNULL(consumo_interno.saldo,0) as saldoconsumo 
-     FROM consumo_interno 
-     INNER JOIN tbladmin ON consumo_interno.servidor = tbladmin.ID 
-     WHERE tbladmin.AdminName = '$nombre'
-     AND (consumo_interno.fecha_creacion > '$fecha_desde' AND consumo_interno.fecha_creacion <= '$fecha_hasta')
- );";
+                 $queryConsumo = "SELECT sum(saldo) as saldoconsumo FROM `consumo_interno` WHERE fecha_creacion BETWEEN '$fecha_desde' and '$fecha_hasta' and servidor='$id';";
  
                  $sqlconsumo = $conn->prepare($queryConsumo);
                  $sqlconsumo->execute();

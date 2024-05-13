@@ -79,8 +79,8 @@ $resultado = $stmt->fetch();
     if (isset($_POST['procesarfecha'])) {
         $fecha_desde = $_POST['fecha_desde'];
         $fecha_hasta = $_POST['fecha_hasta'];
-        $fecha_desde = date('d/m/Y', strtotime($fecha_desde));
-        $fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
+        // $fecha_desde = date('d/m/Y', strtotime($fecha_desde));
+        // $fecha_hasta = date('d/m/Y', strtotime($fecha_hasta));
         echo ' <div class="text-light fs-2 mt-5 container-sm bg-dark rounded p-5"> 
         <h2>Fechas a Procesar pago:</h2>
                 <ul>
