@@ -106,7 +106,7 @@ if (isset($_POST['eliminaradicional'])){
 // TOTALIZAR OPERACION
 
 if(isset($_POST['totalizar'])){
-    $fecha = date("d/m/Y");
+    $fecha = date("Y-m-d");
     $tasa=$_POST['tasa'];
     $monto_cancelado = $_POST['monto_cancelado'];
     $billing = $_POST['invoice'];
@@ -195,7 +195,7 @@ if(isset($_POST['preciolibre'])){
 //     $metodo = $_POST['metodo'];
 //     $referencia = $_POST['referencia'];
 //     $abono = $_POST['abono'];
-//     $fecha = date("d/m/Y");
+//     $fecha = date("Y-m-d");
 //     $tasa=$_POST['tasa'];
 //     $monto_cancelado = $_POST['monto_cancelado'];
 

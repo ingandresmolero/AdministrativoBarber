@@ -5,7 +5,7 @@ include("../php/conex.php");
 $billing = $_GET['id'];
 
 // $sql = "SELECT * FROM consumo_interno join tbladmin on tbladmin.ID = consumo_interno.servidor WHERE consumo_interno.intern='$billing'";
-// $fecha = date("d/m/y");
+// $fecha = date("Y-m-d");
 // $stmt = $conn->prepare($sql);
 // $stmt->execute();
 

@@ -5,7 +5,7 @@ include("../php/conex.php");
 
 if(isset($_POST['totalizar'])){
     $rol = $_POST['rol'];
-    $fecha = date("d/m/Y");
+    $fecha = date("Y-m-d");
     $total_cancelado = $_POST['totalcancelado'];
     $idusuario = $_POST['userid'];
     $saldopendiente  = $_POST['saldo_pendiente'];

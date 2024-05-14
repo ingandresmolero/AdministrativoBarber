@@ -7,7 +7,7 @@ if(isset($_POST['asignaradicional'])){
   $detalle = $_POST['detalles'];
   $monto =$_POST['monto_pago'];
   $tasa = $_POST['tasa'];
-  $fecha_pago = date("d/m/Y");
+  $fecha_pago = date("Y-m-d");
   $idusuario = $_POST['idusuario'];
 
 //   $montousd = intval($montobs / $tasa); 
@@ -26,7 +26,7 @@ if(isset($_POST['asignaradicional_interno'])){
   $detalle = $_POST['detalles'];
   $monto =$_POST['monto_pago'];
   $tasa = $_POST['tasa'];
-  $fecha_pago = date("d/m/Y");
+  $fecha_pago = date("Y-m-d");
   $idusuario = $_POST['idusuario'];
 
 //   $montousd = intval($montobs / $tasa); 

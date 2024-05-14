@@ -22,7 +22,7 @@ $costo =$_POST["costo"];
 $existencia =$_POST["existencia"];
 $cantidad =$_POST["cantidad"];
 $monto = $_POST["monto_com"];
-$fecha_reg = date("D/m/y");
+$fecha_reg = date("Y-m-d");
 $resultado = $existencia + $cantidad;
 
 $query2 = "UPDATE stock SET existencia='$resultado' WHERE codigo = '$codigo'";

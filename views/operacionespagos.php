@@ -143,7 +143,7 @@ if (isset($_POST['eliminaradicional_interno'])) {
 // // TOTALIZAR OPERACION
 
 // if(isset($_POST['totalizar'])){
-//     // $fecha = date("d/m/Y");
+//     // $fecha = date("Y-m-d");
 //     // $tasa=$_POST['tasa'];
 //     // $monto_cancelado = $_POST['monto_cancelado'];
 //     // $billing = $_POST['invoice'];
@@ -297,7 +297,7 @@ if (isset($_POST['guardar'])) {
     $intern = $_POST['inter'];
     $totalpago = $_POST['saldofinal'];
     $montocancelado = $_POST['monto_cancelado'];
-    $fecha = date("d/m/Y");
+    $fecha = date("Y-m-d");
     $queryactualizacion = "UPDATE consumo_interno SET saldo='$montocancelado',fecha_act='$fecha' WHERE intern='$intern'";
     echo 'Guardar de Hoja';
     $stmtactusaldo = mysqli_query($conexion, $queryactualizacion);
@@ -306,7 +306,7 @@ if (isset($_POST['guardar'])) {
 
 if (isset($_POST['totalizar'])) {
     $rol = $_POST['rol'];
-    $fecha = date("d/m/Y");
+    $fecha = date("Y-m-d");
     $total_cancelado = $_POST['totalcancelado'];
     $idusuario = $_POST['userid'];
     $saldopendiente  = $_POST['saldo_pendiente'];

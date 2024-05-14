@@ -7,7 +7,7 @@ if(isset($_POST['asignarmetodobs'])){
   $detallebs = $_POST['detallesbs'];
   $montobs =$_POST['monto_pagobs'];
   $tasa = $_POST['tasa'];
-  $fecha_pago = date("d/m/Y");
+  $fecha_pago = date("Y-m-d");
 
 //   $montousd = intval($montobs / $tasa); 
 echo 'monto';
@@ -26,7 +26,7 @@ var_dump($montobs);
         $idmetodo=$_POST['idmetodo'];
         $monto =$_POST['monto_pago'];
         $detalle = $_POST['detalles'];
-        $fecha_pago = date("d/m/Y");
+        $fecha_pago = date("Y-m-d");
     
  
    $sqlinsertpago = "INSERT INTO cuentas_cobrar( invoice, idmetodo, monto,detalle,fecha_creacion) VALUES ('$invoice','$idmetodo','$monto','$detalle','$fecha_pago')";

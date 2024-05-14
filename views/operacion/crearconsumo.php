@@ -13,7 +13,7 @@ if (isset($_POST['crear'])) {
     $nombre = $_POST['servidor'];
  
     $sumadorFactura = $contadorinterno + 1;
-    $fechacreacion = date("d/m/Y");
+    $fechacreacion = date("Y-m-d");
 
     $facturacion = "INSERT INTO consumo_interno( intern, servidor, fecha_creacion) VALUES ('$contadorinterno','$nombre','$fechacreacion')";
 

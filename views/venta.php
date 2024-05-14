@@ -5,7 +5,7 @@ include("../php/conex.php");
 $billing = $_GET['billing'];
 
 $sql = "SELECT * FROM tblinvoice INNER JOIN tblcustomers on tblinvoice.Userid = tblcustomers.ID WHERE tblinvoice.BillingId='$billing'";
-$fecha = date("d/m/y");
+$fecha = date("Y-m-d");
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 

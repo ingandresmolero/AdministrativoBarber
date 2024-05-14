@@ -4,7 +4,7 @@
  inner join tblservices on tblassignedservice.servicio = tblservices.ID 
  inner join tblbarber on tblbarber.idbarber = tblassignedservice.idbarbero 
  inner join transacciones on tblassignedservice.invoice = transacciones.invoice 
- WHERE tblbarber.nombre='$nombre' AND transacciones.estatus != 'pendiente'   AND (transacciones.fecha_creacion >'$fecha_desde' AND transacciones.fecha_creacion <'$fecha_hasta')
+ WHERE tblbarber.nombre='$nombre' AND transacciones.estatus != 'pendiente'   AND (transacciones.fecha_creacion between '$fecha_desde' AND '$fecha_hasta')
  
  group by nombre,porcentaje;";
                  $sqlservicio = $conn->prepare($queryServicios);

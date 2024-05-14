@@ -6,7 +6,7 @@ $billing = $_GET['billing'];
 $nombreservidor = $_GET['barber'];
 
 $sql = "SELECT * FROM tblinvoice INNER JOIN tblcustomers on tblinvoice.Userid = tblcustomers.ID WHERE tblinvoice.BillingId='$billing'";
-$fecha = date("d/m/y");
+$fecha = date("Y-m-d");
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 

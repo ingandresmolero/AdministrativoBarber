@@ -3,7 +3,7 @@ include("../php/functions/validar.php");
 include("../php/dbconn.php");
 include("../php/conex.php");
 
-$fecha = date("d/m/Y");
+$fecha = date("Y-m-d");
 ?>
 
 <!DOCTYPE html>

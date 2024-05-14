@@ -153,7 +153,7 @@ if (isset($_POST['eliminaradicional_interno'])){
 // TOTALIZAR OPERACION
 
 if(isset($_POST['totalizar'])){
-    $fecha = date("d/m/Y");
+    $fecha = date("Y-m-d");
     $tasa=$_POST['tasa'];
     $monto_cancelado = $_POST['monto_cancelado'];
     $billing = $_POST['invoice'];

@@ -12,7 +12,7 @@ $resultado = $stmt->fetch();
     $usuarioid = $_POST['usuarioid'];
     $contadorfactura = intval($resultado['NControlCargo']);
     $sumadorFactura = $contadorfactura + 1;
-    $fechacreacion = date("d/m/Y");
+    $fechacreacion = date("Y-m-d");
 
     //QUERYS
 $facturacion = "INSERT INTO tblcargo( Userid, AssignedUserID, BillingId,  estado) VALUES ('$clienteid','$usuarioid','$contadorfactura','pendiente')";

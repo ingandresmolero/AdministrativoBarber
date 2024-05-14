@@ -15,7 +15,7 @@ $costo =$_POST["costo"];
 $existencia =$_POST["existencia"];
 $montoretiro =$_POST["monto_reti"];
 $cantidad =$_POST["cantidad"];
-$fecha_reg = date("d/m/Y");
+$fecha_reg = date("Y-m-d");
 
 $resultado = $existencia - $cantidad;
 
