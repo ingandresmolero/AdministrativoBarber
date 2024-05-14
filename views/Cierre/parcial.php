@@ -3,10 +3,9 @@ include("../../php/dbconn.php");
 include("../../php/conex.php");
 include("../../php/functions/tasa.php");
 
-$fecha = date('d/m/Y'); {
+$fecha = date('Y-m-d'); {
     if (isset($_POST['actfecha'])) {
-        $fecha2 = $_POST['fecha_nueva'];
-        $fecha = date('d/m/Y', strtotime($fecha2));
+       $fecha=date('Y-m-d');
 
         $query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
         $query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
@@ -76,7 +75,7 @@ $fecha = date('d/m/Y'); {
         $cnt2 = 1;
         $cnt3 = 1;
     } else {
-        $fecha = date('d/m/Y');
+        $fecha = date('Y-m-d');
         $query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
         $query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
         $query3 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'abono' and fecha_creacion = '$fecha'"; //total de facturas con abono

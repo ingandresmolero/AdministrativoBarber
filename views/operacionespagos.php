@@ -4,6 +4,7 @@
 include("../php/conex.php");
 $idhistorico = $_POST['idhistorico'];
 
+
 // $montototal=$_POST['montototal'];
 // $barbero=$_POST['barbero'];
 
@@ -310,12 +311,12 @@ if (isset($_POST['totalizar'])) {
     $total_cancelado = $_POST['totalcancelado'];
     $idusuario = $_POST['userid'];
     $saldopendiente  = $_POST['saldo_pendiente'];
-    $sueldo = $_POST['sueldo'];
+    $fecha_inicio = $_POST['fecha-desde'];
+    $fecha_final = $_POST['fecha-hasta'];
+    
+    $sueldo = $_POST['sueldo'] + 0;
 
     $montopagado = $_POST['totalcancelado'];
-    $fecha_inicio = $_POST['fecha_pago1'];
-    $fecha_final = $_POST['fecha_pago2'];
-
     // var_dump($montopagado);
     // var_dump($saldopendiente);
     // echo 'id' . $idusuario;
@@ -323,7 +324,7 @@ if (isset($_POST['totalizar'])) {
     // echo 'saldo' . $saldopendiente;
     // echo 'fecha' . $fecha;
 
-  $stmtpago = "INSERT INTO recibos_pago ( idservidor, monto, saldo, sueldo, id_metodo, fecha_desde, fecha_hasta, fecha_Creacion) VALUES ('$idusuario','$montopagado','$saldopendiente','$sueldo',0,'$fecha_inicio','$fecha_final','$fecha')";
+  $stmtpago = "INSERT INTO recibos_pago ( idservidor, monto, saldo,sueldo,  id_metodo, fecha_desde, fecha_hasta, fecha_Creacion) VALUES ('$idusuario','$montopagado','$saldopendiente','$sueldo',0,'$fecha_inicio','$fecha_final','$fecha')";
   var_dump($idusuario);
   $ejecucion =  mysqli_query($conexion, $stmtpago);
 // var_dump($stmt);

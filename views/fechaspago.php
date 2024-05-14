@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+
 include("../php/functions/validar.php");
 include("../php/dbconn.php");
 include("../php/conex.php");
@@ -69,7 +71,15 @@ $resultado = $stmt->fetch();
 
                     <h2>Ultima Fecha de Pago:</h2>
                     <div class="col mt-3">
-                        <h2><?php echo'ultima fecha pago' ?></h2>
+                        <?php
+                        $id=$_GET['userid'];
+                        $sql = "SELECT * FROM `recibos_pago` WHERE idservidor = '$id' ORDER BY idrecibo DESC LIMIT 1";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
+                        $row= $stmt->fetch();
+                        ?>
+                        <h2 class="text-danger">Desde: <?php echo $row['fecha_desde'] ?>  Hasta:<?php echo $row['fecha_hasta'] ?></h2>
+                 
                     </div>
                 </div>
             </div>

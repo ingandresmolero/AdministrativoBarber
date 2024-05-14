@@ -84,11 +84,11 @@ $montototal = 0;
                             </div>
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Desde:</label>
-                                <input type="tex" value="<?php echo $fecha_desde ?>" id="" class="form-control" disabled>
+                                <input type="tex" value="<?php echo $fecha_desde ?>" name='fecha-desde' id="" class="form-control" disabled>
                             </div>
                             <div class="col-sm-3">
                                 <label for="" class="form-label">Hasta:</label>
-                                <input type="tex" value="<?php echo $fecha_hasta ?>" id="" class="form-control" disabled>
+                                <input type="tex" value="<?php echo $fecha_hasta ?>" name='fecha-hasta' id="" class="form-control" disabled>
                             </div>
 
 
@@ -263,6 +263,8 @@ $montototal = 0;
 
                             </div>
                         </div>
+                        <input type="text" name="fecha-desde" value="<?php echo $fecha_desde; ?>" class="d-none">
+                        <input type="text" name="fecha-hasta" value="<?php echo $fecha_hasta; ?>" class="d-none">
                         <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="totalizar">
                     </form>
                 </div>
@@ -453,15 +455,11 @@ $montototal = 0;
                                 </div>
                             </div>
 
-                            <?php
-                            $fecha_pago1 = $_GET['fecha_desde'];
-                            $fecha_pago2 = $_GET['fecha_hasta'];
-                            ?>
-                            <input type="text" name="fecha_pago1" value="<?php echo $fecha_pago1; ?>" class="d-none">
-                            <input type="text" name="fecha_pago2" value="<?php echo $fecha_pago2; ?>" class="d-none">
 
                         </div>
                     </div>
+                    <input type="text" name="fecha-desde" value="<?php echo $fecha_desde; ?>" class="d-none">
+                        <input type="text" name="fecha-hasta" value="<?php echo $fecha_hasta; ?>" class="d-none">
                     <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="totalizar">
 
 

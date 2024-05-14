@@ -19,7 +19,7 @@
                  $listadoconsumo = $sqlconsumo->fetch();
  
                  //VALES
-                 $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre' and vales.fecha > '$fecha_desde' and vales.fecha <= '$fecha_hasta'";
+                 $queryVales = "SELECT IFNULL(SUM(monto),0) as monto  FROM vales inner join tbladmin on tbladmin.ID = vales.idbarber WHERE tbladmin.AdminName='$nombre' and vales.fecha between '$fecha_desde' and '$fecha_hasta'";
                  $sqlvale = $conn->prepare($queryVales);
                  $sqlvale->execute();
                  $listadovale = $sqlvale->fetch();
