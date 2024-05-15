@@ -43,10 +43,11 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
         <!-- Button trigger modal -->
+        <?php if($rol=='admin') { ?>
         <button type="button" class="btn btn-primary" onclick="window.location.href='stock2.php'">Actualizar Producto</button>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Producto</button>
-
+<?php }else if($rol =='manager') {};?>
         <div class="row justify-content-center">
             <form action="" method="post">
                 <div class="col-7">

@@ -15,12 +15,12 @@ $nombreservidor = $_SESSION["username"];
 // var_dump($rol);
 
 //CONTADORES
+$fecha=date('Y-m-d');
+$contador1 = "SELECT * FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber inner join tblinvoice on tblinvoice.BillingId = tblassignedservice.invoice WHERE tblbarber.nombre = '$nombreservidor' and tblinvoice.PostingDate > '$fecha';";
+$contador2 = "SELECT SUM(IFNULL(tblassignedservice_intern.monto,0) + IFNULL(tblassignedproducts_intern.monto,0) + IFNULL(servicios_adicional_interno.monto,0)) as total_monto FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern LEFT JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor' and fecha_creacion >= '$fecha';";
 
-$contador1 = "SELECT DISTINCT usuario FROM tblbarber inner JOIN tblassignedservice on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-$contador2 = "SELECT SUM(IFNULL(tblassignedservice_intern.monto,0) + IFNULL(tblassignedproducts_intern.monto,0) + IFNULL(servicios_adicional_interno.monto,0)) as total_monto FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern LEFT JOIN servicios_adicional_interno ON servicios_adicional_interno.intern = consumo_interno.intern INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName =  '$nombreservidor';";
-
-$contador3 = "SELECT * from vales inner join tblbarber on vales.idbarber = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
-$contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber WHERE tblbarber.nombre = '$nombreservidor'";
+$contador3 = "SELECT * from vales inner join tbladmin on vales.idbarber = tbladmin.ID WHERE tbladmin.AdminName ='$nombreservidor' and vales.fecha >= '$fecha'";
+$contador4 = "SELECT SUM(propina) FROM tblassignedservice inner JOIN tblbarber on tblassignedservice.idbarbero = tblbarber.idbarber inner join tblinvoice on tblassignedservice.invoice = tblinvoice.BillingId WHERE tblbarber.nombre = '$nombreservidor' and tblinvoice.PostingDate >= '$fecha'";
 
 $stmt1 = $conn->prepare($contador1);
 $stmt2 = $conn->prepare($contador2);
@@ -68,17 +68,17 @@ $row4 = $stmt4->fetch();
             <div class="elements">
                 <a href="Protocolo.php" class="item">
 
-                    <img src="../img/icons/tasa.png">
+                    <img src="../img/icons/clientes-ab.png">
                     <p class="card-title">Clientes</p>
                 </a>
                 <a href="./lista_facturas.php" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/facturas-ab.png">
                     <p class="card-title">Caja</p>
                 </a>
                 <a href="stock.php?pagina=1" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/stock-ab.png">
                     <p class="card-title">Inventario</p>
                 </a>
             </div>
@@ -87,7 +87,7 @@ $row4 = $stmt4->fetch();
 
                 <a href="consumo_interno.php" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/pago-ab.png">
                     <p class="card-title">Consumo Interno</p>
                 </a>
 
@@ -182,29 +182,29 @@ $row4 = $stmt4->fetch();
             <div class="elements">
                 <a href="Protocolo.php" class="item">
 
-                    <img src="../img/icons/tasa.png">
+                    <img src="../img/icons/clientes-ab.png">
                     <p class="card-title">Ingreso / Clientes</p>
                 </a>
 
                 <a href="lista_facturas.php" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/citas-ab.png">
                     <p class="card-title">Citas</p>
                 </a>
 
                 <a href="facturas.php" class="item">
-                    <img src="../img/icons/operaciones.png">
+                    <img src="../img/icons/facturas-ab.png">
                     <p class="card-title">Facturas</p>
 
                 </a>
                 <a href="stock.php?pagina=1" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/stock-ab.png">
                     <p class="card-title">Stock</p>
                 </a>
                 <a href="tasa.php" class="item">
 
-                    <img src="../img/icons/tasa.png">
+                    <img src="../img/icons/tasa-ab.png">
                     <p class="card-title">Tasa del dia</p>
                 </a>
                 <!-- 
@@ -221,7 +221,7 @@ $row4 = $stmt4->fetch();
                     <p class="card-title">Reportes</p>
                 </a> -->
                 <a href="cierrediario.php" class="item">
-                    <img src="../img/icons/usuarios.png">
+                    <img src="../img/icons/cierre-ab.png">
                     <p class="card-title">Cierre</p>
                 </a>
 
@@ -229,34 +229,34 @@ $row4 = $stmt4->fetch();
 
                 <a href="consumo_interno.php" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/pago-ab.png">
                     <p class="card-title">Consumo Interno</p>
                 </a>
 
                 <a href="vales.php" class="item">
 
-                    <img src="../img/icons/inventario.png">
+                    <img src="../img/icons/vales-ab.png">
                     <p class="card-title">Vales</p>
                 </a>
 
                 <a href="mant_servicios.php" class="item">
-                    <img src="../img/icons/usuarios.png">
+                    <img src="../img/icons/servicios-ab.png">
                     <p class="card-title">Servicios</p>
                 </a>
 
                 <a href="configuracion.php" class="item">
-                    <img src="../img/icons/configuracion.png">
+                    <img src="../img/icons/config-ab.png">
                     <p class="card-title">Configuracion</p>
                 </a>
             </div>
 
             <div class="elements">
                 <a href="cuentas.php" class="item">
-                    <img src="../img/icons/reportes.png">
+                    <img src="../img/icons/operacion-ab.png">
                     <p class="card-title">Cuentas</p>
                 </a>
                 <a href="pagosservidores.php" class="item">
-                    <img src="../img/icons/usuarios.png">
+                    <img src="../img/icons/operacion-ab.png">
                     <p class="card-title">Pago Servidor</p>
                 </a>
             </div>

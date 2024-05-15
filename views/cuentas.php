@@ -27,9 +27,9 @@ include("../php/functions/validar.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Cuentas x Cobrar</h5>
+                        <h5 class="card-title">Cuentas x Pagar</h5>
                         
-                        <a href="cuentasxcobrar.php" class="btn btn-primary">Entrar</a>
+                        <a href="cuentasxpagar.php" class="btn btn-primary">Entrar</a>
                     </div>
                     
                 </div>
@@ -39,9 +39,9 @@ include("../php/functions/validar.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Cuentas x Pagar</h5>
+                        <h5 class="card-title">Cuentas x Cobrar</h5>
                         
-                        <a href="cuentasxpagar.php" class="btn btn-primary">Entrar</a>
+                        <a href="cuentasxcobrar.php" class="btn btn-primary">Entrar</a>
                     </div>
                     
                 </div>

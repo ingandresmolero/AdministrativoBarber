@@ -5,7 +5,7 @@ include("../../../php/dbconn.php");
 session_start();
 $nombreservidor = $_SESSION["username"];
 
-$sql = "SELECT * FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor'";
+$sql = "SELECT DISTINCT consumo_interno.intern, servidor,SUM(saldo) as saldo,tbladmin.AdminName FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor' GROUP by intern,servidor, saldo, tbladmin.AdminName";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -70,7 +70,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     if (!isset($_POST['busqueda'])) {
                         $iniciar = ($_GET['pagina'] - 1) * $usuarios_x_pagina;
-                        $sql_usuarios = "SELECT * FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor'LIMIT :iniciar, :nusuarios;";
+                        $sql_usuarios = "SELECT DISTINCT consumo_interno.intern, servidor,SUM(saldo) as saldo,tbladmin.AdminName FROM consumo_interno INNER JOIN tblassignedservice_intern ON tblassignedservice_intern.intern = consumo_interno.intern INNER JOIN tblassignedproducts_intern ON tblassignedproducts_intern.intern = consumo_interno.intern  INNER JOIN tbladmin ON tbladmin.ID = consumo_interno.servidor WHERE tbladmin.AdminName = '$nombreservidor' GROUP by intern,servidor, saldo, tbladmin.AdminName LIMIT :iniciar,:nusuarios;";
                         $stm_usuario = $conn->prepare($sql_usuarios);
                         $stm_usuario->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_usuario->bindParam(':nusuarios', $usuarios_x_pagina, PDO::PARAM_INT);

@@ -3,7 +3,7 @@ include("../php/functions/validar.php");
 
 // include("../php/functions/tasa.php");
 include_once("../php/dbconn.php");
-$sql = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula";
+$sql = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -78,7 +78,7 @@ $paginas = ceil($total_report / $report_x_pagina);
 
                         $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-                        $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
+                        $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
                         $stm_report = $conn->prepare($sql_report);
                         $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                         $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);
@@ -107,7 +107,7 @@ $paginas = ceil($total_report / $report_x_pagina);
                             $busqueda = $_POST['campo'];
                             $iniciar = ($_GET['pagina'] - 1) * $report_x_pagina;
 
-                            $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Abono' and (tblcustomers.Name LIKE '%$busqueda%' OR tblcustomers.cedula LIKE '%$busqueda') GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
+                            $sql_report = "SELECT tblcustomers.ID,transacciones.estatus,tblcustomers.Name,tblcustomers.cedula, SUM(transacciones.saldo) AS total_saldo FROM transacciones INNER JOIN tblinvoice ON tblinvoice.BillingId = transacciones.invoice INNER JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID WHERE transacciones.estatus = 'Restante' and (tblcustomers.Name LIKE '%$busqueda%' OR tblcustomers.cedula LIKE '%$busqueda') GROUP BY tblcustomers.ID,transacciones.estatus, tblcustomers.Name,tblcustomers.cedula LIMIT :iniciar,:nusuarios";
                             $stm_report = $conn->prepare($sql_report);
                             $stm_report->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);
                             $stm_report->bindParam(':nusuarios', $report_x_pagina, PDO::PARAM_INT);

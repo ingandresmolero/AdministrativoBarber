@@ -5,7 +5,8 @@ include("../../php/functions/tasa.php");
 
 $fecha = date('Y-m-d'); {
     if (isset($_POST['actfecha'])) {
-       $fecha=date('Y-m-d');
+        $fecha = $_POST['fecha_nueva'];
+
 
         $query  = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE fecha_creacion = '$fecha' "; //total de operaciones
         $query2 = "SELECT IFNULL(SUM(monto_total),0) as total FROM transacciones WHERE estatus = 'totalizado' and fecha_creacion = '$fecha'"; //total totalizado
