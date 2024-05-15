@@ -136,7 +136,7 @@ $row4 = $stmt4->fetch();
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='assets/barberos/clientesatendidos.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Clientes atendidos</button>
+                                <button type="button" onclick="location.href='assets/barberos/clientesatendidos.php?pagina=1'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Clientes atendidos</button>
                             </div>
 
                         </div>
@@ -144,7 +144,7 @@ $row4 = $stmt4->fetch();
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='assets/barberos/consumobarbero.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Consumo</button>
+                                <button type="button" onclick="location.href='assets/barberos/consumobarbero.php?pagina=1'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Consumo</button>
                             </div>
 
                         </div>
@@ -152,14 +152,14 @@ $row4 = $stmt4->fetch();
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='assets/barberos/valesbarber.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Vales</button>
+                                <button type="button" onclick="location.href='assets/barberos/valesbarber.php?pagina=1'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Vales</button>
                             </div>
 
                         </div>
                         <div class="row justify-content-center">
 
                             <div class="row text-dark p-2 justify-content-center">
-                                <button type="button" onclick="location.href='assets/barberos/historicopagosbarbero.php'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Historico Pagos</button>
+                                <button type="button" onclick="location.href='assets/barberos/historicopagosbarbero.php?pagina=1'" class="rounded-4 text-light p-2" style="background-color: #84aa1d; border: #84aa1d;">Historico Pagos</button>
                             </div>
 
                         </div>

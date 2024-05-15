@@ -457,11 +457,12 @@ $montototal = 0;
 
 
                         </div>
-                    </div>
-                    <input type="text" name="fecha-desde" value="<?php echo $fecha_desde; ?>" class="d-none">
+                        <input type="text" name="fecha-desde" value="<?php echo $fecha_desde; ?>" class="d-none">
                         <input type="text" name="fecha-hasta" value="<?php echo $fecha_hasta; ?>" class="d-none">
                     <input type="submit" class="btn btn-success mb-3" value="Realizar Pago" name="totalizar">
 
+                    </div>
+                   
 
                     </form>
                     </div>
