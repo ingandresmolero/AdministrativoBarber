@@ -29,7 +29,7 @@ include("actualizarServicio.php");
 </head>
 
 <body>
-    <?php include("../assets/headersintasa.php"); ?>
+    <?php include("./headersintasa.php"); ?>
 
     <main>
 

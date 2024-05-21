@@ -10,7 +10,7 @@
           <a class="nav-link active text-light" aria-current="page" href="../views/dashboard.php">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../views/stock.php">Inventario</a>
+          <a class="nav-link" href="../views/stock.php?pagina=1">Inventario</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,7 +33,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../views/stock.php">Tasa del dia: <?php echo "$tasadia Fecha: $tasafecha "; ?></a>
+          <a class="nav-link" href="../views/tasa.php">Tasa del dia: <?php echo "$tasadia Fecha: $tasafecha "; ?></a>
         </li>
     </div>
   </div>

@@ -9,7 +9,7 @@ $id=$_GET['idproduct'];
 
 
            echo '<script> alert("Eliminacion Hecha!")</script>';
-           header('Location: ../stock.php');
+           header('Location: ../stock.php?pagina=1');
         
     
 

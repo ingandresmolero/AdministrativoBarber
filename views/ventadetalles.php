@@ -48,7 +48,7 @@ $resultado = $stmt->fetch();
         <section class="container-sm  card  p-3 shadow p-3 mb-3 bg-white rounded mt-5">
             <div class=" row ">
                 <div class="col-md-3">
-                    <a class="btn btn-danger" href="lista_facturas.php">Volver </a>
+                    <a class="btn btn-danger" href="facturas.php">Volver </a>
                 </div>
             </div>
             <div class="row justify-content-start mt-3">
@@ -498,9 +498,9 @@ $resultado = $stmt->fetch();
             <!-- DATOS A ENVIAR -->
             </h1>
             <div class="row mt-3">
-                <div class="col-md-auto">
+                <!-- <div class="col-md-auto">
                     <input type="submit" class="btn btn-success" name="totalizar" value="Totalizar">
-                </div>
+                </div> -->
                 <!-- <div class="col-md-auto">
                     <input type="submit" class="btn btn-warning" value="Guardar">
                 </div> -->

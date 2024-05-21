@@ -5,7 +5,7 @@ include("../php/functions/validar.php");
 ?>
 <?php
 include("../php/dbconn.php");
-$sql = 'SELECT * FROM tblinvoice';
+$sql = "SELECT DISTINCT tblcustomers.Name , tblcustomers.cedula,tblinvoice.BillingId ,tblcustomers.assignedbarber as barbero,tblinvoice.PostingDate as fecha,tblinvoice.estado from tblcustomers join tblinvoice on tblcustomers.ID=tblinvoice.Userid WHERE tblinvoice.estado != 'pagado' AND tblinvoice.estado != 'anulado' ORDER BY tblinvoice.PostingDate desc";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 

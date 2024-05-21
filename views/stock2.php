@@ -40,7 +40,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
     <section class="container">
         <h1 class="page-heading">Actualizacion de Inventario</h1>
-
+<h2 class="text-light mb-5">PRECAUCION: SE ACTUALIZARAN A LA CANTIDAD COLOCADA, UTILIZAR SOLO CUANDO SEA NECESARIO</h2>
 
         <!-- Button trigger modal -->
         <!-- <button type="button" onclick="window.location.href='stock.php'" class="m-2 btn btn-primary">Guardar Cambios</button> -->

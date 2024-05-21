@@ -797,7 +797,7 @@ $resultado = $stmt->fetch();
 
 
                         <label class="form-label" for="">Cantidad</label>
-                        <input class="form-control" type="text" name="cantidad" id="">
+                        <input class="form-control" type="text" name="cantidad" id="" required>
 
 
 

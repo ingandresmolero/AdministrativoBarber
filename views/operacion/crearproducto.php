@@ -13,7 +13,7 @@
         $stmt->execute();
 
       
-           header('Location: ../stock.php');
+           header('Location: ../stock.php?pagina=1');
         
     }
 

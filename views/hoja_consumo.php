@@ -149,7 +149,7 @@ $billing = $_GET['id'];
                                         <td><input type="text" name="propina" value="" placeholder="<?php echo $propina = $row2['propina'] ?>" class="form-control" disabled></td>
                                         <td><a class="btn btn-success" href="propinas.php?idservicio=<?php echo $row2['idserviciointerno'] ?>">+</a></td> -->
                                         <td> <input type="submit" name="preciolibre" value="Libre" class="btn btn-success"></td>
-                                        <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio"></td>
+                                        <td><input type="submit" class="btn btn-danger" value="Eliminar" name="eliminarservicio_interno"></td>
                                     </tr>
                                 <?php
                                     $cntservicio = $cntservicio + 1;
@@ -478,7 +478,7 @@ $billing = $_GET['id'];
 
 
                         <label class="form-label" for="">Cantidad</label>
-                        <input class="form-control" type="text" name="cantidad" id="">
+                        <input class="form-control" type="text" name="cantidad" id="" required>
 
 
 

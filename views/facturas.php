@@ -3,7 +3,7 @@ include("../php/functions/validar.php");
 
 // include("../php/functions/tasa.php");
 include_once("../php/dbconn.php");
-$sql = 'SELECT * FROM transacciones ';
+$sql = "SELECT DISTINCT transacciones.invoice, transacciones.idtransac,tblcustomers.cedula,tblcustomers.Name,transacciones.estatus,transacciones.fecha_creacion FROM `transacciones` JOIN tblinvoice ON transacciones.invoice = tblinvoice.BillingId JOIN tblcustomers ON tblinvoice.Userid = tblcustomers.ID ORDER BY invoice DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
