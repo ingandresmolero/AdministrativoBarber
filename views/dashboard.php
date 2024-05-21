@@ -259,6 +259,10 @@ $row4 = $stmt4->fetch();
                     <img src="../img/icons/operacion-ab.png">
                     <p class="card-title">Pago Servidor</p>
                 </a>
+                <a href="operaciones.php" class="item">
+                    <img src="../img/icons/operacion-ab.png">
+                    <p class="card-title">Operaciones</p>
+                </a>
             </div>
 
 

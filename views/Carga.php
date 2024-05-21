@@ -31,7 +31,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
     <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
 
     <link rel="stylesheet" href="../css/styles.min.css">
-    <title>Inventario</title>
+    <title>Carga - Inventario</title>
 </head>
 
 <body>
@@ -39,20 +39,17 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
 
     <section class="container">
-        <h1 class="page-heading">Inventario</h1>
+        <h1 class="page-heading">Carga de Inventario</h1>
 
 
         <!-- Button trigger modal -->
-        <?php if($rol=='admin') { ?>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='stock2.php?pagina=1'">Actualizar Producto</button>
+        <!-- <button type="button" onclick="window.location.href='stock.php'" class="m-2 btn btn-primary">Guardar Cambios</button> -->
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo Producto</button>
-<?php }else if($rol =='manager') {};?>
         <div class="row justify-content-center">
             <form action="" method="post">
                 <div class="col-7">
 
-                    <input type="text" class="form-control" name="campo" placeholder="Productos,Deposito...." id="">
+                    <input type="text" class="form-control" name="campo" placeholder="Productos, Deposito...." id="">
 
                 </div>
 
@@ -63,7 +60,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                 </div>
                 <div class="col ">
 
-                    <a href="stock.php" class="table-btn">Mostrar Todos</a>
+                    <a href="Carga.php" class="table-btn">Mostrar Todos</a>
 
                 </div>
             </form>
@@ -97,7 +94,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                 <th scope="col">PVP</th>
                                 <th scope="col">Deposito</th>
                                 <th scope="col">Editar</th>
-                                <th scope="col">Eliminar</th>
+                                <th scope="col">Añadir</th>
 
                             </tr>
                         </thead>
@@ -110,10 +107,10 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
 
                     <?php
                     if (!$_GET) {
-                        header('Location:stock.php?pagina=1');
+                        header('Location:Carga.php?pagina=1');
                     }
                     if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
-                        header('Location:stock.php?pagina=1');
+                        header('Location:Carga.php?pagina=1');
                     }
 
                     if (!isset($_POST['busqueda'])) {
@@ -133,15 +130,21 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <?php foreach ($resultado_usuario as $usuario) :   ?>
                             <?php if ($rol == 'admin') { ?>
                                 <tr>
-                                    <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
-                                    <td><?php echo $usuario['nombre']; ?></td>
-                                    <td><?php echo $usuario['cantidad']; ?></td>
-                                    <td><?php echo $usuario['precio']; ?></td>
+                                    <form action="./operacion/actualizarCarga.php" method="post">
+                                        <input type="text" class="d-none" name="idproducto" value="<?php echo $usuario['idproducts'] ?>" id="">
+                                        <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
+                                        <td><?php echo $usuario['nombre']; ?></td>
+                                        <td><?php echo $usuario['cantidad']; ?></td>
 
-                                    <td><?php echo $usuario['deposito']; ?></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                    <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                        <input class="d-none" type="text" name="stock" value="<?php echo $usuario['cantidad']; ?>" placeholder="..." />
+                                        <td><?php echo $usuario['precio']; ?></td>
 
+                                        <td><?php echo $usuario['deposito']; ?></td>
+                                        <td class="action"><input class="table-btn bg-light text-dark" type="text" name="cantidad" placeholder="..." /></td>
+
+                                        <!-- <td class="action"><a class="table-btn text-dark" href="../views/operacion/actualizarCarga.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td> -->
+                                        <td class="action"> <input type="submit" class="table-btn" value="+" name="Carga"> </td>
+                                    </form>
                                 </tr>
                                 <?php } else {
                                 if ($rol == 'manager') { ?>
@@ -188,17 +191,19 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                                     </tr>
                                     <?php  } else {
                                     if ($rol == 'admin') { ?>
-                                        <tr>
+                                        <form action="./operacion/actualizarCarga.php" method="post">
+                                            <input type="text" class="d-none" name="idproducto" value="<?php echo $usuario['idproducts'] ?>" id="">
                                             <th scope="row"><?php echo $usuario['idproducts'];  ?></th>
                                             <td><?php echo $usuario['nombre']; ?></td>
                                             <td><?php echo $usuario['cantidad']; ?></td>
                                             <td><?php echo $usuario['precio']; ?></td>
 
                                             <td><?php echo $usuario['deposito']; ?></td>
-                                            <td class="action"><a class="table-btn" href="../views/operacion/editarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Ver</a></td>
-                                            <td class="action"><a class="table-btn" href="../views/operacion/eliminarproducto.php?idproduct=<?php echo $usuario['idproducts'] ?>">Eliminar</a></td>
+                                            <td class="action"><input class="table-btn bg-light text-dark" type="text" name="cantidad" placeholder="..." /></td>
 
-                                        </tr>
+                                            <!-- <td class="action"><a class="table-btn text-dark" href="../views/operacion/actualizarCarga.php?idproduct=<?php echo $usuario['idproducts'] ?>">+</a></td> -->
+                                            <td class="action"> <input type="submit" class="table-btn" value="+" name="actualizacion"> </td>
+                                        </form>
                                 <?php }
                                 } ?>
 
@@ -213,16 +218,16 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
             <ul class="pagination">
                 <li class="page-item 
                 <?php echo $_GET['pagina'] < $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="stock.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
+                "><a class="page-link" href="Carga.php?pagina=<?php echo $_GET['pagina'] - 1; ?>">Anterior</a></li>
 
                 <?php for ($i = 0; $i < $paginas; $i++) : ?>
-                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="stock.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
+                    <li class="page-item pnum <?php echo $_GET['pagina'] == $i + 1 ? ' active' : '' ?>"><a class="page-link" href="Carga.php?pagina=<?php echo $i + 1; ?>"><?php echo $i + 1; ?></a></li>
                 <?php endfor  ?>
 
 
                 <li class="page-item
                 <?php echo $_GET['pagina'] >= $paginas ? ' disabled' : '' ?> 
-                "><a class="page-link" href="stock.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
+                "><a class="page-link" href="Carga.php?pagina=<?php echo $_GET['pagina'] + 1; ?>">Siguiente</a></li>
             </ul>
         </nav>
 

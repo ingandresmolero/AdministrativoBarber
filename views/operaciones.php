@@ -25,9 +25,9 @@ include("../php/functions/validar.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Cuentas por Cobrar CONSTRUCCION</h5>
+                        <h5 class="card-title">Carga de Productos</h5>
                         
-                        <a href="cuentasxcobrar.php" class="btn btn-primary">Entrar</a>
+                        <a href="Carga.php" class="btn btn-primary">Entrar</a>
                     </div>
                 </div>
             </div>
@@ -35,24 +35,14 @@ include("../php/functions/validar.php");
                 <div class="card" style="width: 18rem;">
 
                     <div class="card-body">
-                        <h5 class="card-title">Ventas por Rango CONSTRUCCION</h5>
+                        <h5 class="card-title">Descarga de Productos</h5>
                         
-                        <a href="#" class="btn btn-primary">Entrar</a>
+                        <a href="Descarga.php" class="btn btn-primary">Entrar</a>
                     </div>
                     
                 </div>
             </div>
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Cierre Diario</h5>
-                        
-                        <a href="cierre.php" class="btn btn-primary">Entrar</a>
-                    </div>
-                    
-                </div>
-            </div>
+           
 
         </div>
 
