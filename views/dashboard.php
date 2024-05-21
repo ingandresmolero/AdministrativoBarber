@@ -260,8 +260,8 @@ $row4 = $stmt4->fetch();
                     <p class="card-title">Pago Servidor</p>
                 </a>
                 <a href="operaciones.php" class="item">
-                    <img src="../img/icons/operacion-ab.png">
-                    <p class="card-title">Operaciones</p>
+                    <img src="../img/icons/stock-ab.png">
+                    <p class="card-title">Operaciones Inventario</p>
                 </a>
             </div>
 
