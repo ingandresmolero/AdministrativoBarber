@@ -247,6 +247,9 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                         <label class="form-label" for="">Deposito</label>
                         <select class="form-control" name="deposito" id="">
                             <option value="Belleza">Belleza</option>
+                            <option value="Electronico">Electronico</option>
+                            <option value="Skincare">SkinCare</option>
+                            <option value="Comida">Comida</option>
                             <option value="Bebida">Bebida</option>
                             <option value="Snack">Snack</option>
                             <option value="Otros">Otros</option>

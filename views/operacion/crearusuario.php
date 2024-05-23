@@ -8,14 +8,14 @@
         $rol = $_POST['rol'];
         
 
-        if($rol != 'usuario'){
+        if($rol != 'servidor'){
             $sql = "INSERT INTO tbladmin (AdminName, UserName, Password, Role) VALUES ('$nombre','$usuario','$contrasena','$rol')";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
     
           
                header('Location: ../usuarios.php');
-        }else if($rol =='usuario') {
+        }else if($rol =='servidor') {
             $sql = "INSERT INTO tbladmin (AdminName, UserName, Password, Role) VALUES ('$nombre','$usuario','$contrasena','$rol')";
             $sqlservidor ="INSERT INTO tblbarber( nombre, porcentaje, usuario, pass, Codigo, Puesto, Telefono) VALUES ('$nombre','0','$usuario','$contrasena','0','0','0')";
             $stmt = $conn->prepare($sql);
