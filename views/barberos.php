@@ -17,6 +17,7 @@ $total_usuario = $stmt->rowCount();
 
 
 $paginas = ceil($total_usuario / $usuarios_x_pagina);
+$paginas = ($paginas <= 0) ? 1 : $paginas;
 
 ?>
 
@@ -74,7 +75,7 @@ $paginas = ceil($total_usuario / $usuarios_x_pagina);
                     if (!$_GET) {
                         header('Location:barberos.php?pagina=1');
                     }
-                    if ($_GET['pagina'] > $paginas || $_GET['pagina'] <= 0) {
+                    if ($_GET['pagina'] > $paginas || $_GET['pagina'] < 0) {
                         header('Location:barberos.php?pagina=1');
                     }
 

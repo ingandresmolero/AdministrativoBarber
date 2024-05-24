@@ -17,6 +17,7 @@ $total_usuario = $stmt->rowCount();
 
 
 $paginas = ceil($total_usuario / $usuarios_x_pagina);
+$paginas = ($paginas <= 0) ? 1 : $paginas;
 
 ?>
 

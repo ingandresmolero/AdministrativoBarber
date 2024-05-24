@@ -17,6 +17,7 @@ $total_report = $stmt->rowCount();
 
 
 $paginas = ceil($total_report / $report_x_pagina);
+$paginas = ($paginas <= 0) ? 1 : $paginas;
 
 ?>
 

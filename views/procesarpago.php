@@ -314,7 +314,7 @@ $montototal = 0;
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <label for="">SUELDO:</label>
-                                <input type="text" name="sueldo" id="sueldo" class="form-control">
+                                <input type="text" name="sueldo" id="sueldo" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
