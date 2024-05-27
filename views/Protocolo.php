@@ -48,7 +48,7 @@ $paginas = ($paginas <= 0) ? 1 : $paginas;
         <!-- Button trigger modal -->
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Nuevo Usuario
+            Nuevo Cliente
         </button>
         <div class="row b-3">
             <div class="col-md">
